@@ -1,9 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctugyrjbojaha"]
+[gd_scene load_steps=6 format=3 uid="uid://ctugyrjbojaha"]
 
 [ext_resource type="Material" uid="uid://cbuxpyskm6sbs" path="res://materials/sand.tres" id="1_3cird"]
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_f6koo"]
 [ext_resource type="PackedScene" uid="uid://c8b4vlwq6o4a8" path="res://prefabs/Turtle/Turtle.tscn" id="2_bw6yb"]
 [ext_resource type="Curve" uid="uid://dkesmoudsws42" path="res://prefabs/Turtle/Acceleration.tres" id="4_ah7lm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e0j0i"]
+font_size = 20
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.498039)
+shadow_offset = Vector2(0, 2)
 
 [node name="scene" type="Node3D"]
 script = ExtResource("1_f6koo")
@@ -20,3 +28,11 @@ size = Vector3(1000, 1, 1000)
 
 [node name="Turtle" parent="." instance=ExtResource("2_bw6yb")]
 Acceleration = ExtResource("4_ah7lm")
+
+[node name="speedo" type="Label" parent="Turtle"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 78.0
+offset_bottom = 51.0
+text = "TODO"
+label_settings = SubResource("LabelSettings_e0j0i")

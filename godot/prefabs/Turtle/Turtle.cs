@@ -7,7 +7,7 @@ public partial class Turtle : Node3D
 	[Export]
 	public Curve Acceleration { get; set; }
 	[Export]
-	public float MaxForwardSpeed { get; set; } = 20;
+	public float MaxForwardSpeed { get; set; } = 50;
 
     [Export]
     public float MaxReverseSpeed { get; set; } = 4;
@@ -24,9 +24,12 @@ public partial class Turtle : Node3D
 
     float m_morwardSpeed = 0;
 
+	Label m_speedoLabel;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		m_speedoLabel = FindChild("speedo") as Label;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -85,5 +88,7 @@ public partial class Turtle : Node3D
 		}
 
         Position += Basis.Z * (float)(m_morwardSpeed * delta);
+
+		m_speedoLabel.Text = $"{m_morwardSpeed:N2}m/s";
     }
 }
