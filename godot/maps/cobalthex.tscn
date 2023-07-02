@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctugyrjbojaha"]
+
+[ext_resource type="Material" uid="uid://cbuxpyskm6sbs" path="res://materials/sand.tres" id="1_3cird"]
+[ext_resource type="Script" path="res://etc/Common.cs" id="1_f6koo"]
+[ext_resource type="PackedScene" uid="uid://c8b4vlwq6o4a8" path="res://prefabs/Turtle/Turtle.tscn" id="2_bw6yb"]
+[ext_resource type="Curve" uid="uid://dkesmoudsws42" path="res://prefabs/Turtle/Acceleration.tres" id="4_ah7lm"]
+
+[node name="scene" type="Node3D"]
+script = ExtResource("1_f6koo")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31.4612, 0)
+light_size = 1.0
+omni_range = 4096.0
+omni_attenuation = 0.00364466
+
+[node name="ground" type="CSGBox3D" parent="."]
+material_override = ExtResource("1_3cird")
+size = Vector3(1000, 1, 1000)
+
+[node name="Turtle" parent="." instance=ExtResource("2_bw6yb")]
+Acceleration = ExtResource("4_ah7lm")
