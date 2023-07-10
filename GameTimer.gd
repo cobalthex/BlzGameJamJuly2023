@@ -4,9 +4,14 @@ extends Control
 var timer_node = null
 var time_left
 
+var score = 0 #starting score
+
 @onready var timer_hud = $UI/HUD # allows access to the HUD scene from the Timer_UI layer
+@onready var score_hud = $UI/HUD 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	score_hud.set_score_label(score) #sets the score label at start of the game to 0
+	
 	timer_node = Timer.new() #creates an object from the Timer class
 	timer_node.name = "Timer" # sets the name of the Timer node
 	timer_node.wait_time = 1 # amount of seconds it waits per timeout
