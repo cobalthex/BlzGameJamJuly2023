@@ -2,7 +2,7 @@ using Godot;
 
 #nullable enable
 
-public partial class Turtle : Node3D
+public partial class Turtle : CharacterBody3D
 {
 	public const float c_seaWaterDensity = 1050; // Kg/m^3
 	public const float c_turtleDragCoefficient = 0.15f;
@@ -14,7 +14,7 @@ public partial class Turtle : Node3D
     public float TurtleFrontalAreaMSq { get; set; } = 0.25f; // wild guess
 
     [Export]
-	public float ForwardMoveForceNewtons { get; set; } = 150;
+	public float ForwardMoveForceNewtons { get; set; } = 1500;
 
 	[Export]
 	public float MaxPitchDegreesPerSec { get; set; } = 50; // cache radians?
@@ -22,53 +22,53 @@ public partial class Turtle : Node3D
 	[Export]
 	public float MaxYawDegreesPerSec { get; set; } = 50; // cache radians?
 
+	[Export]
+	public bool InvertPitchControls { get; set; } = false;
+
 	Vector3 turnPower = Vector3.Zero; // yaw pitch roll
 	float m_desiredBankAngle = 0;
+	float m_currentBankAngle = 0;
     float m_forwardSpeed = 0;
 
     Label? m_speedoLabel;
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		m_speedoLabel = FindChild("speedo") as Label;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
-	{
+    {
 		Vector3 newRotation = Vector3.Zero;
 
-		// todo: smooth turns from bank to bank
-
-		if (Input.IsActionPressed("YawLeft"))
-		{
-			turnPower.X = 1;
-		}
-		if (Input.IsActionPressed("YawRight"))
-		{
-			turnPower.X = -1;
-		}
+		turnPower.X = Input.GetActionStrength("YawLeft");
+		turnPower.X -= Input.GetActionStrength("YawRight");
         newRotation.Y = (float)(turnPower.X * delta); // todo: should be affected by speed (like a car)
 
-		if (Input.IsActionPressed("PitchDown"))
-		{
-			turnPower.Y = 1;
-		}
-		if (Input.IsActionPressed("PitchUp"))
-		{
-			turnPower.Y = -1;
-        }
-        newRotation.X = (float)(turnPower.Y * delta);
+		// flip this to invert
+        turnPower.Y = -Input.GetActionStrength("PitchUp");
+        turnPower.Y += Input.GetActionStrength("PitchDown");
+        newRotation.X = (float)(turnPower.Y * (InvertPitchControls ? -1 : 1) * delta);
 
 		newRotation += Rotation;
         // make the turtle lean into a turn based on their speed
         {
-			float relSpeed = m_forwardSpeed / 5; // todo, use proper bank angle formula
-            float turnSign = Mathf.Sign(turnPower.X);
+			float relSpeed = m_forwardSpeed / 8; // todo, use proper bank angle formula
+            float turnSign = Mathf.Sign(Mathf.Floor(turnPower.X * 100)); // round to .01 to add deadzone, todo: scale by dot product of inv Vector.Right
             m_desiredBankAngle = -turnSign * Mathf.Lerp(0, Mathf.Pi * 0.5f, Mathf.Min(1, turnSign * turnPower.X * relSpeed));
-			newRotation.Z = Mathf.Lerp(newRotation.Z, m_desiredBankAngle, 0.2f); // todo: do this properly, not with lerp
-            //newRotation.Z = Mathf.Lerp(newRotation.Z, 0, 0.1f); // slerp?
+
+			if (turnSign != 0)
+			{
+				newRotation.Z = Mathf.Lerp(newRotation.Z, m_desiredBankAngle, 0.2f); // todo: do this properly, not with lerp
+			}
+			else
+			{
+                newRotation.Z = Mathf.Lerp(newRotation.Z, m_desiredBankAngle, 0.05f);
+            }
+			//newRotation.Z = Mathf.Lerp(newRotation.Z, 0, 0.1f); // slerp?
+
+			//m_currentBankAngle = Mathf.Clamp(m_currentBankAngle + Mathf.Sign(m_desiredBankAngle - m_currentBankAngle) * 0.1f, -1f, 1f);
+			//newRotation.Z = m_currentBankAngle;
         }
 
         turnPower = turnPower.Lerp(Vector3.Zero, 0.2f); // todo: use Ease
@@ -103,12 +103,22 @@ public partial class Turtle : Node3D
 		float dragForce = 0.5f * c_seaWaterDensity * (m_forwardSpeed * m_forwardSpeed) * c_turtleDragCoefficient * TurtleFrontalAreaMSq;
 
 		float acceleration = (acceleratorForce - dragForce) / TurtleMassKg;
-
         m_forwardSpeed += (float)(acceleration * delta);
-        GlobalPosition += m_forwardSpeed * forwardDir;
 
-		//float relSpeed = m_forwardSpeed / MaxForwardSpeed;
-		//m_forwardSpeed *= Mathf.Lerp(1, 1 - Drag, relSpeed);
+		// movement always follows forward direction
+		// todo: enumerate all collisions
+		var motion = m_forwardSpeed * forwardDir * Globals.c_unitsToMeters * (float)delta;
+		if (TestMove(GlobalTransform, motion, m_move))
+		{
+			GlobalPosition += m_move.GetTravel();
+			// todo: slide
+			var plane = new Plane(m_move.GetNormal(), m_move.GetPosition());
+			GlobalPosition += plane.Project((0.1f * forwardDir).Lerp(motion, 0.8f)); // use friction value
+		}
+		else
+		{
+			GlobalPosition += motion;
+		}
 
         // TODO: ocean currents
 
@@ -118,7 +128,8 @@ public partial class Turtle : Node3D
 				$"Euler: {RotationDegrees.ToString("N1")}rad" +
 				$"\nForward: {forwardDir.ToString("N2")}" +
 				$"\nacceleration: {acceleration:N2}m/s^2" +
-				$"\nforward speed: {m_forwardSpeed * Globals.c_unitsToMeters:N2}m/s";
+				$"\nforward speed: {m_forwardSpeed:N2}m/s";
 		}
 	}
+    KinematicCollision3D m_move = new();
 }

@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctugyrjbojaha"]
+[gd_scene load_steps=6 format=3 uid="uid://ctugyrjbojaha"]
 
 [ext_resource type="Material" uid="uid://cgm5iqvfhndew" path="res://materials/sand.tres" id="1_3cird"]
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_f6koo"]
 [ext_resource type="PackedScene" uid="uid://c8b4vlwq6o4a8" path="res://prefabs/Turtle/Turtle.tscn" id="2_bw6yb"]
 [ext_resource type="Theme" uid="uid://bu8wxtxm5hy22" path="res://etc/DebugText.tres" id="5_gcepk"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6lros"]
 
 [node name="scene" type="Node3D"]
 script = ExtResource("1_f6koo")
@@ -27,4 +29,10 @@ omni_attenuation = 0.00364466
 material_override = ExtResource("1_3cird")
 size = Vector3(1000, 1, 1000)
 
+[node name="StaticBody3D" type="StaticBody3D" parent="ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground/StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_6lros")
+
 [node name="Turtle" parent="." instance=ExtResource("2_bw6yb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2.578)
