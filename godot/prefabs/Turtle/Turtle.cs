@@ -6,6 +6,7 @@ public partial class Turtle : CharacterBody3D
 {
 	public const float c_seaWaterDensity = 1050; // Kg/m^3
 	public const float c_turtleDragCoefficient = 0.15f;
+	public const ulong c_backupMillisecondsDelay = 200;
 
     [Export]
     public float TurtleMassKg { get; set; } = 150;
@@ -14,9 +15,15 @@ public partial class Turtle : CharacterBody3D
     public float TurtleFrontalAreaMSq { get; set; } = 0.25f; // wild guess
 
     [Export]
-	public float ForwardMoveForceNewtons { get; set; } = 1500;
+	public float ForwardMoveForceNewtons { get; set; } = 1000;
 
-	[Export]
+    [Export]
+    public float ReverseMoveForceNewtons { get; set; } = 200;
+
+    [Export]
+    public float BrakeForceNewtons { get; set; } = 1400;
+
+    [Export]
 	public float MaxPitchDegreesPerSec { get; set; } = 50; // cache radians?
 
 	[Export]
@@ -32,6 +39,8 @@ public partial class Turtle : CharacterBody3D
 
     Label? m_speedoLabel;
 
+	ulong m_canBackupTime;
+
 	public override void _Ready()
 	{
 		m_speedoLabel = FindChild("speedo") as Label;
@@ -41,9 +50,12 @@ public partial class Turtle : CharacterBody3D
     {
 		Vector3 newRotation = Vector3.Zero;
 
+		float movementDir = Mathf.Sign(m_forwardSpeed);
+
 		turnPower.X = Input.GetActionStrength("YawLeft");
 		turnPower.X -= Input.GetActionStrength("YawRight");
-        newRotation.Y = (float)(turnPower.X * delta); // todo: should be affected by speed (like a car)
+		turnPower.X *= movementDir;
+        newRotation.Y = (float)(turnPower.X * delta);
 
 		// flip this to invert
         turnPower.Y = -Input.GetActionStrength("PitchUp");
@@ -65,10 +77,6 @@ public partial class Turtle : CharacterBody3D
 			{
                 newRotation.Z = Mathf.Lerp(newRotation.Z, m_desiredBankAngle, 0.05f);
             }
-			//newRotation.Z = Mathf.Lerp(newRotation.Z, 0, 0.1f); // slerp?
-
-			//m_currentBankAngle = Mathf.Clamp(m_currentBankAngle + Mathf.Sign(m_desiredBankAngle - m_currentBankAngle) * 0.1f, -1f, 1f);
-			//newRotation.Z = m_currentBankAngle;
         }
 
         turnPower = turnPower.Lerp(Vector3.Zero, 0.2f); // todo: use Ease
@@ -79,28 +87,26 @@ public partial class Turtle : CharacterBody3D
 		if (accelStrength > 0)
 		{
 			acceleratorForce = accelStrength * ForwardMoveForceNewtons;
-			//float forwardAccel = Acceleration.SampleBaked(accelStrength * (m_forwardSpeed / MaxForwardSpeed));
-			//acceleratorPower = accelStrength * forwardAccel;
 		}
 
-		/*float decelStrength = Input.GetActionStrength("Decelerate");
+		float decelStrength = Input.GetActionStrength("Decelerate");
 		if (decelStrength > 0)
 		{
 			// braking
-			if (acceleratorPower > 0)
+			if (m_forwardSpeed > 0)
 			{
-				acceleratorPower = Mathf.Lerp(acceleratorPower, 0, 0.1f); // todo: TEST
+				acceleratorForce = decelStrength * -BrakeForceNewtons;
+				m_canBackupTime = Time.GetTicksMsec() + c_backupMillisecondsDelay;
 			}
-			else
+			else if (Time.GetTicksMsec() >= m_canBackupTime)
 			{
-				float reverseAccel = Acceleration.SampleBaked(-acceleratorPower / MaxReverseSpeed);
-				acceleratorPower -= accelStrength * reverseAccel;
+				acceleratorForce = decelStrength * -ReverseMoveForceNewtons;
 			}
-		}*/
+		}
 
 		var forwardDir = GlobalTransform.Basis.Z;
 
-		float dragForce = 0.5f * c_seaWaterDensity * (m_forwardSpeed * m_forwardSpeed) * c_turtleDragCoefficient * TurtleFrontalAreaMSq;
+		float dragForce = 0.5f * c_seaWaterDensity * (movementDir * m_forwardSpeed * m_forwardSpeed) * c_turtleDragCoefficient * TurtleFrontalAreaMSq;
 
 		float acceleration = (acceleratorForce - dragForce) / TurtleMassKg;
         m_forwardSpeed += (float)(acceleration * delta);
