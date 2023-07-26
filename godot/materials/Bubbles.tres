@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://5nupla30v72k"]
+
+[ext_resource type="Shader" uid="uid://cw33hqeb5s413" path="res://materials/Shaders/Bubble_Node.res" id="1_2gc42"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_2gc42")
+shader_parameter/animation_speed = 0.046
+shader_parameter/smoothness = 0.1
+shader_parameter/height_multiplier = 0.5
+shader_parameter/animation_speed2 = 0.179
+shader_parameter/Mid_Color = Color(0, 0.658824, 1, 0.027451)

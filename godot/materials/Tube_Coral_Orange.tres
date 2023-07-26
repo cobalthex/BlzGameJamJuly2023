@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://djkpikc564dkq"]
+
+[ext_resource type="Texture2D" uid="uid://bf5aaaqgnjgif" path="res://prefabs/Env_Props/Tube_Coral.png" id="1_g4ahk"]
+[ext_resource type="Material" uid="uid://cr1dftdthk43m" path="res://materials/Caustics.tres" id="2_vw2of"]
+
+[resource]
+resource_name = "Tube_Coral"
+next_pass = ExtResource("2_vw2of")
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.635294, 0, 1)
+albedo_texture = ExtResource("1_g4ahk")
+roughness = 0.75
+rim = 0.5
+rim_tint = 0.0
+ao_enabled = true
+ao_light_affect = 1.0
+subsurf_scatter_strength = 0.3

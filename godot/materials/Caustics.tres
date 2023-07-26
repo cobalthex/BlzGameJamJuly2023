@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cr1dftdthk43m"]
+
+[ext_resource type="Shader" uid="uid://rjtyj0jeoqm8" path="res://materials/Shaders/Caustics.tres" id="1_8cpj2"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_8cpj2")
+shader_parameter/ColorParameter = Color(0.830917, 0.941751, 1, 1)

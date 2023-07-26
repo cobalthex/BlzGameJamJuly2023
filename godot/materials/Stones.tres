@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://dbnyqsc6aqkl0"]
+
+[ext_resource type="Texture2D" uid="uid://dttsgq7mmt6qy" path="res://materials/Textures/Stones_BaseColor.png" id="1_bs86w"]
+[ext_resource type="Material" uid="uid://cr1dftdthk43m" path="res://materials/Caustics.tres" id="2_247gd"]
+
+[resource]
+resource_name = "Stones"
+next_pass = ExtResource("2_247gd")
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_bs86w")
+roughness = 0.84
+normal_scale = 4.45
