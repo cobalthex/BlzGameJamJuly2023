@@ -32,7 +32,7 @@ _subresources={
 "materials": {
 "SeaWeed": {
 "use_external/enabled": true,
-"use_external/path": "res://materials/SeaWeed.tres"
+"use_external/path": "res://materials/Seaweed_Wind.tres"
 }
 }
 }
