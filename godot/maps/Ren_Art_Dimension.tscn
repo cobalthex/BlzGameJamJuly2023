@@ -1,0 +1,89 @@
+[gd_scene load_steps=20 format=3 uid="uid://biwp0jb46x6ht"]
+
+[ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="1_yaiek"]
+[ext_resource type="Material" uid="uid://5nupla30v72k" path="res://materials/Bubbles.tres" id="2_bygiq"]
+[ext_resource type="PackedScene" uid="uid://cqewrnvpnc734" path="res://prefabs/Env_Props/Tube_Coral_01.glb" id="3_ef17h"]
+[ext_resource type="Material" uid="uid://cr1dftdthk43m" path="res://materials/Caustics.tres" id="3_mlfjl"]
+[ext_resource type="PackedScene" uid="uid://b5avwnpa6ntdw" path="res://prefabs/Env_Props/Tube_Coral_02.glb" id="4_gv7qo"]
+[ext_resource type="Material" uid="uid://bxexrrc05croc" path="res://materials/Sands_Ren.tres" id="5_xkleb"]
+[ext_resource type="PackedScene" uid="uid://c3bytnuld7byx" path="res://prefabs/Env_Props/Rock_01.glb" id="7_a8gdg"]
+[ext_resource type="PackedScene" uid="uid://ur5b64vs2xi2" path="res://prefabs/Env_Props/Rock_02.glb" id="8_40004"]
+[ext_resource type="PackedScene" uid="uid://yna7uiet116u" path="res://prefabs/Env_Props/Rock_03.glb" id="9_tfo5u"]
+[ext_resource type="PackedScene" uid="uid://b6g6nbf10tlp2" path="res://prefabs/Env_Props/Rock_04.glb" id="10_3ho53"]
+[ext_resource type="PackedScene" uid="uid://dx8vh0r7jd5j2" path="res://prefabs/Env_Props/Rock_05.glb" id="11_ar4jk"]
+[ext_resource type="PackedScene" uid="uid://oo4lbcestic" path="res://prefabs/Env_Props/Rock_06.glb" id="12_h25h7"]
+[ext_resource type="PackedScene" uid="uid://b2yyvw5mmmhw3" path="res://prefabs/Env_Props/Rock_07.glb" id="13_w62el"]
+[ext_resource type="PackedScene" uid="uid://g24ier82cm1j" path="res://prefabs/Env_Props/Seaweed_01.glb" id="14_ojf3i"]
+[ext_resource type="PackedScene" uid="uid://cqiuv0r7el2ql" path="res://prefabs/Env_Props/Seaweed_02.glb" id="15_onc1x"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_b7h6e"]
+radial_segments = 32
+rings = 24
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j5rg5"]
+next_pass = ExtResource("3_mlfjl")
+
+[sub_resource type="BoxMesh" id="BoxMesh_mq03o"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rvffl"]
+material = ExtResource("5_xkleb")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_yaiek")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00528479, 0.177475, 0.0862541)
+material_override = ExtResource("2_bygiq")
+mesh = SubResource("SphereMesh_b7h6e")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.108051, 0.50087, -0.858752, 0, 0.863809, 0.503819, 0.994145, -0.0544384, 0.0933357, 0, 0, 0)
+light_angular_distance = 0.5
+shadow_enabled = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.76374, 0, 0, 0, 9.81469, 0, 0, 0, 10.2299, -8.3626, -0.106976, 0.00772953)
+material_override = SubResource("StandardMaterial3D_j5rg5")
+mesh = SubResource("BoxMesh_mq03o")
+skeleton = NodePath("../WorldEnvironment")
+
+[node name="Tube_Coral_01" parent="." instance=ExtResource("3_ef17h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.32361, 0, -1.74386)
+
+[node name="Tube_Coral_02" parent="." instance=ExtResource("4_gv7qo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08215, 0, -1.81046)
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(19.9835, 0, 0, 0, 4.71071, 0, 0, 0, 32.9901, 0.0151603, -0.0585041, -0.0334964)
+mesh = SubResource("PlaneMesh_rvffl")
+
+[node name="Rock_01" parent="." instance=ExtResource("7_a8gdg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2745, 0, -2.27273)
+
+[node name="Rock_02" parent="." instance=ExtResource("8_40004")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8042, 0, -2.27273)
+
+[node name="Rock_03" parent="." instance=ExtResource("9_tfo5u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5831, 0, -2.27273)
+
+[node name="Rock_04" parent="." instance=ExtResource("10_3ho53")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.3924, 0, -2.27273)
+
+[node name="Rock_05" parent="." instance=ExtResource("11_ar4jk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.9513, 0, 3.66007)
+
+[node name="Rock_06" parent="." instance=ExtResource("12_h25h7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8105, 0, 1.30687)
+
+[node name="Rock_07" parent="." instance=ExtResource("13_w62el")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1475, 0, -2.27273)
+
+[node name="Seaweed_01" parent="." instance=ExtResource("14_ojf3i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7595, -0.150599, -6.71833)
+
+[node name="Seaweed_02" parent="." instance=ExtResource("15_onc1x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7595, 0, -10.8837)
