@@ -1,6 +1,6 @@
-[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://bxexrrc05croc"]
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://b2d181l7tf055"]
 
-[ext_resource type="Material" uid="uid://cr1dftdthk43m" path="res://materials/Caustics.tres" id="1_iubb7"]
+[ext_resource type="Material" path="res://materials/Caustics.tres" id="1_iubb7"]
 
 [sub_resource type="Gradient" id="Gradient_0t7ad"]
 colors = PackedColorArray(0.856067, 0.856067, 0.856067, 1, 1, 1, 1, 1)

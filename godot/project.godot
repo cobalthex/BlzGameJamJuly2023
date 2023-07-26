@@ -75,6 +75,12 @@ RollRight={
 "events": []
 }
 
+[layer_names]
+
+3d_physics/layer_1="Player"
+3d_physics/layer_2="Passenger"
+3d_physics/layer_3="Environment"
+
 [rendering]
 
 anti_aliasing/quality/msaa_2d=1

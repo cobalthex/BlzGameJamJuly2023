@@ -1,11 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://ctugyrjbojaha"]
+[gd_scene load_steps=9 format=3 uid="uid://ctugyrjbojaha"]
 
 [ext_resource type="Material" uid="uid://cgm5iqvfhndew" path="res://materials/sand.tres" id="1_3cird"]
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_f6koo"]
 [ext_resource type="PackedScene" uid="uid://c8b4vlwq6o4a8" path="res://prefabs/Turtle/Turtle.tscn" id="2_bw6yb"]
 [ext_resource type="Theme" uid="uid://bu8wxtxm5hy22" path="res://etc/DebugText.tres" id="5_gcepk"]
+[ext_resource type="Script" path="res://prefabs/Passengers/Passenger.cs" id="5_i4cac"]
+[ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="6_qgseq"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6lros"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hv3ec"]
 
 [node name="scene" type="Node3D"]
 script = ExtResource("1_f6koo")
@@ -35,4 +39,17 @@ size = Vector3(1000, 1, 1000)
 shape = SubResource("WorldBoundaryShape3D_6lros")
 
 [node name="Turtle" parent="." instance=ExtResource("2_bw6yb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2.578)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2, 2.2, -43.3)
+collision_mask = 1
+
+[node name="TestPassenger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 1.46762, 36.9253)
+script = ExtResource("5_i4cac")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="TestPassenger"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestPassenger"]
+shape = SubResource("CylinderShape3D_hv3ec")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("6_qgseq")
