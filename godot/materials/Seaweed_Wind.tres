@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://v1iif0tguqi5"]
+
+[ext_resource type="Shader" uid="uid://b38pxi4t0d8lq" path="res://materials/Shaders/Seaweed_Wind.tres" id="1_ju6a2"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_61l3u"]
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_o567y"]
+seamless = true
+noise = SubResource("FastNoiseLite_61l3u")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ju6a2")
+shader_parameter/ColorParameter2 = Color(0.0704, 0.32, 0.20768, 1)
+shader_parameter/ColorParameter = Color(1, 1, 1, 1)
+shader_parameter/Wind_Noise = SubResource("NoiseTexture2D_o567y")
