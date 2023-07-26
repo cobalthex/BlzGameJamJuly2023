@@ -1,0 +1,39 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://dx8vh0r7jd5j2"
+path="res://.godot/imported/Rock_05.glb-440c7b8292da27678e3da433b7a4a37c.scn"
+
+[deps]
+
+source_file="res://prefabs/Env_Props/Rock_05.glb"
+dest_files=["res://.godot/imported/Rock_05.glb-440c7b8292da27678e3da433b7a4a37c.scn"]
+
+[params]
+
+nodes/root_type="Node3D"
+nodes/root_name="Scene Root"
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+import_script/path=""
+_subresources={
+"materials": {
+"Stones": {
+"use_external/enabled": true,
+"use_external/path": "res://materials/Stones.tres"
+}
+}
+}
+gltf/embedded_image_handling=1
