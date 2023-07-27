@@ -1,10 +1,11 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class GameController : Node
 {
-	private List<Passenger> availablePassengers = new List<Passenger>();
+	public Passenger[] AvailablePassengers { get; private set; } = Array.Empty<Passenger>();
 	private Turtle turtleInstance;
 	private Timer gameTimer;
 	
@@ -43,6 +44,8 @@ public partial class GameController : Node
 				turtleInstance.Transport.TransportPassengerDelivered += PassengerDelivered;
 			}
 		}
+
+		// Spawn initial Passengers in the world
 	}
 
 	private void EndGame()
@@ -63,11 +66,15 @@ public partial class GameController : Node
 		if (full)
 		{
 			GD.Print("Turtle is full");
-			// remove available passengers from world
+			return;
 		} else
 		{
 			GD.Print("We can get some more passengers");
-			// add some passengers to pick up
+			// if there are less than 4 passenger in availablePassengers, spawn some more in the world
+			while (AvailablePassengers.Length > Globals.c_maxPassengers)
+			{
+				AvailablePassengers.Append(new Passenger());
+			}
 		}
 	}
 }
