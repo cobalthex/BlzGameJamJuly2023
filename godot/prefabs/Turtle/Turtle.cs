@@ -114,7 +114,6 @@ public partial class Turtle : CharacterBody3D
 		var forwardDir = GlobalTransform.Basis.Z;
 
 		float dragForce = 0.5f * c_seaWaterDensity * (movementDir * m_forwardSpeed * m_forwardSpeed) * c_turtleDragCoefficient * TurtleFrontalAreaMSq;
-  
 		float acceleration = (acceleratorForce - dragForce) / TurtleMassKg;
 		m_forwardSpeed += (float)(acceleration * deltaTime);
 
