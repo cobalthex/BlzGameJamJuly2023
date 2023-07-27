@@ -15,14 +15,6 @@ public partial class GameController : Node
 	{
 		// Increment score every second
 		Score += 1f;
-
-		if (!turtleInstance.Transport.IsFull())
-		{
-			// Make sure there are available passengers
-				
-		} else {
-			// No available passengers
-		}
 	}
 	
 	public override void _Ready()
@@ -47,6 +39,7 @@ public partial class GameController : Node
 			{
 				GD.Print("Turtle Set");
 				turtleInstance = turtle;
+				turtleInstance.Transport.IsFull += ManageAvailablePassengers;
 			}
 		}
 	}
@@ -62,5 +55,18 @@ public partial class GameController : Node
 	private void PassengerDelivered()
 	{
 		gameTimer.WaitTime += Globals.c_baseGameDuration;
+	}
+
+	private void ManageAvailablePassengers(bool full)
+	{
+		if (full)
+		{
+			GD.Print("Turtle is full");
+			// remove available passengers from world
+		} else
+		{
+			GD.Print("We can get some more passengers");
+			// add some passengers to pick up
+		}
 	}
 }

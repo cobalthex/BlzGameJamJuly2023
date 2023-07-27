@@ -5,16 +5,16 @@ using System.Diagnostics;
 
 public partial class Passenger : Area3D
 {
-    public Passenger()
-    {
+	public Passenger()
+	{
 	BodyEntered += Passenger_BodyEntered;
-    }
+	}
 
-    private void Passenger_BodyEntered(Node3D body)
-    {
+	private void Passenger_BodyEntered(Node3D body)
+	{
 	if (body is Turtle t)
 	{
-	    t.Transport.TryAddPassenger(this);
+		t.Transport.TryAddPassenger(this);
 	}
-    }
+	}
 }

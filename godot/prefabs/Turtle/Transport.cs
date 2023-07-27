@@ -21,6 +21,9 @@ public partial class Transport : Node3D
 
 	public Seat[] Seats { get; private set; } = Array.Empty<Seat>();
 
+	[Signal]
+	public delegate void IsFullEventHandler(bool full);
+
 	public override void _Ready()
 	{
 		Seats = FindChildren(c_seatNamePattern, nameof(Node3D), false)
@@ -63,17 +66,20 @@ public partial class Transport : Node3D
 		return false;
 	}
 	
-	public bool IsFull()
+	// Emit a signal indicating if the Transport has room for more passengers, or not
+	public void CheckIfFull()
 	{
 		for (int i = 0; i < Seats.Length; ++i)
 		{
 			if (Seats[i].passenger == null)
 			{
-				return false;
+				EmitSignal(SignalName.IsFull, false);
+				return;
 			}
 		}
-		
-		return true;
+
+		EmitSignal(SignalName.IsFull, true);
+		return;
 	}
 
 	public override void _Process(double delta)
@@ -91,5 +97,7 @@ public partial class Transport : Node3D
 			}
 			debugText.Text = sb.ToString();
 		}
+
+		CheckIfFull();
 	}
 }
