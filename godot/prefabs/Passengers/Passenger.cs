@@ -24,7 +24,7 @@ public partial class Passenger : Area3D
 		}
 	}
 
-	// Call when Passenger delivered to emit delivery signal and update scoring
+	// Call when Passenger is delivered to emit delivery signal and update scoring
 	public void SetDelivered(bool value)
 	{
 		if (Delivered != value)
