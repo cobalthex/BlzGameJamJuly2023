@@ -8,22 +8,22 @@ public partial class Turtle : CharacterBody3D
 	public const float c_turtleDragCoefficient = 0.15f;
 	public const ulong c_backupMillisecondsDelay = 200;
 
-    [Export]
-    public float TurtleMassKg { get; set; } = 150;
+	[Export]
+	public float TurtleMassKg { get; set; } = 150;
 
-    [Export]
-    public float TurtleFrontalAreaMSq { get; set; } = 0.25f; // wild guess
+	[Export]
+	public float TurtleFrontalAreaMSq { get; set; } = 0.25f; // wild guess
 
-    [Export]
+	[Export]
 	public float ForwardMoveForceNewtons { get; set; } = 1000;
 
-    [Export]
-    public float ReverseMoveForceNewtons { get; set; } = 200;
+	[Export]
+	public float ReverseMoveForceNewtons { get; set; } = 200;
 
-    [Export]
-    public float BrakeForceNewtons { get; set; } = 1400;
+	[Export]
+	public float BrakeForceNewtons { get; set; } = 1400;
 
-    [Export]
+	[Export]
 	public float MaxPitchDegreesPerSec { get; set; } = 50; // cache radians?
 
 	[Export]
@@ -32,122 +32,122 @@ public partial class Turtle : CharacterBody3D
 	[Export]
 	public bool InvertPitchControls { get; set; } = false;
 
-    KinematicCollision3D m_collision = new();
+	KinematicCollision3D m_collision = new();
 	Vector3 turnPower = Vector3.Zero; // yaw pitch roll
 	float m_desiredBankAngle = 0;
 	float m_currentBankAngle = 0;
-    float m_forwardSpeed = 0;
-    ulong m_canBackupTime;
+	float m_forwardSpeed = 0;
+	ulong m_canBackupTime;
 
-    Label? m_speedoLabel;
+	Label? m_speedoLabel;
 
-    // child elements
-    public Transport Transport { get; private set; }
+	// child elements
+	public Transport Transport { get; private set; }
 
 	public override void _Ready()
 	{
 		m_speedoLabel = GetNode<Label>("speedo");
-        Transport = GetNode<Transport>("model/transport");
+		Transport = GetNode<Transport>("model/transport");
 	}
 
-    // TODO: fix controller movement
+	// TODO: fix controller movement
 	void HandleMovement(double deltaTime)
 	{
-        Vector3 newRotation = Vector3.Zero;
+		Vector3 newRotation = Vector3.Zero;
 
-        float movementDir = Mathf.Sign(m_forwardSpeed);
+		float movementDir = Mathf.Sign(m_forwardSpeed);
 
-        turnPower.X = Input.GetActionStrength("YawLeft");
-        turnPower.X -= Input.GetActionStrength("YawRight");
-        turnPower.X *= movementDir;
-        newRotation.Y = (float)(turnPower.X * deltaTime);
+		turnPower.X = Input.GetActionStrength("YawLeft");
+		turnPower.X -= Input.GetActionStrength("YawRight");
+		turnPower.X *= movementDir;
+		newRotation.Y = (float)(turnPower.X * deltaTime);
 
-        // TODO: up/down don't work correctly when tilted
+		// TODO: up/down don't work correctly when tilted
 
-        // flip this to invert
-        turnPower.Y = -Input.GetActionStrength("PitchUp");
-        turnPower.Y += Input.GetActionStrength("PitchDown");
-        newRotation.X = (float)(turnPower.Y * (InvertPitchControls ? -1 : 1) * deltaTime);
+		// flip this to invert
+		turnPower.Y = -Input.GetActionStrength("PitchUp");
+		turnPower.Y += Input.GetActionStrength("PitchDown");
+		newRotation.X = (float)(turnPower.Y * (InvertPitchControls ? -1 : 1) * deltaTime);
 
-        newRotation += Rotation;
-        // make the turtle lean into a turn based on their speed
-        {
-            float relSpeed = m_forwardSpeed / 8; // todo, use proper bank angle formula
-            float turnSign = Mathf.Sign(Mathf.Floor(turnPower.X * 100)); // round to .01 to add deadzone, todo: scale by dot product of inv Vector.Right
-            m_desiredBankAngle = -turnSign * Mathf.Lerp(0, Mathf.Pi * 0.5f, Mathf.Min(1, turnSign * turnPower.X * relSpeed));
+		newRotation += Rotation;
+		// make the turtle lean into a turn based on their speed
+		{
+			float relSpeed = m_forwardSpeed / 8; // todo, use proper bank angle formula
+			float turnSign = Mathf.Sign(Mathf.Floor(turnPower.X * 100)); // round to .01 to add deadzone, todo: scale by dot product of inv Vector.Right
+			m_desiredBankAngle = -turnSign * Mathf.Lerp(0, Mathf.Pi * 0.5f, Mathf.Min(1, turnSign * turnPower.X * relSpeed));
 
-            if (turnSign != 0)
-            {
-                newRotation.Z = Mathf.Lerp(newRotation.Z, m_desiredBankAngle, 0.2f); // todo: do this properly, not with lerp
-            }
-            else
-            {
-                newRotation.Z = Mathf.Lerp(newRotation.Z, m_desiredBankAngle, 0.05f);
-            }
-        }
+			if (turnSign != 0)
+			{
+				newRotation.Z = Mathf.Lerp(newRotation.Z, m_desiredBankAngle, 0.2f); // todo: do this properly, not with lerp
+			}
+			else
+			{
+				newRotation.Z = Mathf.Lerp(newRotation.Z, m_desiredBankAngle, 0.05f);
+			}
+		}
 
-        turnPower = turnPower.Lerp(Vector3.Zero, 0.2f); // todo: use Ease
-        Rotation = newRotation;
+		turnPower = turnPower.Lerp(Vector3.Zero, 0.2f); // todo: use Ease
+		Rotation = newRotation;
 
-        float acceleratorForce = 0;
-        float accelStrength = Input.GetActionStrength("Accelerate");
-        if (accelStrength > 0)
-        {
-            acceleratorForce = accelStrength * ForwardMoveForceNewtons;
-        }
+		float acceleratorForce = 0;
+		float accelStrength = Input.GetActionStrength("Accelerate");
+		if (accelStrength > 0)
+		{
+			acceleratorForce = accelStrength * ForwardMoveForceNewtons;
+		}
 
-        float decelStrength = Input.GetActionStrength("Decelerate");
-        if (decelStrength > 0)
-        {
-            // braking
-            if (m_forwardSpeed > 0)
-            {
-                acceleratorForce = decelStrength * -BrakeForceNewtons;
-                m_canBackupTime = Time.GetTicksMsec() + c_backupMillisecondsDelay;
-            }
-            else if (Time.GetTicksMsec() >= m_canBackupTime)
-            {
-                acceleratorForce = decelStrength * -ReverseMoveForceNewtons;
-            }
-        }
+		float decelStrength = Input.GetActionStrength("Decelerate");
+		if (decelStrength > 0)
+		{
+			// braking
+			if (m_forwardSpeed > 0)
+			{
+				acceleratorForce = decelStrength * -BrakeForceNewtons;
+				m_canBackupTime = Time.GetTicksMsec() + c_backupMillisecondsDelay;
+			}
+			else if (Time.GetTicksMsec() >= m_canBackupTime)
+			{
+				acceleratorForce = decelStrength * -ReverseMoveForceNewtons;
+			}
+		}
 
-        var forwardDir = GlobalTransform.Basis.Z;
+		var forwardDir = GlobalTransform.Basis.Z;
 
-        float dragForce = 0.5f * c_seaWaterDensity * (movementDir * m_forwardSpeed * m_forwardSpeed) * c_turtleDragCoefficient * TurtleFrontalAreaMSq;
+		float dragForce = 0.5f * c_seaWaterDensity * (movementDir * m_forwardSpeed * m_forwardSpeed) * c_turtleDragCoefficient * TurtleFrontalAreaMSq;
 
-        float acceleration = (acceleratorForce - dragForce) / TurtleMassKg;
-        m_forwardSpeed += (float)(acceleration * deltaTime);
+		float acceleration = (acceleratorForce - dragForce) / TurtleMassKg;
+		m_forwardSpeed += (float)(acceleration * deltaTime);
 
-        // movement always follows forward direction
-        // todo: enumerate all collisions
-        var motion = m_forwardSpeed * forwardDir * Globals.c_unitsToMeters * (float)deltaTime;
-        if (TestMove(GlobalTransform, motion, m_collision))
-        {
-            GlobalPosition += m_collision.GetTravel();
-            // todo: slide
-            var plane = new Plane(m_collision.GetNormal(), m_collision.GetPosition());
-            GlobalPosition += plane.Project((0.1f * forwardDir).Lerp(motion, 0.8f)); // use friction value
-        }
-        else
-        {
-            GlobalPosition += motion;
-        }
+		// movement always follows forward direction
+		// todo: enumerate all collisions
+		var motion = m_forwardSpeed * forwardDir * Globals.c_unitsToMeters * (float)deltaTime;
+		if (TestMove(GlobalTransform, motion, m_collision))
+		{
+			GlobalPosition += m_collision.GetTravel();
+			// todo: slide
+			var plane = new Plane(m_collision.GetNormal(), m_collision.GetPosition());
+			GlobalPosition += plane.Project((0.1f * forwardDir).Lerp(motion, 0.8f)); // use friction value
+		}
+		else
+		{
+			GlobalPosition += motion;
+		}
 
-        // TODO: ocean currents
+		// TODO: ocean currents
 
-        if (m_speedoLabel != null)
-        {
-            m_speedoLabel.Text =
-                $"Euler: {RotationDegrees.ToString("N1")}rad" +
-                $"\nForward: {forwardDir.ToString("N2")}" +
-                $"\nacceleration: {acceleration:N2}m/s^2" +
-                $"\nforward speed: {m_forwardSpeed:N2}m/s";
-        }
-    }
+		if (m_speedoLabel != null)
+		{
+			m_speedoLabel.Text =
+				$"Euler: {RotationDegrees.ToString("N1")}rad" +
+				$"\nForward: {forwardDir.ToString("N2")}" +
+				$"\nacceleration: {acceleration:N2}m/s^2" +
+				$"\nforward speed: {m_forwardSpeed:N2}m/s";
+		}
+	}
 
-    // use _PhysicsProcess?
-    public override void _Process(double deltaTime)
-    {
-        HandleMovement(deltaTime);
-    }
+	// use _PhysicsProcess?
+	public override void _Process(double deltaTime)
+	{
+		HandleMovement(deltaTime);
+	}
 }

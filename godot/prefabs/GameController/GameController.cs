@@ -4,41 +4,51 @@ using System.Collections.Generic;
 
 public partial class GameController : Node
 {
-	private const double COUNTDOWN_DURATION = 60f; // The countdown duration in seconds
-	private double timeRemaining = COUNTDOWN_DURATION;
 	private List<Passenger> availablePassengers = new List<Passenger>();
 	private Turtle turtleInstance;
+	private Timer gameTimer;
+	
+	[Export]
+	public float Score { get; private set; } = 0;
 
 	public override void _Process(double delta)
 	{
-		timeRemaining -= delta;
+		// Increment score every second
+		Score += 1f;
 
-		if (timeRemaining <= 0)
+		if (!turtleInstance.Transport.IsFull())
 		{
-			EndGame();
-		}
-		
-		// Get the Turtle instance when it's spawned or check if it's full
-		if (turtleInstance != null) {
-			if (!turtleInstance.Transport.IsFull())
-			{
-				// Make sure there are available passengers
+			// Make sure there are available passengers
 				
-			} else {
-				// No available passengers
-			}
 		} else {
-			var turtle = GetParent().GetNodeOrNull<Turtle>("Turtle");
-			if (turtle != null)
-			{
-				turtleInstance = turtle;
-			}
+			// No available passengers
 		}
 	}
 	
 	public override void _Ready()
 	{
 		GD.Print("Starting");
+		
+		// Set Timer
+		if (gameTimer == null ) {
+			var timer = GetParent().GetNodeOrNull<GameTimer>("GameTimer");
+			if (timer != null)
+			{
+				gameTimer = timer;
+				gameTimer.Timeout += EndGame;
+			}
+		}
+
+		// Set Turtle
+		if (turtleInstance == null)
+		{
+			var turtle = GetParent().GetNodeOrNull<Turtle>("Turtle");
+			if (turtle != null)
+			{
+				GD.Print("Turtle Set");
+				turtleInstance = turtle;
+			}
+		}
 	}
 
 	private void EndGame()
@@ -46,9 +56,11 @@ public partial class GameController : Node
 		GD.Print("Game Over");
 		GetTree().Quit();
 	}
-	
-	public void AddTime(double additionalTime)
+
+	// Add 60" to the game time when a passenger is delivered
+	// Should be called when a signal is emitted from any Passenger indicating they were delivered
+	private void PassengerDelivered()
 	{
-		timeRemaining += additionalTime;
+		gameTimer.WaitTime += Globals.c_baseGameDuration;
 	}
 }
