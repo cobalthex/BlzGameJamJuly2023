@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cqewrnvpnc734" path="res://prefabs/Env_Props/Tube_Coral_01.glb" id="3_ef17h"]
 [ext_resource type="Material" uid="uid://cr1dftdthk43m" path="res://materials/Caustics.tres" id="3_mlfjl"]
 [ext_resource type="PackedScene" uid="uid://b5avwnpa6ntdw" path="res://prefabs/Env_Props/Tube_Coral_02.glb" id="4_gv7qo"]
-[ext_resource type="Material" uid="uid://bxexrrc05croc" path="res://materials/Sands_Ren.tres" id="5_xkleb"]
+[ext_resource type="Material" uid="uid://b2d181l7tf055" path="res://materials/Sands_Ren.tres" id="5_xkleb"]
 [ext_resource type="PackedScene" uid="uid://c3bytnuld7byx" path="res://prefabs/Env_Props/Rock_01.glb" id="7_a8gdg"]
 [ext_resource type="PackedScene" uid="uid://ur5b64vs2xi2" path="res://prefabs/Env_Props/Rock_02.glb" id="8_40004"]
 [ext_resource type="PackedScene" uid="uid://yna7uiet116u" path="res://prefabs/Env_Props/Rock_03.glb" id="9_tfo5u"]
