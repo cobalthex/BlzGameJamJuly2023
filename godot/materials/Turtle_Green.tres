@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://culhpmtbik4yn"]
+
+[ext_resource type="Material" uid="uid://cr1dftdthk43m" path="res://materials/Caustics.tres" id="1_mhbla"]
+
+[resource]
+resource_name = "Turtle_Green"
+next_pass = ExtResource("1_mhbla")
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.249201, 0.906332, 0.553357, 1)
+roughness = 0.5

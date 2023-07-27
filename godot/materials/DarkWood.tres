@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bcf26fclu54qx"]
+
+[ext_resource type="Material" uid="uid://cr1dftdthk43m" path="res://materials/Caustics.tres" id="1_o11fs"]
+
+[resource]
+resource_name = "DarkWood"
+next_pass = ExtResource("1_o11fs")
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.379989, 0.279027, 0.249725, 0)
+roughness = 0.690035
