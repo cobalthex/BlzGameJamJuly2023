@@ -40,6 +40,7 @@ public partial class GameController : Node
 				GD.Print("Turtle Set");
 				turtleInstance = turtle;
 				turtleInstance.Transport.IsFull += ManageAvailablePassengers;
+				turtleInstance.Transport.TransportPassengerDelivered += PassengerDelivered;
 			}
 		}
 	}
@@ -51,7 +52,7 @@ public partial class GameController : Node
 	}
 
 	// Add 60" to the game time when a passenger is delivered
-	// Should be called when a signal is emitted from any Passenger indicating they were delivered
+	// Should be called when a signal is emitted from Turtle.Transport indicating a Passenger was delivered
 	private void PassengerDelivered()
 	{
 		gameTimer.WaitTime += Globals.c_baseGameDuration;

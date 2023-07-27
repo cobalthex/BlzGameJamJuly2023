@@ -24,6 +24,9 @@ public partial class Transport : Node3D
 	[Signal]
 	public delegate void IsFullEventHandler(bool full);
 
+	[Signal]
+	public delegate void TransportPassengerDeliveredEventHandler();
+
 	public override void _Ready()
 	{
 		Seats = FindChildren(c_seatNamePattern, nameof(Node3D), false)
@@ -57,6 +60,9 @@ public partial class Transport : Node3D
 			Seats[i].node.AddChild(passenger);
 			passenger.Position = Seats[i].node.Transform.Origin; // todo: this needs rotation+scale
 
+			// connect to PassengerDelivered signal
+			passenger.PassengerDelivered += TransportPassengerWasDelivered;
+
 			// todo: passenger needs to swim to desird location (passenger should do that automatically?)
 
 			GD.PrintS("Picked up passenger", passenger);
@@ -79,6 +85,12 @@ public partial class Transport : Node3D
 		}
 
 		EmitSignal(SignalName.IsFull, true);
+		return;
+	}
+
+	public void TransportPassengerWasDelivered()
+	{
+		EmitSignal(SignalName.TransportPassengerDelivered);
 		return;
 	}
 

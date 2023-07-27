@@ -5,16 +5,35 @@ using System.Diagnostics;
 
 public partial class Passenger : Area3D
 {
+	[Export]
+	public bool Delivered { get; set; } = false;
+
+	[Signal]
+	public delegate void PassengerDeliveredEventHandler();
+
 	public Passenger()
 	{
-	BodyEntered += Passenger_BodyEntered;
+		BodyEntered += Passenger_BodyEntered;
 	}
 
 	private void Passenger_BodyEntered(Node3D body)
 	{
-	if (body is Turtle t)
-	{
-		t.Transport.TryAddPassenger(this);
+		if (body is Turtle t)
+		{
+			t.Transport.TryAddPassenger(this);
+		}
 	}
+
+	// Call when Passenger delivered to emit delivery signal and update scoring
+	public void SetDelivered(bool value)
+	{
+		if (Delivered != value)
+		{
+			Delivered = value;
+			if (Delivered)
+			{
+				EmitSignal(nameof(PassengerDelivered));
+			}
+		}
 	}
 }
