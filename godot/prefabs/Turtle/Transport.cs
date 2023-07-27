@@ -26,11 +26,11 @@ public partial class Transport : Node3D
 		Seats = FindChildren(c_seatNamePattern, nameof(Node3D), false)
 			.Select(s => new Seat { node = ((Node3D)s), passenger = null })
 			.ToArray();
-        // sort seats around a circle?
+		// sort seats around a circle?
 
-        // TODO: do ^ in child_entered_tree?
+		// TODO: do ^ in child_entered_tree?
 
-        debugText = FindChild("debug") as Label;
+		debugText = FindChild("debug") as Label;
 	}
 
 	/// <summary>
@@ -62,9 +62,22 @@ public partial class Transport : Node3D
 
 		return false;
 	}
+	
+	public bool IsFull()
+	{
+		for (int i = 0; i < Seats.Length; ++i)
+		{
+			if (Seats[i].passenger == null)
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
 
-    public override void _Process(double delta)
-    {
+	public override void _Process(double delta)
+	{
 		if (debugText != null)
 		{
 			StringBuilder sb = new();
@@ -78,5 +91,5 @@ public partial class Transport : Node3D
 			}
 			debugText.Text = sb.ToString();
 		}
-    }
+	}
 }
