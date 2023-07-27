@@ -83,7 +83,6 @@ public partial class Transport : Node3D
 				return;
 			}
 		}
-
 		EmitSignal(SignalName.IsFull, true);
 		return;
 	}
