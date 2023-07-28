@@ -6,7 +6,7 @@ using System.Diagnostics;
 public partial class Passenger : Area3D
 {
 	[Export]
-	public bool IsDelivered { get; set; } = false;
+	public bool WasDelivered { get; set; } = false;
 
 	[Signal]
 	public delegate void PassengerDeliveredEventHandler();
@@ -27,10 +27,10 @@ public partial class Passenger : Area3D
 	// Call when Passenger delivered to emit delivery signal and update scoring
 	public void SetDelivered(bool value)
 	{
-		if (IsDelivered != value)
+		if (WasDelivered != value)
 		{
-			IsDelivered = value;
-			if (IsDelivered)
+			WasDelivered = value;
+			if (WasDelivered)
 			{
 				EmitSignal(nameof(PassengerDelivered));
 			}
