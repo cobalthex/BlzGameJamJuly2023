@@ -9,107 +9,107 @@ using System.Text;
 
 public partial class Transport : Node3D
 {
-    public const string c_seatNamePattern = "Seat-*";
+	public const string c_seatNamePattern = "Seat-*";
 
-    Label? debugText;
+	Label? debugText;
 
-    public struct Seat
-    {
-        public Node3D node;
-        public Passenger? passenger;
-    }
+	public struct Seat
+	{
+		public Node3D node;
+		public Passenger? passenger;
+	}
 
-    public Seat[] Seats { get; private set; } = Array.Empty<Seat>();
+	public Seat[] Seats { get; private set; } = Array.Empty<Seat>();
 
-    [Signal]
-    public delegate void IsFullEventHandler(bool full);
+	[Signal]
+	public delegate void IsFullEventHandler(bool full);
 
-    [Signal]
-    public delegate void TransportPassengerDeliveredEventHandler();
+	[Signal]
+	public delegate void TransportPassengerDeliveredEventHandler();
 
-    public override void _Ready()
-    {
-        Seats = FindChildren(c_seatNamePattern, nameof(Node3D), false)
-            .Select(s => new Seat { node = ((Node3D)s), passenger = null })
-            .ToArray();
-        // sort seats around a circle?
+	public override void _Ready()
+	{
+		Seats = FindChildren(c_seatNamePattern, nameof(Node3D), false)
+			.Select(s => new Seat { node = ((Node3D)s), passenger = null })
+			.ToArray();
+		// sort seats around a circle?
 
-        // TODO: do ^ in child_entered_tree?
+		// TODO: do ^ in child_entered_tree?
 
-        debugText = FindChild("debug") as Label;
-    }
+		debugText = FindChild("debug") as Label;
+	}
 
-    /// <summary>
-    /// Try and add a passenger to the transport
-    /// </summary>
-    /// <returns>True if the passenger was added, false if not (no free seats)</returns>
-    /// <remarks>This transport will parent the passenger if added, and handle movement</remarks>
-    public bool TryAddPassenger(Passenger passenger)
-    {
-        // TODO: find the closest seat
-        for (int i = 0; i < Seats.Length; ++i)
-        {
-            if (Seats[i].passenger != null)
-            {
-                continue;
-            }
+	/// <summary>
+	/// Try and add a passenger to the transport
+	/// </summary>
+	/// <returns>True if the passenger was added, false if not (no free seats)</returns>
+	/// <remarks>This transport will parent the passenger if added, and handle movement</remarks>
+	public bool TryAddPassenger(Passenger passenger)
+	{
+		// TODO: find the closest seat
+		for (int i = 0; i < Seats.Length; ++i)
+		{
+			if (Seats[i].passenger != null)
+			{
+				continue;
+			}
 
-            Seats[i].passenger = passenger;
-            var relTransform = passenger.Transform;
-            passenger.GetParent()?.RemoveChild(passenger);
-            Seats[i].node.AddChild(passenger);
-            passenger.Position = Seats[i].node.Transform.Origin; // todo: this needs rotation+scale
+			Seats[i].passenger = passenger;
+			var relTransform = passenger.Transform;
+			passenger.GetParent()?.RemoveChild(passenger);
+			Seats[i].node.AddChild(passenger);
+			passenger.Position = Seats[i].node.Transform.Origin; // todo: this needs rotation+scale
 
-            // connect to PassengerDelivered signal
-            passenger.PassengerDelivered += TransportPassengerWasDelivered;
+			// connect to PassengerDelivered signal
+			passenger.PassengerDelivered += TransportPassengerWasDelivered;
 
-            // todo: passenger needs to swim to desird location (passenger should do that automatically?)
+			// todo: passenger needs to swim to desird location (passenger should do that automatically?)
 
-            GD.PrintS("Picked up passenger", passenger);
-            return true;
-        }
+			GD.PrintS("Picked up passenger", passenger);
+			return true;
+		}
+		CheckIfFull();
 
-        return false;
-    }
-    
-    // Emit a signal indicating if the Transport has room for more passengers, or not
-    public void CheckIfFull()
-    {
-        for (int i = 0; i < Seats.Length; ++i)
-        {
-            if (Seats[i].passenger == null)
-            {
-                EmitSignal(SignalName.IsFull, false);
-                return;
-            }
-        }
+		return false;
+	}
+	
+	// Emit a signal indicating if the Transport has room for more passengers, or not
+	public void CheckIfFull()
+	{
+		for (int i = 0; i < Seats.Length; ++i)
+		{
+			if (Seats[i].passenger == null)
+			{
+				EmitSignal(SignalName.IsFull, false);
+				return;
+			}
+		}
 
-        EmitSignal(SignalName.IsFull, true);
-        return;
-    }
+		EmitSignal(SignalName.IsFull, true);
+		return;
+	}
 
-    public void TransportPassengerWasDelivered()
-    {
+	public void TransportPassengerWasDelivered()
+	{
         EmitSignal(SignalName.TransportPassengerDelivered);
-        return;
-    }
-
-    public override void _Process(double delta)
-    {
-        if (debugText != null)
-        {
-            StringBuilder sb = new();
-            for (int i = 0; i < Seats.Length; ++i)
-            {
-                sb.Append(i);
-                sb.Append(": ");
-                sb.Append(Seats[i].node.Name);
-                sb.Append(' ');
-                sb.AppendLine(Seats[i].passenger?.Name ?? "(none)");
-            }
-            debugText.Text = sb.ToString();
-        }
-
         CheckIfFull();
-    }
+        return;
+	}
+
+	public override void _Process(double delta)
+	{
+		if (debugText != null)
+		{
+			StringBuilder sb = new();
+			for (int i = 0; i < Seats.Length; ++i)
+			{
+				sb.Append(i);
+				sb.Append(": ");
+				sb.Append(Seats[i].node.Name);
+				sb.Append(' ');
+				sb.AppendLine(Seats[i].passenger?.Name ?? "(none)");
+			}
+			debugText.Text = sb.ToString();
+		}
+	}
 }
