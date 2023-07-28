@@ -22,10 +22,10 @@ public partial class Transport : Node3D
 	public Seat[] Seats { get; private set; } = Array.Empty<Seat>();
 
 	[Signal]
-	public delegate void IsFullEventHandler(bool full);
+	public delegate void PassengerAddedEventHandler();
 
 	[Signal]
-	public delegate void TransportPassengerDeliveredEventHandler();
+	public delegate void PassengerDeliveredEventHandler();
 
 	public override void _Ready()
 	{
@@ -68,32 +68,31 @@ public partial class Transport : Node3D
 			GD.PrintS("Picked up passenger", passenger);
 			return true;
 		}
-		CheckIfFull();
+		EmitSignal(SignalName.PassengerAdded);
 
 		return false;
 	}
 	
 	// Emit a signal indicating if the Transport has room for more passengers, or not
-	public void CheckIfFull()
-	{
-		for (int i = 0; i < Seats.Length; ++i)
-		{
-			if (Seats[i].passenger == null)
-			{
-				EmitSignal(SignalName.IsFull, false);
-				return;
-			}
-		}
+	//public void CheckIfFull()
+	//{
+	//	for (int i = 0; i < Seats.Length; ++i)
+	//	{
+	//		if (Seats[i].passenger == null)
+	//		{
+	//			EmitSignal(SignalName., false);
+	//			return;
+	//		}
+	//	}
 
-		EmitSignal(SignalName.IsFull, true);
-		return;
-	}
+	//	EmitSignal(SignalName.IsFull, true);
+	//	return;
+	//}
 
 	public void TransportPassengerWasDelivered()
 	{
-        EmitSignal(SignalName.TransportPassengerDelivered);
-        CheckIfFull();
-        return;
+		EmitSignal(SignalName.PassengerDelivered);
+		return;
 	}
 
 	public override void _Process(double delta)
