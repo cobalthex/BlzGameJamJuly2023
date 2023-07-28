@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctugyrjbojaha"]
+[gd_scene load_steps=11 format=3 uid="uid://ctugyrjbojaha"]
 
 [ext_resource type="Material" uid="uid://cgm5iqvfhndew" path="res://materials/sand.tres" id="1_3cird"]
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_f6koo"]
@@ -6,6 +6,8 @@
 [ext_resource type="Theme" uid="uid://bu8wxtxm5hy22" path="res://etc/DebugText.tres" id="5_gcepk"]
 [ext_resource type="Script" path="res://prefabs/Passengers/Passenger.cs" id="5_i4cac"]
 [ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="6_qgseq"]
+[ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="7_gybuw"]
+[ext_resource type="Script" path="res://prefabs/GameTimer/GameTimer.cs" id="8_n8uio"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6lros"]
 
@@ -53,3 +55,9 @@ shape = SubResource("CylinderShape3D_hv3ec")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("6_qgseq")
+
+[node name="GameController" type="Node" parent="."]
+script = ExtResource("7_gybuw")
+
+[node name="GameTimer" type="Timer" parent="."]
+script = ExtResource("8_n8uio")
