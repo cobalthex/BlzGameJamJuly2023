@@ -21,16 +21,22 @@ public partial class Transport : Node3D
 
 	public Seat[] Seats { get; private set; } = Array.Empty<Seat>();
 
+	[Signal]
+	public delegate void PassengerAddedEventHandler();
+
+	[Signal]
+	public delegate void PassengerDeliveredEventHandler();
+
 	public override void _Ready()
 	{
 		Seats = FindChildren(c_seatNamePattern, nameof(Node3D), false)
 			.Select(s => new Seat { node = ((Node3D)s), passenger = null })
 			.ToArray();
-        // sort seats around a circle?
+		// sort seats around a circle?
 
-        // TODO: do ^ in child_entered_tree?
+		// TODO: do ^ in child_entered_tree?
 
-        debugText = FindChild("debug") as Label;
+		debugText = FindChild("debug") as Label;
 	}
 
 	/// <summary>
@@ -54,17 +60,43 @@ public partial class Transport : Node3D
 			Seats[i].node.AddChild(passenger);
 			passenger.Position = Seats[i].node.Transform.Origin; // todo: this needs rotation+scale
 
+			// connect to PassengerDelivered signal
+			passenger.PassengerDelivered += TransportPassengerWasDelivered;
+
 			// todo: passenger needs to swim to desird location (passenger should do that automatically?)
 
 			GD.PrintS("Picked up passenger", passenger);
 			return true;
 		}
+		EmitSignal(SignalName.PassengerAdded);
 
 		return false;
 	}
+	
+	// Emit a signal indicating if the Transport has room for more passengers, or not
+	//public void CheckIfFull()
+	//{
+	//	for (int i = 0; i < Seats.Length; ++i)
+	//	{
+	//		if (Seats[i].passenger == null)
+	//		{
+	//			EmitSignal(SignalName., false);
+	//			return;
+	//		}
+	//	}
 
-    public override void _Process(double delta)
-    {
+	//	EmitSignal(SignalName.IsFull, true);
+	//	return;
+	//}
+
+	public void TransportPassengerWasDelivered()
+	{
+		EmitSignal(SignalName.PassengerDelivered);
+		return;
+	}
+
+	public override void _Process(double delta)
+	{
 		if (debugText != null)
 		{
 			StringBuilder sb = new();
@@ -78,5 +110,5 @@ public partial class Transport : Node3D
 			}
 			debugText.Text = sb.ToString();
 		}
-    }
+	}
 }
