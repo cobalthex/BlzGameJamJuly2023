@@ -6,7 +6,7 @@ public partial class Turtle : CharacterBody3D
 {
 	public const float c_seaWaterDensity = 1050; // Kg/m^3
 	public const float c_turtleDragCoefficient = 0.15f;
-	public const ulong c_backupMillisecondsDelay = 200;
+	public const ulong c_backupMillisecondsDelay = 300;
 
 	[Export]
 	public float TurtleMassKg { get; set; } = 150;
@@ -21,23 +21,26 @@ public partial class Turtle : CharacterBody3D
 	public float ReverseMoveForceNewtons { get; set; } = 200;
 
 	[Export]
-	public float BrakeForceNewtons { get; set; } = 1400;
+	public float BrakeForceNewtons { get; set; } = 1000;
+
+    [Export]
+    public float MaxYawDegreesPerSec { get; set; } = 50; // cache radians?
+
+    [Export]
+	public float MaxPitchDegreesPerSec { get; set; } = 60; // cache radians?
 
 	[Export]
-	public float MaxPitchDegreesPerSec { get; set; } = 50; // cache radians?
+	public bool InvertPitchControls { get; set; } = true;
 
-	[Export]
-	public float MaxYawDegreesPerSec { get; set; } = 50; // cache radians?
+    [Export]
+    public bool InvertJoypadPitchControls { get; set; } = false;
 
-	[Export]
-	public bool InvertPitchControls { get; set; } = false;
-
-	KinematicCollision3D m_collision = new();
-	Vector3 turnPower = Vector3.Zero; // yaw pitch roll
-	float m_desiredBankAngle = 0;
+    KinematicCollision3D m_collision = new();
+	float m_desiredBankAngleRadians = 0;
 	float m_currentBankAngle = 0;
 	float m_forwardSpeed = 0;
 	ulong m_canBackupTime;
+	bool m_didCollide;
 
 	Label? m_speedoLabel;
 
@@ -51,43 +54,66 @@ public partial class Turtle : CharacterBody3D
 	}
 
 	// TODO: fix controller movement
-	void HandleMovement(double deltaTime)
+	void HandleMovement(double deltaTimeD)
 	{
-		Vector3 newRotation = Vector3.Zero;
-
+		float deltaTime = (float)deltaTimeD;
 		float movementDir = Mathf.Sign(m_forwardSpeed);
 
-		turnPower.X = Input.GetActionStrength("YawLeft");
-		turnPower.X -= Input.GetActionStrength("YawRight");
-		turnPower.X *= movementDir;
-		newRotation.Y = (float)(turnPower.X * deltaTime);
-
-		// TODO: up/down don't work correctly when tilted
-
-		// flip this to invert
-		turnPower.Y = -Input.GetActionStrength("PitchUp");
-		turnPower.Y += Input.GetActionStrength("PitchDown");
-		newRotation.X = (float)(turnPower.Y * (InvertPitchControls ? -1 : 1) * deltaTime);
-
-		newRotation += Rotation;
-		// make the turtle lean into a turn based on their speed
+		// keyboard
+		Vector3 input = new();
+		input.X = Input.GetActionStrength("YawLeft");
+		input.X -= Input.GetActionStrength("YawRight");
+        input.Y = Input.GetActionStrength("PitchUp");
+        input.Y -= Input.GetActionStrength("PitchDown");
+		if (InvertPitchControls)
 		{
-			float relSpeed = m_forwardSpeed / 8; // todo, use proper bank angle formula
-			float turnSign = Mathf.Sign(Mathf.Floor(turnPower.X * 100)); // round to .01 to add deadzone, todo: scale by dot product of inv Vector.Right
-			m_desiredBankAngle = -turnSign * Mathf.Lerp(0, Mathf.Pi * 0.5f, Mathf.Min(1, turnSign * turnPower.X * relSpeed));
-
-			if (turnSign != 0)
-			{
-				newRotation.Z = Mathf.Lerp(newRotation.Z, m_desiredBankAngle, 0.2f); // todo: do this properly, not with lerp
-			}
-			else
-			{
-				newRotation.Z = Mathf.Lerp(newRotation.Z, m_desiredBankAngle, 0.05f);
-			}
+			input.Y *= -1;
 		}
 
-		turnPower = turnPower.Lerp(Vector3.Zero, 0.2f); // todo: use Ease
-		Rotation = newRotation;
+        Vector3 joypadInput = new();
+        joypadInput.X = Input.GetActionStrength("YawLeftJoypad");
+        joypadInput.X -= Input.GetActionStrength("YawRightJoypad");
+        joypadInput.Y = Input.GetActionStrength("PitchUpJoypad");
+        joypadInput.Y -= Input.GetActionStrength("PitchDownJoypad");
+		if (InvertJoypadPitchControls)
+		{
+			joypadInput.Y *= -1;
+		}
+
+		if (!joypadInput.IsZeroApprox()) // per axis?
+		{
+			input = joypadInput;
+        }
+
+		// todo: if did collide, don't continue allowing rotation in that direction
+
+        Vector3 newRotation = Vector3.Zero;
+        newRotation.X = input.Y * Mathf.DegToRad(MaxYawDegreesPerSec);
+
+        float turnScale = input.X * (m_forwardSpeed < 0 ? -1 : 1) * Mathf.DegToRad(MaxPitchDegreesPerSec);
+        const float c_maxSpeed = 8; // todo: don't hard code this
+        float relSpeed = Mathf.Clamp(m_forwardSpeed / c_maxSpeed, -c_maxSpeed, c_maxSpeed);
+
+        // make the turtle lean into a turn based on their speed
+		// todo: separate turtle model rotation?
+        {
+            float maxBankAngleRadians = Mathf.Min(Mathf.Pi * 0.3f, Mathf.DegToRad(MaxPitchDegreesPerSec) * 2);
+			float turnSign = Mathf.Sign(Mathf.Floor(input.X * 100)); // round to .01 to add deadzone (avoids issues of being almost but not exactly 0)
+																			 // todo: scale by dot product of inv Vector.Right
+			m_desiredBankAngleRadians = -turnSign * Mathf.Lerp(0, maxBankAngleRadians, Mathf.Min(1, turnSign * turnScale * relSpeed));
+
+			// this sucks
+			const float c_activeBankLerp = Mathf.Pi * 0.5f;
+			const float c_passiveBankLerp = c_activeBankLerp / 2;
+			float bankLerp = (m_desiredBankAngleRadians == 0 ? c_passiveBankLerp : c_activeBankLerp);
+			newRotation.Z = Mathf.MoveToward(Rotation.Z, m_desiredBankAngleRadians, bankLerp * deltaTime); // lerp would be better
+		}
+
+		newRotation.Y = -movementDir * m_desiredBankAngleRadians;
+        newRotation.X = (newRotation.X * deltaTime) + Rotation.X;
+        newRotation.Y = (newRotation.Y * deltaTime) + Rotation.Y;
+
+        Rotation = newRotation;
 
 		float acceleratorForce = 0;
 		float accelStrength = Input.GetActionStrength("Accelerate");
@@ -96,16 +122,19 @@ public partial class Turtle : CharacterBody3D
 			acceleratorForce = accelStrength * ForwardMoveForceNewtons;
 		}
 
+		bool isBraking = false;
 		float decelStrength = Input.GetActionStrength("Decelerate");
 		if (decelStrength > 0)
 		{
 			// braking
 			if (m_forwardSpeed > 0)
 			{
+				// todo: brake force should round off to zero as speed approaches zero
 				acceleratorForce = decelStrength * -BrakeForceNewtons;
 				m_canBackupTime = Time.GetTicksMsec() + c_backupMillisecondsDelay;
-			}
-			else if (Time.GetTicksMsec() >= m_canBackupTime)
+                isBraking = true;
+            }
+            else if (Time.GetTicksMsec() >= m_canBackupTime)
 			{
 				acceleratorForce = decelStrength * -ReverseMoveForceNewtons;
 			}
@@ -118,15 +147,20 @@ public partial class Turtle : CharacterBody3D
 		float acceleration = (acceleratorForce - dragForce) / TurtleMassKg;
 		m_forwardSpeed += (float)(acceleration * deltaTime);
 
+		// avoids braking overshoot (force should really be based on speed)
+		if (isBraking && Mathf.Abs(m_forwardSpeed) < 0.1f)
+		{
+			m_forwardSpeed = 0;
+		}
+
 		// movement always follows forward direction
 		// todo: enumerate all collisions
-		var motion = m_forwardSpeed * forwardDir * Globals.c_unitsToMeters * (float)deltaTime;
+		var motion = m_forwardSpeed * forwardDir * Globals.c_unitsToMeters * deltaTime;
 		if (TestMove(GlobalTransform, motion, m_collision))
 		{
-			GlobalPosition += m_collision.GetTravel();
-			// todo: slide
 			var plane = new Plane(m_collision.GetNormal(), m_collision.GetPosition());
-			GlobalPosition += plane.Project((0.1f * forwardDir).Lerp(motion, 0.8f)); // use friction value
+			motion = plane.Project((0.1f * forwardDir).Lerp(motion, 0.8f)); // todo: use a proper friction value
+			GlobalPosition += m_collision.GetTravel() + motion;
 		}
 		else
 		{

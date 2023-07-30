@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctugyrjbojaha"]
+[gd_scene load_steps=14 format=3 uid="uid://ctugyrjbojaha"]
 
 [ext_resource type="Material" uid="uid://cgm5iqvfhndew" path="res://materials/sand.tres" id="1_3cird"]
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_f6koo"]
@@ -6,10 +6,23 @@
 [ext_resource type="Theme" uid="uid://bu8wxtxm5hy22" path="res://etc/DebugText.tres" id="5_gcepk"]
 [ext_resource type="Script" path="res://prefabs/Passengers/Passenger.cs" id="5_i4cac"]
 [ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="6_qgseq"]
+[ext_resource type="PackedScene" uid="uid://csgaobayntxip" path="res://prefabs/Fish_Pasengers/AngelFish.glb" id="7_vu5f7"]
+[ext_resource type="Script" path="res://prefabs/Swim.cs" id="8_odamu"]
+[ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="8_qo4sc"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6lros"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hv3ec"]
+
+[sub_resource type="Curve3D" id="Curve3D_aniwr"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 1.7, 1.2, -1.5, 0, 0, 0, 0, 0, 0, -0.6, 1.4, 7.3, -2.6, 0.1, -5.2, 2.6, -0.1, 5.2, 3, 2.7, 30.3, -3.7, 4.3, -0.1, 3.7, -4.3, 0.1, 24.7, 2, 36.8, 3.5, 1, 9.3, -3.5, -1, -9.3, 26.7, 2.8, 6.1, -0.5, -3.4, -6.2, 0.5, 3.4, 6.2, 9.6, 1.6, -12),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_10eyf"]
+radius = 20.0
 
 [node name="scene" type="Node3D"]
 script = ExtResource("1_f6koo")
@@ -53,3 +66,37 @@ shape = SubResource("CylinderShape3D_hv3ec")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("6_qgseq")
+
+[node name="GameController" type="Node" parent="."]
+script = ExtResource("8_qo4sc")
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 4.9, 0.3)
+curve = SubResource("Curve3D_aniwr")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(0.996586, 0.00376689, 0.0824678, -0.00975296, 0.997333, 0.0723047, -0.0819756, -0.0728622, 0.993967, -0.303023, 1.70919, 11.4156)
+progress = 13.2359
+use_model_front = true
+tilt_enabled = false
+script = ExtResource("8_odamu")
+
+[node name="AngelFish" parent="Path3D/PathFollow3D" instance=ExtResource("7_vu5f7")]
+transform = Transform3D(1, -3.72529e-09, 7.45058e-09, -4.19095e-09, 1, 2.98023e-08, 2.23517e-08, -5.96046e-08, 1, 0.7, -0.299998, 3.2)
+
+[node name="debugText" type="Label3D" parent="Path3D/PathFollow3D/AngelFish"]
+transform = Transform3D(1, -6.0536e-09, 7.45058e-09, -6.0536e-09, 1, 4.47035e-08, 2.23517e-08, -7.45058e-08, 1, -4.17233e-07, 1.87139, 2.79644)
+pixel_size = 0.0005
+billboard = 1
+no_depth_test = true
+fixed_size = true
+texture_filter = 1
+text = "DEBUG"
+font_size = 128
+outline_size = 64
+
+[node name="FieldOfView" type="Area3D" parent="Path3D/PathFollow3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/FieldOfView"]
+transform = Transform3D(1, -2.79397e-09, -8.9407e-08, 1.86265e-09, 1, 0, 5.96046e-08, 3.35276e-08, 1, -7.15256e-07, 5.66211, 23.0104)
+shape = SubResource("SphereShape3D_10eyf")
