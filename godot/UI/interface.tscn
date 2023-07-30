@@ -1,0 +1,103 @@
+[gd_scene load_steps=5 format=3 uid="uid://oab203y68wwl"]
+
+[ext_resource type="Script" path="res://code/UIManager.cs" id="1_6qxgf"]
+[ext_resource type="Texture2D" uid="uid://dcr6vofl6jsw7" path="res://UI/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_54.png" id="1_cqnmc"]
+[ext_resource type="Theme" uid="uid://bhtgpwuqt86fr" path="res://UI/default_theme.tres" id="2_ry5no"]
+[ext_resource type="Texture2D" uid="uid://myymqne4o27k" path="res://UI/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_44.png" id="4_e0se5"]
+
+[node name="Interface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6qxgf")
+
+[node name="TimerRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1354.0
+offset_top = 43.0
+offset_right = -91.0
+offset_bottom = -821.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_cqnmc")
+
+[node name="TimerText" type="Label" parent="TimerRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_right = -68.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ry5no")
+text = "Time :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TimerValue" type="Label" parent="TimerRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 1.0
+offset_right = -16.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ry5no")
+text = "200"
+vertical_alignment = 1
+
+[node name="ScoreRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1354.0
+offset_top = 97.0
+offset_right = -91.0
+offset_bottom = -767.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_e0se5")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="ScoreText" type="Label" parent="ScoreRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_right = -68.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ry5no")
+text = "Score :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ScoreValue" type="Label" parent="ScoreRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 1.0
+offset_right = -16.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ry5no")
+text = "200"
+vertical_alignment = 1

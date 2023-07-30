@@ -16,6 +16,7 @@ public partial class GameController : Node
 	{
 		// Increment score every second
 		Score += delta;
+		EventManager.Fire(new ScoreChangedEvent(Score));
 	}
 	
 	public override void _Ready()
@@ -61,6 +62,7 @@ public partial class GameController : Node
 	private void AddTime()
 	{
 		gameTimer.WaitTime += Globals.c_baseGameDuration;
+		EventManager.Fire(new TimerChangedEvent(gameTimer.WaitTime));
 	}
 
 	private void ManageAvailablePassengers()

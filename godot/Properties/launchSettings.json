@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "BlzGameJamJuly2023": {
+      "commandName": "Project",
+      "commandLineArgs": "-e --path \"C:\\Projects\\2023_ShellWeJam\\godot\"",
+      "workingDirectory": "C:\\Projects\\2023_ShellWeJam\\godot"
+    }
+  }
+}
