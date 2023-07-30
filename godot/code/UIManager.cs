@@ -9,8 +9,20 @@ public partial class UIManager : Control
     {
         m_timerValue = GetNode<Label>("TimerRect/TimerValue");
         m_scoreValue = GetNode<Label>("ScoreRect/ScoreValue");
+    }
+
+    public override void _EnterTree()
+    {
+        base._EnterTree();
         EventManager.AddListener<TimerChangedEvent>(OnTimerChangedEvent);
         EventManager.AddListener<ScoreChangedEvent>(OnScoreChangedEvent);
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        EventManager.RemoveListener<TimerChangedEvent>(OnTimerChangedEvent);
+        EventManager.RemoveListener<ScoreChangedEvent>(OnScoreChangedEvent);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -20,7 +32,7 @@ public partial class UIManager : Control
 
     private void OnTimerChangedEvent(TimerChangedEvent evt)
     {
-        m_timerValue.Text = evt.Time.ToString();
+        m_timerValue.Text = evt.Time > 0 ? evt.Time.ToString() : "0";
     }
     
     private void OnScoreChangedEvent(ScoreChangedEvent evt)

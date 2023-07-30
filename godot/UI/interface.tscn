@@ -99,5 +99,5 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_ry5no")
-text = "200"
+text = "0"
 vertical_alignment = 1
