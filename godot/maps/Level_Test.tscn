@@ -1,0 +1,187 @@
+[gd_scene load_steps=24 format=3 uid="uid://d2bptgni81amj"]
+
+[ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="1_bt4l2"]
+[ext_resource type="Material" uid="uid://b2d181l7tf055" path="res://materials/Sands_Ren.tres" id="2_nsugi"]
+[ext_resource type="PackedScene" uid="uid://c8b4vlwq6o4a8" path="res://prefabs/Turtle/Turtle.tscn" id="3_xmgvi"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter.gd" id="4_7iygc"]
+[ext_resource type="PackedScene" uid="uid://0tc8a7fjwh1r" path="res://prefabs/Env_Props/Composites/rock_wall_test.tscn" id="4_tkcdx"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/stack/modifier_stack.gd" id="5_ujevm"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/create_inside_random.gd" id="6_3bhjg"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/randomize_transforms.gd" id="7_5gijm"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/relax.gd" id="8_vyqgm"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/project_on_geometry.gd" id="9_j4y4u"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter_item.gd" id="10_15m6p"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter_shape.gd" id="11_86bsw"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/clusterize.gd" id="14_5r306"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/shapes/sphere_shape.gd" id="14_ptpfs"]
+[ext_resource type="PackedScene" uid="uid://8jswubl5mo0b" path="res://prefabs/Env_Props/Composites/Composite_Reef.tscn" id="15_t60p3"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_51oru"]
+
+[sub_resource type="Resource" id="Resource_ks3vk"]
+script = ExtResource("6_3bhjg")
+amount = 120
+enabled = true
+override_global_seed = true
+custom_seed = 60
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_6akyi"]
+script = ExtResource("7_5gijm")
+position = Vector3(0.15, 0.15, 0.15)
+rotation = Vector3(20, 360, 20)
+scale = Vector3(0.1, 0.1, 0.1)
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_cqsre"]
+script = ExtResource("8_vyqgm")
+iterations = 3
+offset_step = 0.55
+consecutive_step_multiplier = 0.75
+use_computeshader = true
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = true
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_kioqt"]
+script = ExtResource("9_j4y4u")
+ray_direction = Vector3(0, -1, 0)
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = true
+align_with_collision_normal = true
+max_slope = 70.0
+collision_mask = 1
+exclude_mask = 0
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_40ttj"]
+script = ExtResource("14_5r306")
+mask = "res://addons/proton_scatter/masks/bars.png"
+mask_rotation = 0.0
+mask_offset = Vector2(0, 0)
+mask_scale = Vector2(2, 2)
+pixel_to_unit_ratio = 4.0
+remove_below = 0.1
+remove_above = 1.0
+scale_transforms = false
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_1jiqr"]
+script = ExtResource("5_ujevm")
+stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_ks3vk"), SubResource("Resource_6akyi"), SubResource("Resource_cqsre"), SubResource("Resource_kioqt"), SubResource("Resource_40ttj")])
+
+[sub_resource type="Resource" id="Resource_pyolu"]
+script = ExtResource("14_ptpfs")
+radius = 12.0705
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_bt4l2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.108051, 0.50087, -0.858752, 0, 0.863809, 0.503819, 0.994145, -0.0544384, 0.0933357, 0, 0, 0)
+light_angular_distance = 0.5
+shadow_enabled = true
+
+[node name="ground" type="CSGBox3D" parent="."]
+visible = false
+material_override = ExtResource("2_nsugi")
+size = Vector3(1000, 1, 1000)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground/StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_51oru")
+
+[node name="Turtle" parent="." instance=ExtResource("3_xmgvi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50843, 2.2, -5.104)
+collision_mask = 1
+
+[node name="Rock_Wall" parent="." instance=ExtResource("4_tkcdx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.7847, 7.62939e-06, -30.6269)
+visible = false
+
+[node name="ProtonScatter" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9171, 1.90735e-06, -36.4677)
+visible = false
+script = ExtResource("4_7iygc")
+modifier_stack = SubResource("Resource_1jiqr")
+Performance/use_chunks = true
+Performance/chunk_dimensions = Vector3(15, 15, 15)
+
+[node name="ScatterItem" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("10_15m6p")
+proportion = 20
+source_scale_multiplier = 0.75
+path = "res://prefabs/Env_Props/Tube_Coral_01.glb"
+
+[node name="ScatterItem3" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("10_15m6p")
+proportion = 15
+path = "res://prefabs/Env_Props/Tube_Coral_01.glb"
+
+[node name="ScatterItem2" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("10_15m6p")
+proportion = 2
+source_scale_multiplier = 2.0
+path = "res://prefabs/Env_Props/Tube_Coral_01.glb"
+
+[node name="ScatterItem4" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("10_15m6p")
+proportion = 20
+source_scale_multiplier = 0.75
+path = "res://prefabs/Env_Props/Tube_Coral_02.glb"
+
+[node name="ScatterItem5" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("10_15m6p")
+proportion = 15
+path = "res://prefabs/Env_Props/Tube_Coral_02.glb"
+
+[node name="ScatterItem6" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("10_15m6p")
+proportion = 2
+source_scale_multiplier = 2.0
+path = "res://prefabs/Env_Props/Tube_Coral_02.glb"
+
+[node name="ScatterItem7" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("10_15m6p")
+proportion = 6
+source_scale_multiplier = 2.0
+path = "res://prefabs/Env_Props/Rock_01.glb"
+
+[node name="ScatterItem8" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("10_15m6p")
+proportion = 6
+source_scale_multiplier = 2.0
+path = "res://prefabs/Env_Props/Rock_02.glb"
+
+[node name="ScatterItem9" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("10_15m6p")
+proportion = 6
+source_scale_multiplier = 2.0
+path = "res://prefabs/Env_Props/Rock_07.glb"
+
+[node name="ScatterShape" type="Node3D" parent="ProtonScatter"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 3.76347, 0)
+script = ExtResource("11_86bsw")
+shape = SubResource("Resource_pyolu")
+
+[node name="Composite_Reef" parent="." instance=ExtResource("15_t60p3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.6853, 0, 47.6664)

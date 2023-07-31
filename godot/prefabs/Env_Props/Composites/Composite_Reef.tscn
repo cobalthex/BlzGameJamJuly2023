@@ -1,0 +1,310 @@
+[gd_scene load_steps=30 format=3 uid="uid://8jswubl5mo0b"]
+
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter.gd" id="1_pompj"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/stack/modifier_stack.gd" id="2_1b65s"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/create_inside_random.gd" id="3_4edg0"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/randomize_transforms.gd" id="4_8vg11"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/relax.gd" id="5_ahx4j"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter_item.gd" id="6_kslkv"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/scatter_shape.gd" id="7_yi8od"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/shapes/sphere_shape.gd" id="8_8lmie"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/project_on_geometry.gd" id="9_imvyd"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/clusterize.gd" id="10_egbnc"]
+
+[sub_resource type="Resource" id="Resource_v6sii"]
+script = ExtResource("3_4edg0")
+amount = 6
+enabled = true
+override_global_seed = true
+custom_seed = 8
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_b010a"]
+script = ExtResource("4_8vg11")
+position = Vector3(0.15, 0.15, 0.15)
+rotation = Vector3(0, 360, 0)
+scale = Vector3(0.1, 0.1, 0.1)
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_t6h6d"]
+script = ExtResource("5_ahx4j")
+iterations = 3
+offset_step = 0.2
+consecutive_step_multiplier = 0.75
+use_computeshader = true
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = true
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_2te3p"]
+script = ExtResource("2_1b65s")
+stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_v6sii"), SubResource("Resource_b010a"), SubResource("Resource_t6h6d")])
+
+[sub_resource type="Resource" id="Resource_m2ioe"]
+script = ExtResource("8_8lmie")
+radius = 23.446
+
+[sub_resource type="Resource" id="Resource_eljg7"]
+script = ExtResource("3_4edg0")
+amount = 200
+enabled = true
+override_global_seed = true
+custom_seed = 400
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_1f7qq"]
+script = ExtResource("4_8vg11")
+position = Vector3(0.15, 0.15, 0.15)
+rotation = Vector3(20, 360, 20)
+scale = Vector3(0.1, 0.1, 0.1)
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_73olp"]
+script = ExtResource("5_ahx4j")
+iterations = 3
+offset_step = 0.62
+consecutive_step_multiplier = 0.75
+use_computeshader = true
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = true
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_2f2hc"]
+script = ExtResource("9_imvyd")
+ray_direction = Vector3(0, -1, 0)
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = true
+align_with_collision_normal = true
+max_slope = 65.0
+collision_mask = 1
+exclude_mask = 0
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_yx1ei"]
+script = ExtResource("10_egbnc")
+mask = "res://addons/proton_scatter/masks/bars.png"
+mask_rotation = 0.0
+mask_offset = Vector2(0, 0)
+mask_scale = Vector2(2, 2)
+pixel_to_unit_ratio = 4.0
+remove_below = 0.1
+remove_above = 1.0
+scale_transforms = false
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_1270u"]
+script = ExtResource("2_1b65s")
+stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_eljg7"), SubResource("Resource_1f7qq"), SubResource("Resource_73olp"), SubResource("Resource_2f2hc"), SubResource("Resource_yx1ei")])
+
+[sub_resource type="Resource" id="Resource_hevov"]
+script = ExtResource("8_8lmie")
+radius = 34.4395
+
+[sub_resource type="Resource" id="Resource_hyoa1"]
+script = ExtResource("3_4edg0")
+amount = 700
+enabled = true
+override_global_seed = true
+custom_seed = 400
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_ffois"]
+script = ExtResource("10_egbnc")
+mask = "res://addons/proton_scatter/masks/wave.png"
+mask_rotation = 0.0
+mask_offset = Vector2(0, 0)
+mask_scale = Vector2(1, 1)
+pixel_to_unit_ratio = 8.0
+remove_below = 0.1
+remove_above = 1.0
+scale_transforms = false
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_431ix"]
+script = ExtResource("4_8vg11")
+position = Vector3(0.15, 0.1, 0.15)
+rotation = Vector3(0, 360, 0)
+scale = Vector3(0.1, 0.1, 0.1)
+enabled = true
+override_global_seed = false
+custom_seed = 25
+restrict_height = false
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_siw8g"]
+script = ExtResource("5_ahx4j")
+iterations = 3
+offset_step = 0.3
+consecutive_step_multiplier = 0.75
+use_computeshader = true
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = true
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_wyreq"]
+script = ExtResource("9_imvyd")
+ray_direction = Vector3(0, -1, 0)
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = true
+align_with_collision_normal = false
+max_slope = 40.0
+collision_mask = 1
+exclude_mask = 0
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_xvp53"]
+script = ExtResource("2_1b65s")
+stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_hyoa1"), SubResource("Resource_ffois"), SubResource("Resource_431ix"), SubResource("Resource_siw8g"), SubResource("Resource_wyreq")])
+
+[sub_resource type="Resource" id="Resource_ertb4"]
+script = ExtResource("8_8lmie")
+radius = 33.2629
+
+[node name="Composite_Reef" type="Node3D"]
+
+[node name="ProtonScatter" type="Node3D" parent="."]
+script = ExtResource("1_pompj")
+render_mode = 1
+keep_static_colliders = true
+modifier_stack = SubResource("Resource_2te3p")
+Performance/use_chunks = true
+Performance/chunk_dimensions = Vector3(15, 15, 15)
+
+[node name="ScatterItem" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("6_kslkv")
+path = "res://prefabs/Env_Props/Composites/rock_wall.tscn"
+
+[node name="ScatterItem2" type="Node3D" parent="ProtonScatter"]
+script = ExtResource("6_kslkv")
+path = "res://prefabs/Env_Props/Composites/rock_wall_02.tscn"
+
+[node name="ScatterShape" type="Node3D" parent="ProtonScatter"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+script = ExtResource("7_yi8od")
+shape = SubResource("Resource_m2ioe")
+
+[node name="ProtonScatter2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.467523, 1.90735e-06, 2.98571)
+script = ExtResource("1_pompj")
+enable_updates_in_game = true
+modifier_stack = SubResource("Resource_1270u")
+Performance/use_chunks = true
+Performance/chunk_dimensions = Vector3(15, 15, 15)
+
+[node name="ScatterItem" type="Node3D" parent="ProtonScatter2"]
+script = ExtResource("6_kslkv")
+proportion = 20
+source_scale_multiplier = 0.75
+path = "res://prefabs/Env_Props/Tube_Coral_01.glb"
+
+[node name="ScatterItem3" type="Node3D" parent="ProtonScatter2"]
+script = ExtResource("6_kslkv")
+proportion = 15
+path = "res://prefabs/Env_Props/Tube_Coral_01.glb"
+
+[node name="ScatterItem2" type="Node3D" parent="ProtonScatter2"]
+script = ExtResource("6_kslkv")
+proportion = 2
+source_scale_multiplier = 2.0
+path = "res://prefabs/Env_Props/Tube_Coral_01.glb"
+
+[node name="ScatterItem4" type="Node3D" parent="ProtonScatter2"]
+script = ExtResource("6_kslkv")
+proportion = 20
+source_scale_multiplier = 0.75
+path = "res://prefabs/Env_Props/Tube_Coral_02.glb"
+
+[node name="ScatterItem5" type="Node3D" parent="ProtonScatter2"]
+script = ExtResource("6_kslkv")
+proportion = 15
+path = "res://prefabs/Env_Props/Tube_Coral_02.glb"
+
+[node name="ScatterItem6" type="Node3D" parent="ProtonScatter2"]
+script = ExtResource("6_kslkv")
+proportion = 2
+source_scale_multiplier = 2.0
+path = "res://prefabs/Env_Props/Tube_Coral_02.glb"
+
+[node name="ScatterItem7" type="Node3D" parent="ProtonScatter2"]
+script = ExtResource("6_kslkv")
+proportion = 6
+source_scale_multiplier = 2.0
+path = "res://prefabs/Env_Props/Rock_01.glb"
+
+[node name="ScatterItem8" type="Node3D" parent="ProtonScatter2"]
+script = ExtResource("6_kslkv")
+proportion = 6
+source_scale_multiplier = 2.0
+path = "res://prefabs/Env_Props/Rock_02.glb"
+
+[node name="ScatterItem9" type="Node3D" parent="ProtonScatter2"]
+script = ExtResource("6_kslkv")
+proportion = 3
+source_scale_multiplier = 2.0
+path = "res://prefabs/Env_Props/Rock_07.glb"
+
+[node name="ScatterShape" type="Node3D" parent="ProtonScatter2"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0.12904, 4.21847, -0.373463)
+script = ExtResource("7_yi8od")
+shape = SubResource("Resource_hevov")
+
+[node name="ProtonScatter3" type="Node3D" parent="."]
+script = ExtResource("1_pompj")
+modifier_stack = SubResource("Resource_xvp53")
+Performance/use_chunks = true
+Performance/chunk_dimensions = Vector3(15, 15, 15)
+
+[node name="ScatterItem" type="Node3D" parent="ProtonScatter3"]
+script = ExtResource("6_kslkv")
+proportion = 90
+path = "res://prefabs/Env_Props/Seaweed_01.glb"
+
+[node name="ScatterItem2" type="Node3D" parent="ProtonScatter3"]
+script = ExtResource("6_kslkv")
+proportion = 2
+path = "res://prefabs/Env_Props/Seaweed_02.glb"
+
+[node name="ScatterItem3" type="Node3D" parent="ProtonScatter3"]
+script = ExtResource("6_kslkv")
+proportion = 8
+path = "res://prefabs/Env_Props/Composites/Coral_Bush.tscn"
+
+[node name="ScatterShape" type="Node3D" parent="ProtonScatter3"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, -0.0877337, 0)
+script = ExtResource("7_yi8od")
+shape = SubResource("Resource_ertb4")
