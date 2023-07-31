@@ -166,23 +166,9 @@ public partial class Turtle : CharacterBody3D
             // slide
             if (relativeOrientation > -0.6f)
             {
-                Vector3 preMotion = motion;
-
                 // todo: use actual friction forces
-                var zmotion = motion * 0.8f * (1 + relativeOrientation); // reduce speed the more perpendicular to the collider
-                motion = plane.Project(zmotion); // project the motion onto the plane to slide the turtle
-
-                if (motion.Length() > 5)
-                {
-                    GD.PrintS(
-                        ("trvl", m_collision.GetTravel()),
-                        ("nrm", m_collision.GetNormal()),
-                        ("pm", preMotion),
-                        ("zm", zmotion),
-                        ("m", motion),
-                        ("fwd", m_forwardSpeed),
-                        ("ro", relativeOrientation));
-                }
+                motion *= 0.8f * (1 + relativeOrientation); // reduce speed the more perpendicular to the collider
+                motion = plane.Project(motion); // project the motion onto the plane to slide the turtle
             }
             else
             {
