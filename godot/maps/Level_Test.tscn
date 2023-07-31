@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://d2bptgni81amj"]
+[gd_scene load_steps=27 format=3 uid="uid://d2bptgni81amj"]
 
 [ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="1_bt4l2"]
 [ext_resource type="Material" uid="uid://b2d181l7tf055" path="res://materials/Sands_Ren.tres" id="2_nsugi"]
@@ -15,6 +15,8 @@
 [ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/clusterize.gd" id="14_5r306"]
 [ext_resource type="Script" path="res://addons/proton_scatter/src/shapes/sphere_shape.gd" id="14_ptpfs"]
 [ext_resource type="PackedScene" uid="uid://8jswubl5mo0b" path="res://prefabs/Env_Props/Composites/Composite_Reef.tscn" id="15_t60p3"]
+[ext_resource type="Shader" uid="uid://buff3c6smrh5c" path="res://materials/Shaders/Landscape_Shader.tres" id="16_8kln8"]
+[ext_resource type="ArrayMesh" uid="uid://77keyv10qbfa" path="res://prefabs/Env_Props/Canyon.obj" id="17_y7ymw"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_51oru"]
 
@@ -89,6 +91,11 @@ stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.
 [sub_resource type="Resource" id="Resource_pyolu"]
 script = ExtResource("14_ptpfs")
 radius = 12.0705
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ica3"]
+render_priority = 0
+shader = ExtResource("16_8kln8")
+shader_parameter/Scale = 500.0
 
 [node name="Node3D" type="Node3D"]
 
@@ -184,4 +191,12 @@ script = ExtResource("11_86bsw")
 shape = SubResource("Resource_pyolu")
 
 [node name="Composite_Reef" parent="." instance=ExtResource("15_t60p3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.6853, 0, 47.6664)
+transform = Transform3D(0.931723, 0, -0.36317, 0, 1, 0, 0.36317, 0, 0.931723, -36.8558, 0, 36.4924)
+
+[node name="Composite_Reef" parent="Composite_Reef" instance=ExtResource("15_t60p3")]
+transform = Transform3D(0.931723, 0, -0.36317, 0, 1, 0, 0.36317, 0, 0.931723, -73.6016, 0, 39.552)
+
+[node name="Canyon" type="MeshInstance3D" parent="."]
+transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, -68.9519, 0, 75.8688)
+material_override = SubResource("ShaderMaterial_0ica3")
+mesh = ExtResource("17_y7ymw")
