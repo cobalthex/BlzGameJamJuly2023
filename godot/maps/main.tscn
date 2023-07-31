@@ -1,15 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://bto77f7eq6vuo"]
+[gd_scene load_steps=8 format=3 uid="uid://bto77f7eq6vuo"]
 
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_yyim6"]
 [ext_resource type="Theme" uid="uid://bu8wxtxm5hy22" path="res://etc/DebugText.tres" id="2_ecra3"]
 [ext_resource type="PackedScene" uid="uid://c8b4vlwq6o4a8" path="res://prefabs/Turtle/Turtle.tscn" id="4_njlwa"]
 [ext_resource type="PackedScene" uid="uid://cx3ns1e42mpl3" path="res://prefabs/Environment/world_environment.tscn" id="5_34cai"]
-[ext_resource type="Script" path="res://prefabs/Passengers/Passenger.cs" id="5_udynu"]
 [ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="7_pycw0"]
 [ext_resource type="Script" path="res://prefabs/GameTimer/GameTimer.cs" id="8_bjmqm"]
 [ext_resource type="PackedScene" uid="uid://oab203y68wwl" path="res://UI/interface.tscn" id="9_uijmv"]
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_hv3ec"]
 
 [node name="scene" type="Node3D"]
 script = ExtResource("1_yyim6")
@@ -32,15 +29,6 @@ omni_attenuation = 0.00364466
 [node name="Turtle" parent="." instance=ExtResource("4_njlwa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2, 2.2, -43.3)
 collision_mask = 1
-
-[node name="TestPassenger" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 1.46762, 36.9253)
-script = ExtResource("5_udynu")
-
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="TestPassenger"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TestPassenger"]
-shape = SubResource("CylinderShape3D_hv3ec")
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("5_34cai")]
 
