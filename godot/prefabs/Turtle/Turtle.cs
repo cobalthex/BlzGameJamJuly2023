@@ -42,14 +42,16 @@ public partial class Turtle : CharacterBody3D
     ulong m_canBackupTime;
     bool m_didCollide;
 
-    Label? m_speedoLabel;
+    Label? m_debugText;
 
     // child elements
     public Transport Transport { get; private set; }
 
     public override void _Ready()
     {
-        m_speedoLabel = GetNode<Label>("speedo");
+#if DEBUG
+        m_debugText = GetNode<Label>("debug");
+#endif
         Transport = GetNode<Transport>("model/transport");
     }
 
@@ -184,9 +186,9 @@ public partial class Turtle : CharacterBody3D
 
         // TODO: ocean currents
 
-        if (m_speedoLabel != null)
+        if (m_debugText != null)
         {
-            m_speedoLabel.Text =
+            m_debugText.Text =
                 $"Euler: {RotationDegrees.ToString("N1")}deg"
                 + $"\nForward: {forwardDir.ToString("N2")}"
                 + $"\nAcceleration: {acceleration:N2}m/s^2"

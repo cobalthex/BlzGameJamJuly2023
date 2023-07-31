@@ -83,6 +83,8 @@ public partial class Swim : PathFollow3D
         MoveTowards(path.Curve.SampleBaked(Progress) - Position);
     }
 
+    private readonly Quaternion c_qUp = new Quaternion(Vector3.Up, Mathf.Pi / 2);
+
     public override void _Process(double deltaTime)
     {
         if (State == SwimState.FollowingPath)
@@ -108,6 +110,7 @@ public partial class Swim : PathFollow3D
                 Position += Basis.Z * SpeedMetersPerSecond * (float)deltaTime;
             }
         }
+        Quaternion = Quaternion.Slerp(c_qUp, 0.2f); // test
 
         m_debugText.Text = $"{State} {m_navigateQuat} {m_navigateTimeEndMillisec}";
     }

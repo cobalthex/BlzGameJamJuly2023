@@ -13,7 +13,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.57816)
 collision_mask = 3
 script = ExtResource("1_62bav")
 
-[node name="speedo" type="Label" parent="."]
+[node name="debug" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -47,7 +47,7 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 65.0
 offset_bottom = 36.0
-text = "DEBUG"
+theme = ExtResource("3_gju5p")
 
 [node name="collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 1.3)
