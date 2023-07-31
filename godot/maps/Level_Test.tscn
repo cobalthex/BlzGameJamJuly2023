@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://ba545pxv3u16b"]
+[gd_scene load_steps=26 format=3 uid="uid://ba545pxv3u16b"]
 
 [ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="1_bt4l2"]
 [ext_resource type="Material" uid="uid://b2d181l7tf055" path="res://materials/Sands_Ren.tres" id="2_nsugi"]
@@ -15,12 +15,12 @@
 [ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/clusterize.gd" id="14_5r306"]
 [ext_resource type="Script" path="res://addons/proton_scatter/src/shapes/sphere_shape.gd" id="14_ptpfs"]
 [ext_resource type="PackedScene" uid="uid://8jswubl5mo0b" path="res://prefabs/Env_Props/Composites/Composite_Reef.tscn" id="15_t60p3"]
-[ext_resource type="Shader" uid="uid://buff3c6smrh5c" path="res://materials/Shaders/Landscape_Shader.tres" id="16_8kln8"]
-[ext_resource type="ArrayMesh" uid="uid://77keyv10qbfa" path="res://prefabs/Env_Props/Canyon.obj" id="17_y7ymw"]
+[ext_resource type="Material" uid="uid://dajcks5nbs5od" path="res://materials/Landscape.tres" id="16_y0gmj"]
+[ext_resource type="ArrayMesh" uid="uid://1wgo4p3w5337" path="res://prefabs/Env_Props/Canyon_UV.obj" id="19_cx0li"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_51oru"]
 
-[sub_resource type="Resource" id="Resource_6hx0f"]
+[sub_resource type="Resource" id="Resource_dj7fd"]
 script = ExtResource("6_3bhjg")
 amount = 120
 enabled = true
@@ -29,7 +29,7 @@ custom_seed = 60
 restrict_height = true
 reference_frame = 1
 
-[sub_resource type="Resource" id="Resource_ona8q"]
+[sub_resource type="Resource" id="Resource_krjcm"]
 script = ExtResource("7_5gijm")
 position = Vector3(0.15, 0.15, 0.15)
 rotation = Vector3(20, 360, 20)
@@ -40,7 +40,7 @@ custom_seed = 0
 restrict_height = false
 reference_frame = 2
 
-[sub_resource type="Resource" id="Resource_oq7w7"]
+[sub_resource type="Resource" id="Resource_5r1f7"]
 script = ExtResource("8_vyqgm")
 iterations = 3
 offset_step = 0.55
@@ -52,7 +52,7 @@ custom_seed = 0
 restrict_height = true
 reference_frame = 0
 
-[sub_resource type="Resource" id="Resource_28hoj"]
+[sub_resource type="Resource" id="Resource_isf5p"]
 script = ExtResource("9_j4y4u")
 ray_direction = Vector3(0, -1, 0)
 ray_length = 5.0
@@ -68,7 +68,7 @@ custom_seed = 0
 restrict_height = false
 reference_frame = 0
 
-[sub_resource type="Resource" id="Resource_mgk3h"]
+[sub_resource type="Resource" id="Resource_m0166"]
 script = ExtResource("14_5r306")
 mask = "res://addons/proton_scatter/masks/bars.png"
 mask_rotation = 0.0
@@ -84,18 +84,13 @@ custom_seed = 0
 restrict_height = false
 reference_frame = 0
 
-[sub_resource type="Resource" id="Resource_i4xp8"]
+[sub_resource type="Resource" id="Resource_vhkc6"]
 script = ExtResource("5_ujevm")
-stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_6hx0f"), SubResource("Resource_ona8q"), SubResource("Resource_oq7w7"), SubResource("Resource_28hoj"), SubResource("Resource_mgk3h")])
+stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_dj7fd"), SubResource("Resource_krjcm"), SubResource("Resource_5r1f7"), SubResource("Resource_isf5p"), SubResource("Resource_m0166")])
 
 [sub_resource type="Resource" id="Resource_pyolu"]
 script = ExtResource("14_ptpfs")
 radius = 12.0705
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ica3"]
-render_priority = 0
-shader = ExtResource("16_8kln8")
-shader_parameter/Scale = 500.0
 
 [node name="Node3D" type="Node3D"]
 
@@ -129,7 +124,7 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9171, 1.90735e-06, -36.4677)
 visible = false
 script = ExtResource("4_7iygc")
-modifier_stack = SubResource("Resource_i4xp8")
+modifier_stack = SubResource("Resource_vhkc6")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
@@ -197,6 +192,6 @@ transform = Transform3D(0.931723, 0, -0.36317, 0, 1, 0, 0.36317, 0, 0.931723, -3
 transform = Transform3D(0.931723, 0, -0.36317, 0, 1, 0, 0.36317, 0, 0.931723, -73.6016, 0, 39.552)
 
 [node name="Canyon" type="MeshInstance3D" parent="."]
-transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, -68.9519, 0, 75.8688)
-material_override = SubResource("ShaderMaterial_0ica3")
-mesh = ExtResource("17_y7ymw")
+transform = Transform3D(300, 0, 0, 0, 300, 0, 0, 0, 300, -71.135, -3.27502, 132.357)
+material_override = ExtResource("16_y0gmj")
+mesh = ExtResource("19_cx0li")

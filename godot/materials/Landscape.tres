@@ -1,0 +1,38 @@
+[gd_resource type="ShaderMaterial" load_steps=10 format=3 uid="uid://dajcks5nbs5od"]
+
+[ext_resource type="Material" uid="uid://cr1dftdthk43m" path="res://materials/Caustics.tres" id="1_0vvyv"]
+[ext_resource type="Shader" path="res://materials/Shaders/Landscape_02.gdshader" id="1_7i02k"]
+[ext_resource type="Texture2D" uid="uid://6fxtrulnyhks" path="res://materials/Textures/Canyon_Mask_Mask.png" id="2_3747k"]
+[ext_resource type="Texture2D" uid="uid://1auteaew6nbm" path="res://materials/Textures/Sand_Noise.tres" id="3_f0h77"]
+
+[sub_resource type="Gradient" id="Gradient_aqnju"]
+colors = PackedColorArray(0.0699445, 0.107402, 0.116726, 1, 0.0565812, 0.0674318, 0.0664072, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4j62x"]
+noise_type = 2
+frequency = 0.015
+fractal_octaves = 1
+fractal_weighted_strength = 1.0
+cellular_distance_function = 3
+cellular_jitter = 0.695
+cellular_return_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nrljb"]
+seamless = true
+color_ramp = SubResource("Gradient_aqnju")
+noise = SubResource("FastNoiseLite_4j62x")
+
+[sub_resource type="Gradient" id="Gradient_0kfjl"]
+colors = PackedColorArray(0.423529, 0.423529, 0.423529, 0.0392157, 1, 1, 1, 0.454902)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_21olq"]
+gradient = SubResource("Gradient_0kfjl")
+
+[resource]
+render_priority = 0
+next_pass = ExtResource("1_0vvyv")
+shader = ExtResource("1_7i02k")
+shader_parameter/Sand = ExtResource("3_f0h77")
+shader_parameter/Stone = SubResource("NoiseTexture2D_nrljb")
+shader_parameter/highlights = SubResource("GradientTexture1D_21olq")
+shader_parameter/Mask = ExtResource("2_3747k")

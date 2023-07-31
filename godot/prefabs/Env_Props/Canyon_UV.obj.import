@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://1wgo4p3w5337"
+path="res://.godot/imported/Canyon_UV.obj-da32c0969d460a9c29ddea8843c01c80.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Canyon_UV.obj-da32c0969d460a9c29ddea8843c01c80.mesh"]
+
+source_file="res://prefabs/Env_Props/Canyon_UV.obj"
+dest_files=["res://.godot/imported/Canyon_UV.obj-da32c0969d460a9c29ddea8843c01c80.mesh", "res://.godot/imported/Canyon_UV.obj-da32c0969d460a9c29ddea8843c01c80.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
