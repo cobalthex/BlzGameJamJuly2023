@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://byq3yxnw2y732"]
 
 [ext_resource type="PackedScene" uid="uid://oo4lbcestic" path="res://prefabs/Env_Props/Rock_06.glb" id="1_hrf2l"]
-[ext_resource type="ArrayMesh" uid="uid://cbjuvlr6euw6p" path="res://prefabs/Env_Props/Rock_06_Mesh.res" id="2_wfl5q"]
-[ext_resource type="ArrayMesh" uid="uid://fktf6wyinfq2" path="res://prefabs/Env_Props/Rock_05_Mesh.res" id="3_jmacw"]
+[ext_resource type="ArrayMesh" path="res://prefabs/Env_Props/Rock_06_Mesh.res" id="2_wfl5q"]
+[ext_resource type="ArrayMesh" path="res://prefabs/Env_Props/Rock_05_Mesh.res" id="3_jmacw"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_x5heq"]
 points = PackedVector3Array(0.0980065, 0.170918, 1.08368, 0.0313357, -1.09544, -0.915432, -0.101746, -1.06124, -0.914896, 0.264708, 0.938067, -0.948591, -0.899434, 0.868715, -0.214713, -0.933298, -1.0597, 0.184202, 0.826977, -1.05665, 0.31623, 0.828285, 0.934382, 0.316701, -0.699931, 0.935244, 0.61601, 0.98915, -0.491416, -0.279359, -0.202043, -1.0964, 0.885223, -0.700041, -1.05918, -0.646748, 0.79239, -0.0622573, 0.812109, 0.760906, 0.501431, -0.744903, -0.3991, 0.202376, -0.875594, 0.3319, 0.906276, 0.85272, -0.831406, 0.634442, 0.648204, 0.661321, -1.09025, -0.57905, 0.163824, -0.559514, -1.04346, -0.804609, 0.941485, -0.416681, -0.168909, -0.663574, 1.05459, -0.400212, 0.402541, 0.980228, 0.86303, 0.8361, -0.248095, -0.997137, 0.30271, 0.349434, 0.262426, -1.02058, 0.777767, 0.995195, 0.203612, -0.148297, -0.201979, 0.938755, 0.885154, -0.661566, -0.490679, 0.677478, 0.899553, -1.09707, -0.215545, 0.328703, 0.00370006, 1.0764, -0.961276, -0.52513, 0.0179, 0.265474, 0.406011, -1.0519)
@@ -16,6 +16,8 @@ points = PackedVector3Array(-2.00845, 0.247563, 0.302847, 2.06745, -0.0150163, -
 transform = Transform3D(4.59351, 0, 0, 0, 2.37398, 0, 0, 0, 3.7966, 3.11616, -0.631376, -1.94246)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__005" index="0"]
+collision_layer = 8
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__005/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_x5heq")
@@ -25,6 +27,8 @@ transform = Transform3D(3.81133, 0, 0, 0, 1.70593, 0, 0, 0, 2.19987, 2.6951, -0.
 mesh = ExtResource("3_jmacw")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock_05" index="0"]
+collision_layer = 8
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock_05/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_p7n5f")
@@ -35,6 +39,8 @@ mesh = ExtResource("3_jmacw")
 skeleton = NodePath("../Rock_05")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock_06" index="0"]
+collision_layer = 8
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock_06/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_p7n5f")
@@ -45,6 +51,8 @@ mesh = ExtResource("3_jmacw")
 skeleton = NodePath("../Rock_05")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock_07" index="0"]
+collision_layer = 8
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock_07/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_p7n5f")
@@ -55,6 +63,8 @@ mesh = ExtResource("2_wfl5q")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__006" index="0"]
+collision_layer = 8
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__006/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_x5heq")
@@ -65,6 +75,8 @@ mesh = ExtResource("2_wfl5q")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__007" index="0"]
+collision_layer = 8
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__007/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_x5heq")
@@ -75,6 +87,8 @@ mesh = ExtResource("2_wfl5q")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__008" index="0"]
+collision_layer = 8
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__008/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_x5heq")
@@ -85,6 +99,8 @@ mesh = ExtResource("2_wfl5q")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__009" index="0"]
+collision_layer = 8
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__009/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_x5heq")
@@ -95,6 +111,8 @@ mesh = ExtResource("2_wfl5q")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__010" index="0"]
+collision_layer = 8
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__010/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_x5heq")
@@ -105,6 +123,8 @@ mesh = ExtResource("3_jmacw")
 skeleton = NodePath("../Rock_05")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock_08" index="0"]
+collision_layer = 8
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock_08/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_p7n5f")
@@ -115,6 +135,8 @@ mesh = ExtResource("3_jmacw")
 skeleton = NodePath("../Rock_05")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock_09" index="0"]
+collision_layer = 8
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock_09/StaticBody3D" index="0"]
 shape = SubResource("ConvexPolygonShape3D_p7n5f")

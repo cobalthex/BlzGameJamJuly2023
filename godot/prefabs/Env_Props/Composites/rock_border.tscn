@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bix1qv7x72t5r"]
+[gd_scene load_steps=8 format=3 uid="uid://bq621cdmal7rf"]
 
-[ext_resource type="Material" uid="uid://dbnyqsc6aqkl0" path="res://materials/Stones.tres" id="1_gdcno"]
+[ext_resource type="Material" path="res://materials/Stones.tres" id="1_gdcno"]
 [ext_resource type="ArrayMesh" path="res://prefabs/Env_Props/Rock_05_Mesh.res" id="2_m28ec"]
 [ext_resource type="ArrayMesh" path="res://prefabs/Env_Props/Rock_06_Mesh.res" id="3_ufqfa"]
 
@@ -43,7 +43,6 @@ points = PackedVector3Array(0.0980065, 0.170918, 1.08368, 0.0313357, -1.09544, -
 points = PackedVector3Array(-2.00845, 0.247563, 0.302847, 2.06745, -0.0150163, -0.35406, 2.03434, -0.20857, -0.348727, -0.700622, 0.0508611, -2.1426, -0.988317, -0.775615, -0.342794, 0.349537, 0.631306, 1.71816, -0.166606, -0.530737, 1.78205, -0.036389, 0.744941, -1.16369, 1.29766, -0.585727, -1.04175, 1.51438, 0.567498, 1.13845, 0.981749, -0.714184, 0.802279, 1.01218, 0.0506307, -1.93067, -1.48467, -0.277783, 1.48642, -1.11205, 0.682237, 1.11388, 1.68461, 0.623429, -0.280241, -1.69459, 0.514351, -0.819976, -1.73903, -0.341825, -1.00657, 0.0269395, -0.462522, -1.88359, 1.50936, -0.272074, 1.26336, -0.105308, 0.183297, 2.09414, 0.469362, 0.808032, 0.417047, 0.0909626, 0.564442, -1.76188, -0.948709, 0.375522, 1.79611, -1.86952, -0.276339, 0.759397, 1.30345, -0.716239, 0.35732, -1.09348, -0.410636, 1.75451, -1.48567, 0.0506709, -1.73561, 1.66507, -0.342437, -1.27016, 1.84426, 0.504641, -0.479656, -0.870553, -0.462929, -1.56456, -1.72877, 0.440498, 0.820086, -1.59707, -0.599371, -0.479724)
 
 [node name="Rock_Boundary" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Rock__005" type="MeshInstance3D" parent="."]
 transform = Transform3D(-6.55438, 0, 7.509, 0, 32.0597, 0, -9.08519, 0, -5.41726, -109.703, -1.47146, -54.0226)
@@ -51,6 +50,8 @@ mesh = SubResource("ArrayMesh_bxp6j")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__005"]
+collision_layer = 4
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__005/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_llb30")
@@ -60,6 +61,8 @@ transform = Transform3D(-0.0267658, 0, 9.30746, 0, 27.0843, 0, -16.1254, 0, -0.0
 mesh = ExtResource("2_m28ec")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock_05"]
+collision_layer = 4
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock_05/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_a3hft")
@@ -70,6 +73,8 @@ mesh = ExtResource("2_m28ec")
 skeleton = NodePath("../Rock_05")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock_06"]
+collision_layer = 4
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock_06/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_a3hft")
@@ -80,6 +85,8 @@ mesh = ExtResource("2_m28ec")
 skeleton = NodePath("../Rock_05")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock_07"]
+collision_layer = 4
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock_07/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_a3hft")
@@ -90,6 +97,8 @@ mesh = ExtResource("3_ufqfa")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__006"]
+collision_layer = 4
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__006/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_llb30")
@@ -100,6 +109,8 @@ mesh = ExtResource("3_ufqfa")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__007"]
+collision_layer = 4
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__007/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_llb30")
@@ -110,6 +121,8 @@ mesh = ExtResource("3_ufqfa")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__008"]
+collision_layer = 4
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__008/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_llb30")
@@ -120,6 +133,8 @@ mesh = ExtResource("3_ufqfa")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__009"]
+collision_layer = 4
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__009/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_llb30")
@@ -130,6 +145,8 @@ mesh = ExtResource("3_ufqfa")
 skeleton = NodePath("")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock__010"]
+collision_layer = 4
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock__010/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_llb30")
@@ -140,6 +157,8 @@ mesh = ExtResource("2_m28ec")
 skeleton = NodePath("../Rock_05")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock_08"]
+collision_layer = 4
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock_08/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_a3hft")
@@ -150,6 +169,8 @@ mesh = ExtResource("2_m28ec")
 skeleton = NodePath("../Rock_05")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Rock_09"]
+collision_layer = 4
+collision_mask = 49
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock_09/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_a3hft")
