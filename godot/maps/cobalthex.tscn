@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ctugyrjbojaha"]
+[gd_scene load_steps=18 format=3 uid="uid://ctugyrjbojaha"]
 
 [ext_resource type="Material" uid="uid://cgm5iqvfhndew" path="res://materials/sand.tres" id="1_3cird"]
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_f6koo"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://csgaobayntxip" path="res://prefabs/Fish_Pasengers/AngelFish.glb" id="7_vu5f7"]
 [ext_resource type="Script" path="res://prefabs/Swim.cs" id="8_odamu"]
 [ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="8_qo4sc"]
+[ext_resource type="PackedScene" uid="uid://ba5u2sgh4ywwc" path="res://prefabs/Env_Props/Composites/rock_wall.tscn" id="10_bn8m0"]
+[ext_resource type="PackedScene" uid="uid://byq3yxnw2y732" path="res://prefabs/Env_Props/Composites/rock_wall_02.tscn" id="11_6e7a0"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6lros"]
 
@@ -71,7 +73,7 @@ environment = ExtResource("6_qgseq")
 script = ExtResource("8_qo4sc")
 
 [node name="Path3D" type="Path3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 4.9, 0.3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 16.7, 0.3)
 curve = SubResource("Curve3D_aniwr")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
@@ -100,3 +102,28 @@ outline_size = 64
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/FieldOfView"]
 transform = Transform3D(1, -2.79397e-09, -8.9407e-08, 1.86265e-09, 1, 0, 5.96046e-08, 3.35276e-08, 1, -7.15256e-07, 5.66211, 23.0104)
 shape = SubResource("SphereShape3D_10eyf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3, 3.3, -4.7)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D"]
+size = Vector3(10.4, 5.4, 15.6)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_iclym")
+
+[node name="StaticBody3D2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.1, 4.9, -4.7)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D2"]
+size = Vector3(10.4, 5.4, 15.6)
+material = SubResource("StandardMaterial3D_irrwd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+shape = SubResource("BoxShape3D_iclym")
+
+[node name="Rock_Wall" parent="." instance=ExtResource("10_bn8m0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.3, 0, 47.7)
+
+[node name="Rock_Wall2" parent="." instance=ExtResource("11_6e7a0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 66.7)

@@ -99,7 +99,7 @@ public partial class Turtle : CharacterBody3D
         {
             float maxBankAngleRadians = Mathf.Min(Mathf.Pi * 0.3f, Mathf.DegToRad(MaxPitchDegreesPerSec) * 2);
             float turnSign = Mathf.Sign(Mathf.Floor(input.X * 100)); // round to .01 to add deadzone (avoids issues of being almost but not exactly 0)
-                                                                             // todo: scale by dot product of inv Vector.Right
+                                                                     // todo: scale by dot product of inv Vector.Right
             m_desiredBankAngleRadians = -turnSign * Mathf.Lerp(0, maxBankAngleRadians, Mathf.Min(1, turnSign * turnScale * relSpeed));
 
             // this sucks
@@ -109,11 +109,11 @@ public partial class Turtle : CharacterBody3D
             newRotation.Z = Mathf.MoveToward(Rotation.Z, m_desiredBankAngleRadians, bankLerp * deltaTime); // lerp would be better
         }
 
-		newRotation.Y = -movementDir * m_desiredBankAngleRadians; // todo: bank speed should be inverse of desired bank angle
+        newRotation.Y = movementDir * input.X * Mathf.Lerp(MaxPitchDegreesPerSec, MaxPitchDegreesPerSec / 2, relSpeed) * deltaTime;
         newRotation.X = (newRotation.X * deltaTime) + Rotation.X;
         newRotation.Y = (newRotation.Y * deltaTime) + Rotation.Y;
 
-		newRotation.X = Mathf.Clamp(newRotation.X, -Mathf.Pi * 0.45f, Mathf.Pi * 0.45f);
+        newRotation.X = Mathf.Clamp(newRotation.X, -Mathf.Pi * 0.45f, Mathf.Pi * 0.45f);
 
         Rotation = newRotation;
 
@@ -155,40 +155,57 @@ public partial class Turtle : CharacterBody3D
             m_forwardSpeed = 0;
         }
 
-		// movement always follows forward direction
-		// todo: enumerate all collisions
-		var motion = m_forwardSpeed * forwardDir * Globals.c_unitsToMeters * deltaTime;
-		if (TestMove(GlobalTransform, motion, m_collision))
-		{
-			var plane = new Plane(m_collision.GetNormal(), m_collision.GetPosition());
-			
-			var relativeOrientation = forwardDir.Dot(plane.Normal);
+        // movement always follows forward direction
+        // todo: enumerate all collisions
+        var motion = m_forwardSpeed * forwardDir * Globals.c_unitsToMeters * deltaTime;
+        if (TestMove(GlobalTransform, motion, m_collision))
+        {
+            var plane = new Plane(m_collision.GetNormal(), Vector3.Zero);
+
+            var relativeOrientation = forwardDir.Dot(plane.Normal);
             // slide
             if (relativeOrientation > -0.6f)
-			{
-                motion = plane.Project((0.1f * forwardDir).Lerp(motion, 1 + relativeOrientation)); // todo: use a proper friction value
-			}
-			else
-			{
-                motion = Vector3.Zero;
-				m_forwardSpeed = 0;
+            {
+                Vector3 preMotion = motion;
+
+                // todo: use actual friction forces
+                var zmotion = motion * 0.8f * (1 + relativeOrientation); // reduce speed the more perpendicular to the collider
+                motion = plane.Project(zmotion); // project the motion onto the plane to slide the turtle
+
+                if (motion.Length() > 5)
+                {
+                    GD.PrintS(
+                        ("trvl", m_collision.GetTravel()),
+                        ("nrm", m_collision.GetNormal()),
+                        ("pm", preMotion),
+                        ("zm", zmotion),
+                        ("m", motion),
+                        ("fwd", m_forwardSpeed),
+                        ("ro", relativeOrientation));
+                }
             }
-			GlobalPosition += m_collision.GetTravel() + motion;
-		}
-		else
-		{
-			GlobalPosition += motion;
-		}
+            else
+            {
+                motion = Vector3.Zero;
+                //m_forwardSpeed = 0.1f;
+            }
+            GlobalPosition += m_collision.GetTravel() + motion;
+        }
+        else
+        {
+            GlobalPosition += motion;
+        }
 
         // TODO: ocean currents
 
         if (m_speedoLabel != null)
         {
             m_speedoLabel.Text =
-                $"Euler: {RotationDegrees.ToString("N1")}rad" +
-                $"\nForward: {forwardDir.ToString("N2")}" +
-                $"\nacceleration: {acceleration:N2}m/s^2" +
-                $"\nforward speed: {m_forwardSpeed:N2}m/s";
+                $"Euler: {RotationDegrees.ToString("N1")}deg"
+                + $"\nForward: {forwardDir.ToString("N2")}"
+                + $"\nAcceleration: {acceleration:N2}m/s^2"
+                + $"\nForward speed: {m_forwardSpeed:N2}m/s"
+                + $"\nBank angle: {m_desiredBankAngleRadians:N2}rad";
         }
     }
 
