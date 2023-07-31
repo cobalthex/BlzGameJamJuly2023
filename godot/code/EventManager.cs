@@ -11,7 +11,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 public abstract class TEventBase
 {
@@ -67,7 +66,6 @@ static internal class EventManager
         var eventType = typeof(TEvent);
         if (!m_eventTable.ContainsKey(eventType))
         {
-            Debug.Print("No event for " + eventType.ToString());
             return;
         }
 

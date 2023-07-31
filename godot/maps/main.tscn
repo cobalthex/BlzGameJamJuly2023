@@ -1,16 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://bto77f7eq6vuo"]
+[gd_scene load_steps=10 format=3 uid="uid://bto77f7eq6vuo"]
 
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_yyim6"]
 [ext_resource type="Theme" uid="uid://bu8wxtxm5hy22" path="res://etc/DebugText.tres" id="2_ecra3"]
-[ext_resource type="Material" uid="uid://cgm5iqvfhndew" path="res://materials/sand.tres" id="3_ojevo"]
 [ext_resource type="PackedScene" uid="uid://c8b4vlwq6o4a8" path="res://prefabs/Turtle/Turtle.tscn" id="4_njlwa"]
+[ext_resource type="PackedScene" uid="uid://cx3ns1e42mpl3" path="res://prefabs/Environment/world_environment.tscn" id="5_34cai"]
 [ext_resource type="Script" path="res://prefabs/Passengers/Passenger.cs" id="5_udynu"]
-[ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="6_51yoj"]
 [ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="7_pycw0"]
 [ext_resource type="Script" path="res://prefabs/GameTimer/GameTimer.cs" id="8_bjmqm"]
 [ext_resource type="PackedScene" uid="uid://oab203y68wwl" path="res://UI/interface.tscn" id="9_uijmv"]
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6lros"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hv3ec"]
 
@@ -32,15 +29,6 @@ light_size = 1.0
 omni_range = 4096.0
 omni_attenuation = 0.00364466
 
-[node name="ground" type="CSGBox3D" parent="."]
-material_override = ExtResource("3_ojevo")
-size = Vector3(1000, 1, 1000)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="ground"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ground/StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_6lros")
-
 [node name="Turtle" parent="." instance=ExtResource("4_njlwa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2, 2.2, -43.3)
 collision_mask = 1
@@ -54,8 +42,7 @@ script = ExtResource("5_udynu")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestPassenger"]
 shape = SubResource("CylinderShape3D_hv3ec")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("6_51yoj")
+[node name="WorldEnvironment" parent="." instance=ExtResource("5_34cai")]
 
 [node name="GameController" type="Node" parent="."]
 script = ExtResource("7_pycw0")

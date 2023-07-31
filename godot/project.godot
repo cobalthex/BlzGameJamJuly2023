@@ -80,12 +80,35 @@ RollRight={
 "deadzone": 0.01,
 "events": []
 }
+PitchUpJoypad={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":1,"axis_value":-1.0,"script":null)
+]
+}
+PitchDownJoypad={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":1,"axis_value":1.0,"script":null)
+]
+}
+YawLeftJoypad={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":0,"axis_value":-1.0,"script":null)
+]
+}
+YawRightJoypad={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":0,"axis_value":1.0,"script":null)
+]
+}
 
 [layer_names]
 
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Passenger"
-3d_physics/layer_3="Environment"
+3d_physics/layer_3="Ground"
+3d_physics/layer_4="Obstacles"
+3d_physics/layer_5="Small fish"
+3d_physics/layer_6="Large fish"
 
 [rendering]
 

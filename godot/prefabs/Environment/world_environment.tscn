@@ -1,0 +1,78 @@
+[gd_scene load_steps=9 format=3 uid="uid://cx3ns1e42mpl3"]
+
+[ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="1_aqefp"]
+[ext_resource type="Material" uid="uid://cgm5iqvfhndew" path="res://materials/sand.tres" id="2_i67fd"]
+[ext_resource type="PackedScene" uid="uid://8jswubl5mo0b" path="res://prefabs/Env_Props/Composites/Composite_Reef.tscn" id="3_vm0r1"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/cache/scatter_cache.gd" id="4_vdcdf"]
+[ext_resource type="PackedScene" uid="uid://bix1qv7x72t5r" path="res://prefabs/Env_Props/Composites/rock_border.tscn" id="5_12viv"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6lros"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ys2o4"]
+size = Vector3(50, 100, 500)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ig7x8"]
+size = Vector3(500, 100, 50)
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = ExtResource("1_aqefp")
+
+[node name="ground" type="CSGBox3D" parent="."]
+material_override = ExtResource("2_i67fd")
+size = Vector3(1000, 0.002, 1000)
+
+[node name="ceiling" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32, 0)
+visible = false
+material_override = ExtResource("2_i67fd")
+size = Vector3(1000, 0.002, 1000)
+
+[node name="Colliders_StaticBody" type="StaticBody3D" parent="."]
+transform = Transform3D(0.819193, 0, 0, 0, 0.819193, 0, 0, 0, 0.819193, 0, 0, 0)
+
+[node name="Floor_CollisionShape3D" type="CollisionShape3D" parent="Colliders_StaticBody"]
+shape = SubResource("WorldBoundaryShape3D_6lros")
+
+[node name="Ceiling_CollisionShape3D" type="CollisionShape3D" parent="Colliders_StaticBody"]
+transform = Transform3D(-10, 1.50996e-06, 0, -1.50996e-06, -10, 0, 0, 0, 10, 0, 50, 0)
+shape = SubResource("WorldBoundaryShape3D_6lros")
+
+[node name="Wall_CollisionShape3D1" type="CollisionShape3D" parent="Colliders_StaticBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150, 0, 0)
+shape = SubResource("BoxShape3D_ys2o4")
+
+[node name="Wall_CollisionShape3D2" type="CollisionShape3D" parent="Colliders_StaticBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -150, 0, 0)
+shape = SubResource("BoxShape3D_ys2o4")
+
+[node name="Wall_CollisionShape3D3" type="CollisionShape3D" parent="Colliders_StaticBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 150)
+shape = SubResource("BoxShape3D_ig7x8")
+
+[node name="Wall_CollisionShape3D4" type="CollisionShape3D" parent="Colliders_StaticBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -150)
+shape = SubResource("BoxShape3D_ig7x8")
+
+[node name="Composite_Reef1" parent="." instance=ExtResource("3_vm0r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.0115, 0, -22.7305)
+
+[node name="Composite_Reef2" parent="." instance=ExtResource("3_vm0r1")]
+transform = Transform3D(-0.585071, 0, 0.810982, 0, 1, 0, -0.810982, 0, -0.585071, -47.9057, 0, -12.5075)
+
+[node name="Composite_Reef3" parent="." instance=ExtResource("3_vm0r1")]
+transform = Transform3D(-0.805629, 0, -0.592421, 0, 1, 0, 0.592421, 0, -0.805629, 35.2241, 0, 56.9736)
+
+[node name="ScatterCache" type="Node3D" parent="."]
+script = ExtResource("4_vdcdf")
+cache_file = "res://addons/proton_scatter/cache/world_environment_1895413439_scatter_cache.tres"
+
+[node name="Rock_Boundary1" parent="." instance=ExtResource("5_12viv")]
+
+[node name="Rock_Boundary2" parent="." instance=ExtResource("5_12viv")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Rock_Boundary3" parent="." instance=ExtResource("5_12viv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Rock_Boundary4" parent="." instance=ExtResource("5_12viv")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://d2bptgni81amj"]
+[gd_scene load_steps=24 format=3 uid="uid://ba545pxv3u16b"]
 
 [ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="1_bt4l2"]
 [ext_resource type="Material" uid="uid://b2d181l7tf055" path="res://materials/Sands_Ren.tres" id="2_nsugi"]
@@ -20,7 +20,7 @@
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_51oru"]
 
-[sub_resource type="Resource" id="Resource_ks3vk"]
+[sub_resource type="Resource" id="Resource_6hx0f"]
 script = ExtResource("6_3bhjg")
 amount = 120
 enabled = true
@@ -29,7 +29,7 @@ custom_seed = 60
 restrict_height = true
 reference_frame = 1
 
-[sub_resource type="Resource" id="Resource_6akyi"]
+[sub_resource type="Resource" id="Resource_ona8q"]
 script = ExtResource("7_5gijm")
 position = Vector3(0.15, 0.15, 0.15)
 rotation = Vector3(20, 360, 20)
@@ -40,7 +40,7 @@ custom_seed = 0
 restrict_height = false
 reference_frame = 2
 
-[sub_resource type="Resource" id="Resource_cqsre"]
+[sub_resource type="Resource" id="Resource_oq7w7"]
 script = ExtResource("8_vyqgm")
 iterations = 3
 offset_step = 0.55
@@ -52,7 +52,7 @@ custom_seed = 0
 restrict_height = true
 reference_frame = 0
 
-[sub_resource type="Resource" id="Resource_kioqt"]
+[sub_resource type="Resource" id="Resource_28hoj"]
 script = ExtResource("9_j4y4u")
 ray_direction = Vector3(0, -1, 0)
 ray_length = 5.0
@@ -68,7 +68,7 @@ custom_seed = 0
 restrict_height = false
 reference_frame = 0
 
-[sub_resource type="Resource" id="Resource_40ttj"]
+[sub_resource type="Resource" id="Resource_mgk3h"]
 script = ExtResource("14_5r306")
 mask = "res://addons/proton_scatter/masks/bars.png"
 mask_rotation = 0.0
@@ -84,9 +84,9 @@ custom_seed = 0
 restrict_height = false
 reference_frame = 0
 
-[sub_resource type="Resource" id="Resource_1jiqr"]
+[sub_resource type="Resource" id="Resource_i4xp8"]
 script = ExtResource("5_ujevm")
-stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_ks3vk"), SubResource("Resource_6akyi"), SubResource("Resource_cqsre"), SubResource("Resource_kioqt"), SubResource("Resource_40ttj")])
+stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_6hx0f"), SubResource("Resource_ona8q"), SubResource("Resource_oq7w7"), SubResource("Resource_28hoj"), SubResource("Resource_mgk3h")])
 
 [sub_resource type="Resource" id="Resource_pyolu"]
 script = ExtResource("14_ptpfs")
@@ -129,7 +129,7 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9171, 1.90735e-06, -36.4677)
 visible = false
 script = ExtResource("4_7iygc")
-modifier_stack = SubResource("Resource_1jiqr")
+modifier_stack = SubResource("Resource_i4xp8")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
