@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ctugyrjbojaha"]
+[gd_scene load_steps=16 format=3 uid="uid://ctugyrjbojaha"]
 
 [ext_resource type="Material" uid="uid://cgm5iqvfhndew" path="res://materials/sand.tres" id="1_3cird"]
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_f6koo"]
@@ -23,6 +23,12 @@ point_count = 6
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_10eyf"]
 radius = 20.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iclym"]
+size = Vector3(10.4, 5.4, 15.6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_irrwd"]
+albedo_color = Color(0.337255, 0.654902, 1, 1)
 
 [node name="scene" type="Node3D"]
 script = ExtResource("1_f6koo")
@@ -75,7 +81,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 4.9, 0.3)
 curve = SubResource("Curve3D_aniwr")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(0.996586, 0.00376689, 0.0824678, -0.00975296, 0.997333, 0.0723047, -0.0819756, -0.0728622, 0.993967, -0.303023, 1.70919, 11.4156)
+transform = Transform3D(0.996586, 0.00376689, 0.0824678, -0.00975296, 0.997333, 0.0723047, -0.0819756, -0.0728621, 0.993966, -0.303023, 1.70919, 11.4156)
 progress = 13.2359
 use_model_front = true
 tilt_enabled = false
@@ -100,3 +106,22 @@ outline_size = 64
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/FieldOfView"]
 transform = Transform3D(1, -2.79397e-09, -8.9407e-08, 1.86265e-09, 1, 0, 5.96046e-08, 3.35276e-08, 1, -7.15256e-07, 5.66211, 23.0104)
 shape = SubResource("SphereShape3D_10eyf")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3, 3.3, -4.7)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D"]
+size = Vector3(10.4, 5.4, 15.6)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_iclym")
+
+[node name="StaticBody3D2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.1, 4.9, -4.7)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D2"]
+size = Vector3(10.4, 5.4, 15.6)
+material = SubResource("StandardMaterial3D_irrwd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+shape = SubResource("BoxShape3D_iclym")
