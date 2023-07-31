@@ -10,7 +10,7 @@ public partial class Swim : PathFollow3D
     public float MaxTurnRadiansPerSecond { get; set; } = Mathf.Pi;
 
     [Export]
-    public bool WillFlee { get; set; } = true;
+    public bool ShouldFlee { get; set; } = true;
 
     public enum SwimState
     {
@@ -18,6 +18,8 @@ public partial class Swim : PathFollow3D
         FollowingPath,
         Fleeing,
     }
+
+    // add support for custom path points?
 
     public SwimState State { get; private set; }
 
@@ -43,12 +45,12 @@ public partial class Swim : PathFollow3D
 
     private void FieldOfViewEntered(Node3D body)
     {
-        if (IsAncestorOf(body))
+        if (!ShouldFlee || IsAncestorOf(body))
         {
             return;
         }
 
-        GD.PrintS($"Fleeing from {body.Name}");
+        GD.PrintS($"Fleeing from {body.GetPath()}");
 
         // this shouldn't be necessary
         if (State == SwimState.Fleeing)
@@ -109,7 +111,7 @@ public partial class Swim : PathFollow3D
             }
             else
             {
-                Quaternion = Quaternion.Slerp(m_navigateQuat, MaxTurnRadiansPerSecond * (float)deltaTime);
+                Quaternion = Quaternion.Slerp(m_navigateQuat, 0.1f /*MaxTurnRadiansPerSecond * (float)deltaTime*/);
                 Position += Basis.Z * SpeedMetersPerSecond * (float)deltaTime;
             }
         }
