@@ -26,5 +26,5 @@ albedo_color = Color(1, 0.619608, 0.380392, 1)
 albedo_texture = SubResource("NoiseTexture2D_xgltt")
 heightmap_scale = 1.0
 heightmap_texture = SubResource("NoiseTexture2D_xgltt")
-uv1_scale = Vector3(0.035, 0.035, 0.035)
+uv1_scale = Vector3(0.07, 0.07, 0.07)
 uv1_triplanar = true
