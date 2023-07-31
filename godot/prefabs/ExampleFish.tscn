@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://de13w7ephfimp"]
+
+[ext_resource type="Script" path="res://prefabs/Swim.cs" id="1_mm38m"]
+[ext_resource type="PackedScene" uid="uid://csgaobayntxip" path="res://prefabs/Fish_Pasengers/AngelFish.glb" id="2_00l36"]
+
+[sub_resource type="Curve3D" id="Curve3D_aniwr"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 1.7, 1.2, -1.5, 0, 0, 0, 0, 0, 0, -0.6, 1.4, 7.3, -2.6, 0.1, -5.2, 2.6, -0.1, 5.2, 3, 2.7, 30.3, -3.7, 4.3, -0.1, 3.7, -4.3, 0.1, 24.7, 2, 36.8, 3.5, 1, 9.3, -3.5, -1, -9.3, 26.7, 2.8, 6.1, -0.5, -3.4, -6.2, 0.5, 3.4, 6.2, 9.6, 1.6, -12),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pvnt0"]
+radius = 2.1
+height = 9.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_10eyf"]
+radius = 20.0
+
+[node name="Path3D" type="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.0983124, 0.3)
+curve = SubResource("Curve3D_aniwr")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="."]
+transform = Transform3D(0.996575, -0.00597846, 0.0824678, 0, 0.997381, 0.0723047, -0.0826842, -0.0720571, 0.993967, -0.303023, 1.70919, 11.4156)
+progress = 13.2359
+rotation_mode = 4
+use_model_front = true
+tilt_enabled = false
+script = ExtResource("1_mm38m")
+
+[node name="AnimatableBody3D" type="AnimatableBody3D" parent="PathFollow3D"]
+transform = Transform3D(1, -4.65661e-10, 0, 0, 1, 0, 0, 7.45058e-09, 1, 0, 0, 0)
+collision_layer = 16
+collision_mask = 61
+
+[node name="AngelFish" parent="PathFollow3D/AnimatableBody3D" instance=ExtResource("2_00l36")]
+transform = Transform3D(1, -3.25963e-09, 7.45058e-09, -4.19095e-09, 1, 2.98023e-08, 2.23517e-08, -6.70552e-08, 1, 0.7, -0.299997, 3.2)
+
+[node name="debugText" type="Label3D" parent="PathFollow3D/AnimatableBody3D/AngelFish"]
+transform = Transform3D(1, -6.0536e-09, 7.45058e-09, -6.0536e-09, 1, 4.47035e-08, 2.23517e-08, -7.45058e-08, 1, -4.17233e-07, 1.87139, 2.79644)
+pixel_size = 0.0005
+billboard = 1
+no_depth_test = true
+fixed_size = true
+texture_filter = 1
+text = "DEBUG"
+font_size = 128
+outline_size = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PathFollow3D/AnimatableBody3D"]
+transform = Transform3D(1, 0, 0, 0, -4.47035e-08, -1, 0, 1, -1.04308e-07, 0.8, 0, 1.87043)
+shape = SubResource("CapsuleShape3D_pvnt0")
+
+[node name="FieldOfView" type="Area3D" parent="PathFollow3D"]
+transform = Transform3D(1, -4.65661e-10, 0, 0, 1, 0, 0, 7.45058e-09, 1, 0, 0, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PathFollow3D/FieldOfView"]
+transform = Transform3D(1, -2.79397e-09, -8.9407e-08, 1.86265e-09, 1, 0, 5.96046e-08, 3.35276e-08, 1, -7.15256e-07, 5.66211, 23.0104)
+shape = SubResource("SphereShape3D_10eyf")

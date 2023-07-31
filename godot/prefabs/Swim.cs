@@ -9,6 +9,9 @@ public partial class Swim : PathFollow3D
     [Export]
     public float MaxTurnRadiansPerSecond { get; set; } = Mathf.Pi;
 
+    [Export]
+    public bool WillFlee { get; set; } = true;
+
     public enum SwimState
     {
         NagivatingToPath,
