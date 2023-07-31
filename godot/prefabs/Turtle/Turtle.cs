@@ -109,9 +109,11 @@ public partial class Turtle : CharacterBody3D
             newRotation.Z = Mathf.MoveToward(Rotation.Z, m_desiredBankAngleRadians, bankLerp * deltaTime); // lerp would be better
         }
 
-        newRotation.Y = -movementDir * m_desiredBankAngleRadians;
+		newRotation.Y = -movementDir * m_desiredBankAngleRadians; // todo: bank speed should be inverse of desired bank angle
         newRotation.X = (newRotation.X * deltaTime) + Rotation.X;
         newRotation.Y = (newRotation.Y * deltaTime) + Rotation.Y;
+
+		newRotation.X = Mathf.Clamp(newRotation.X, -Mathf.Pi * 0.45f, Mathf.Pi * 0.45f);
 
         Rotation = newRotation;
 
@@ -153,19 +155,30 @@ public partial class Turtle : CharacterBody3D
             m_forwardSpeed = 0;
         }
 
-        // movement always follows forward direction
-        // todo: enumerate all collisions
-        var motion = m_forwardSpeed * forwardDir * Globals.c_unitsToMeters * deltaTime;
-        if (TestMove(GlobalTransform, motion, m_collision))
-        {
-            var plane = new Plane(m_collision.GetNormal(), m_collision.GetPosition());
-            motion = plane.Project((0.1f * forwardDir).Lerp(motion, 0.8f)); // todo: use a proper friction value
-            GlobalPosition += m_collision.GetTravel() + motion;
-        }
-        else
-        {
-            GlobalPosition += motion;
-        }
+		// movement always follows forward direction
+		// todo: enumerate all collisions
+		var motion = m_forwardSpeed * forwardDir * Globals.c_unitsToMeters * deltaTime;
+		if (TestMove(GlobalTransform, motion, m_collision))
+		{
+			var plane = new Plane(m_collision.GetNormal(), m_collision.GetPosition());
+			
+			var relativeOrientation = forwardDir.Dot(plane.Normal);
+            // slide
+            if (relativeOrientation > -0.6f)
+			{
+                motion = plane.Project((0.1f * forwardDir).Lerp(motion, 1 + relativeOrientation)); // todo: use a proper friction value
+			}
+			else
+			{
+                motion = Vector3.Zero;
+				m_forwardSpeed = 0;
+            }
+			GlobalPosition += m_collision.GetTravel() + motion;
+		}
+		else
+		{
+			GlobalPosition += motion;
+		}
 
         // TODO: ocean currents
 
