@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cx3ns1e42mpl3"]
+[gd_scene load_steps=18 format=3 uid="uid://cx3ns1e42mpl3"]
 
 [ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="1_aqefp"]
 [ext_resource type="Material" uid="uid://cgm5iqvfhndew" path="res://materials/sand.tres" id="2_i67fd"]
@@ -7,6 +7,8 @@
 [ext_resource type="Material" uid="uid://dbnyqsc6aqkl0" path="res://materials/Stones.tres" id="5_qxpb6"]
 [ext_resource type="ArrayMesh" path="res://prefabs/Env_Props/Rock_05_Mesh.res" id="6_b0r77"]
 [ext_resource type="ArrayMesh" path="res://prefabs/Env_Props/Rock_06_Mesh.res" id="7_rj0be"]
+[ext_resource type="Shader" uid="uid://3m7f12r4upuc" path="res://materials/Shaders/Landscape_Shader.tres" id="8_v88ej"]
+[ext_resource type="ArrayMesh" uid="uid://77keyv10qbfa" path="res://prefabs/Env_Props/Canyon.obj" id="9_d3k3x"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6lros"]
 
@@ -54,12 +56,13 @@ points = PackedVector3Array(0.0980065, 0.170918, 1.08368, 0.0313357, -1.09544, -
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_a3hft"]
 points = PackedVector3Array(-2.00845, 0.247563, 0.302847, 2.06745, -0.0150163, -0.35406, 2.03434, -0.20857, -0.348727, -0.700622, 0.0508611, -2.1426, -0.988317, -0.775615, -0.342794, 0.349537, 0.631306, 1.71816, -0.166606, -0.530737, 1.78205, -0.036389, 0.744941, -1.16369, 1.29766, -0.585727, -1.04175, 1.51438, 0.567498, 1.13845, 0.981749, -0.714184, 0.802279, 1.01218, 0.0506307, -1.93067, -1.48467, -0.277783, 1.48642, -1.11205, 0.682237, 1.11388, 1.68461, 0.623429, -0.280241, -1.69459, 0.514351, -0.819976, -1.73903, -0.341825, -1.00657, 0.0269395, -0.462522, -1.88359, 1.50936, -0.272074, 1.26336, -0.105308, 0.183297, 2.09414, 0.469362, 0.808032, 0.417047, 0.0909626, 0.564442, -1.76188, -0.948709, 0.375522, 1.79611, -1.86952, -0.276339, 0.759397, 1.30345, -0.716239, 0.35732, -1.09348, -0.410636, 1.75451, -1.48567, 0.0506709, -1.73561, 1.66507, -0.342437, -1.27016, 1.84426, 0.504641, -0.479656, -0.870553, -0.462929, -1.56456, -1.72877, 0.440498, 0.820086, -1.59707, -0.599371, -0.479724)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4qiv2"]
+render_priority = 0
+shader = ExtResource("8_v88ej")
+shader_parameter/Scale = 500.0
+
 [node name="WorldEnvironment" type="WorldEnvironment"]
 environment = ExtResource("1_aqefp")
-
-[node name="ground" type="CSGBox3D" parent="."]
-material_override = ExtResource("2_i67fd")
-size = Vector3(1000, 0.002, 1000)
 
 [node name="ceiling" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32, 0)
@@ -204,3 +207,8 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rock_Obstacles/Rock__010/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_llb30")
+
+[node name="Canyon" type="MeshInstance3D" parent="."]
+transform = Transform3D(19.982, 0, 0, 0, 19.982, 0, 0, 0, 19.982, 0, -3, 0)
+material_override = SubResource("ShaderMaterial_4qiv2")
+mesh = ExtResource("9_d3k3x")
