@@ -33,11 +33,11 @@ script = ExtResource("4_ixssj")
 [node name="Seat-TL" type="Marker3D" parent="model/transport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.63, 0.4, 0.3)
 
-[node name="Seat-BL" type="Marker3D" parent="model/transport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.63, 0.4, -0.8)
-
 [node name="Seat-TR" type="Marker3D" parent="model/transport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.63, 0.4, 0.3)
+
+[node name="Seat-BL" type="Marker3D" parent="model/transport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.63, 0.4, -0.8)
 
 [node name="Seat-BR" type="Marker3D" parent="model/transport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.63, 0.4, -0.8)

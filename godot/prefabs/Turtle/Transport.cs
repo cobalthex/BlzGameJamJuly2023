@@ -9,148 +9,149 @@ using System.Text;
 
 public partial class Transport : Node3D
 {
-	public const string c_seatNamePattern = "Seat-*";
+    public const string c_seatNamePattern = "Seat-*";
 
-	Label? debugText;
+    Label? debugText;
 
-	public struct Seat
-	{
-		public Node3D node;
-		public Passenger? passenger;
-		public ulong pickupTimeMillisec;
-	}
+    public struct Seat
+    {
+        public Node3D node;
+        public Passenger? passenger;
+        public ulong pickupTimeMillisec;
+    }
 
-	public Seat[] Seats { get; private set; } = Array.Empty<Seat>();
+    public Seat[] Seats { get; private set; } = Array.Empty<Seat>();
 
-	[Signal]
-	public delegate void PassengerPickedUpEventHandler();
+    [Signal]
+    public delegate void PassengerPickedUpEventHandler();
 
-	[Signal]
-	public delegate void PassengerDeliveredEventHandler(float deliveryScore);
+    [Signal]
+    public delegate void PassengerDeliveredEventHandler(float deliveryScore);
 
-	public override void _Ready()
-	{
-		Seats = FindChildren(c_seatNamePattern, nameof(Node3D), false)
-			.Select(s => new Seat { node = ((Node3D)s), passenger = null })
-			.ToArray();
-		// sort seats around a circle?
+    public override void _Ready()
+    {
+        Seats = FindChildren(c_seatNamePattern, nameof(Node3D), false)
+            .Select(s => new Seat { node = ((Node3D)s), passenger = null })
+            .ToArray();
+        // sort seats around a circle?
 
-		// TODO: do ^ in child_entered_tree?
+        // TODO: do ^ in child_entered_tree?
 
 #if DEBUG
-		debugText = FindChild("debug") as Label;
+        debugText = FindChild("debug") as Label;
 #endif
-	}
+    }
 
-	/// <summary>
-	/// Try and add a passenger to the transport
-	/// </summary>
-	/// <returns>True if the passenger was added, false if not (no free seats)</returns>
-	/// <remarks>This transport will parent the passenger if added, and handle movement</remarks>
-	public bool TryPickupPassenger(Passenger passenger)
-	{
-		// TODO: find the closest seat
-		for (int i = 0; i < Seats.Length; ++i)
-		{
-			if (Seats[i].passenger != null)
-			{
-				continue;
-			}
+    /// <summary>
+    /// Try and add a passenger to the transport
+    /// </summary>
+    /// <returns>True if the passenger was added, false if not (no free seats)</returns>
+    /// <remarks>This transport will parent the passenger if added, and handle movement</remarks>
+    public bool TryPickupPassenger(Passenger passenger)
+    {
+        // TODO: find the closest seat
+        for (int i = 0; i < Seats.Length; ++i)
+        {
+            if (Seats[i].passenger != null)
+            {
+                continue;
+            }
 
-			Seats[i].passenger = passenger;
-			var relTransform = passenger.Transform;
-			passenger.GetParent()?.RemoveChild(passenger);
-			Seats[i].node.AddChild(passenger);
-			passenger.Position = Seats[i].node.Transform.Origin; // todo: this needs rotation+scale
+            Seats[i].passenger = passenger;
+            Seats[i].pickupTimeMillisec = Time.GetTicksMsec();
+            var relTransform = passenger.Transform;
+            passenger.GetParent()?.RemoveChild(passenger);
+            Seats[i].node.AddChild(passenger);
+            passenger.Position = Seats[i].node.Transform.Origin; // todo: this needs rotation+scale
 
-			// connect to PassengerDelivered signal
-			passenger.PassengerDelivered += TransportPassengerWasDelivered;
+            // connect to PassengerDelivered signal
+            passenger.PassengerDelivered += TransportPassengerWasDelivered;
 
-			// todo: passenger needs to swim to desird location (passenger should do that automatically?)
+            // todo: passenger needs to swim to desird location (passenger should do that automatically?)
 
-			GD.PrintS("Picked up passenger", passenger);
-			return true;
-		}
-		EmitSignal(SignalName.PassengerPickedUp);
+            GD.PrintS("Picked up passenger", passenger.Name);
+            return true;
+        }
+        EmitSignal(SignalName.PassengerPickedUp);
 
-		// tell target that it's active?
+        // tell target that it's active?
 
-		return false;
-	}
+        return false;
+    }
 
-	private float CalculateScore(Passenger passenger, float secondsTaken) =>
+    private float CalculateScore(Passenger passenger, float secondsTaken) =>
         Mathf.Clamp(1 - secondsTaken / (passenger.DeliveryParTimeSeconds * 2), 0, 1) * passenger.MaxDeliveryScore;
 
-	public void TryDeliverPassengers(Target target)
-	{
-		if (target == null)
-		{
-			return;
-		}
+    public void TryDeliverPassengers(Target target)
+    {
+        if (target == null)
+        {
+            return;
+        }
 
-		for (int i = 0; i < Seats.Length; ++i)
-		{
-			var passenger = Seats[i].passenger;
-			if (passenger != null &&
-				passenger.Target == target)
-			{
+        for (int i = 0; i < Seats.Length; ++i)
+        {
+            var passenger = Seats[i].passenger;
+            if (passenger != null &&
+                passenger.Target == target)
+            {
                 // calculate score
                 var timeTaken = (Time.GetTicksMsec() - Seats[i].pickupTimeMillisec) / 1000f;
-				var deliveryScore = CalculateScore(passenger, timeTaken);
+                var deliveryScore = CalculateScore(passenger, timeTaken);
 
                 EmitSignal(nameof(PassengerDelivered), deliveryScore);
-                GD.PrintS("Passenger delivered in", timeTaken, "secs,", deliveryScore, "points");
-				Seats[i].passenger = null;
+                GD.PrintS("Passenger in", Seats[i].node.Name, "delivered in", timeTaken, "secs,", deliveryScore, "points");
+                Seats[i].passenger = null;
 
-				Seats[i].node.RemoveChild(passenger);
-				GetTree().QueueDelete(passenger);
-			}
-		}
-	}
+                Seats[i].node.RemoveChild(passenger);
+                GetTree().QueueDelete(passenger);
+            }
+        }
+    }
 
-	public void TransportPassengerWasDelivered()
-	{
-		EmitSignal(SignalName.PassengerDelivered);
-		return;
-	}
+    public void TransportPassengerWasDelivered()
+    {
+        EmitSignal(SignalName.PassengerDelivered);
+        return;
+    }
 
-	public override void _Process(double delta)
-	{
-		var now = Time.GetTicksMsec();
+    public override void _Process(double delta)
+    {
+        var now = Time.GetTicksMsec();
 
-		if (debugText != null)
-		{
-			StringBuilder sb = new();
-			for (int i = 0; i < Seats.Length; ++i)
-			{
-				sb.Append(i);
-				sb.Append(": ");
-				sb.Append(Seats[i].node.Name);
-				sb.Append(' ');
-				var passenger = Seats[i].passenger;
-				if (passenger != null)
-				{
-					sb.Append(passenger.Name);
-					sb.Append("  ");
-					var timeTaken = Time.GetTicksMsec() - Seats[i].pickupTimeMillisec;
-					sb.Append(timeTaken / 1000);
-					sb.Append('.');
-					sb.Append((timeTaken % 1000).ToString("D3"));
-					sb.Append(" / ");
+        if (debugText != null)
+        {
+            StringBuilder sb = new();
+            for (int i = 0; i < Seats.Length; ++i)
+            {
+                sb.Append(i);
+                sb.Append(": ");
+                sb.Append(Seats[i].node.Name);
+                sb.Append(' ');
+                var passenger = Seats[i].passenger;
+                if (passenger != null)
+                {
+                    sb.Append(passenger.Name);
+                    sb.Append("  ");
+                    var timeTaken = Time.GetTicksMsec() - Seats[i].pickupTimeMillisec;
+                    sb.Append(timeTaken / 1000);
+                    sb.Append('.');
+                    sb.Append((timeTaken % 1000).ToString("D3"));
+                    sb.Append(" / ");
                     sb.Append(passenger.DeliveryParTimeSeconds.ToString("N3"));
                     sb.Append(" sec,  ");
-					sb.Append(CalculateScore(passenger, timeTaken / 1000f).ToString("N1"));
-					sb.Append(" / ");
+                    sb.Append(CalculateScore(passenger, timeTaken / 1000f).ToString("N1"));
+                    sb.Append(" / ");
                     sb.Append(passenger.MaxDeliveryScore.ToString("N1"));
                     sb.AppendLine(" pts");
-				}
-				else
-				{
-					sb.AppendLine("(none)");
-				}
-				
-			}
-			debugText.Text = sb.ToString();
-		}
-	}
+                }
+                else
+                {
+                    sb.AppendLine("(none)");
+                }
+                
+            }
+            debugText.Text = sb.ToString();
+        }
+    }
 }
