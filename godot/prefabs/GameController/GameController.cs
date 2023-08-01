@@ -9,6 +9,7 @@ public partial class GameController : Node
     [Export]
     public float DeliveryTimeAddSeconds { get; set; } = 30;
 
+    public List<Passenger> WorldPassengers = new List<Passenger>();
     public Passenger[] AvailablePassengers { get; private set; } = Array.Empty<Passenger>();
 
     private Turtle m_turtleInstance;
@@ -25,6 +26,18 @@ public partial class GameController : Node
 
     public int Score => Mathf.FloorToInt(m_score);
     private float m_score;
+
+    public override void _EnterTree()
+    {
+        base._EnterTree();
+        EventManager.AddListener<PassengerSpawnedEvent>(OnPassengerSpawnedEvent);
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        EventManager.RemoveListener<PassengerSpawnedEvent>(OnPassengerSpawnedEvent);
+    }
 
     public override void _Ready()
     {
@@ -71,5 +84,10 @@ public partial class GameController : Node
     {
         m_score += deliveryScore;
         m_gameTimer.WaitTime += DeliveryTimeAddSeconds;
+    }
+
+    private void OnPassengerSpawnedEvent(PassengerSpawnedEvent evt)
+    {
+        WorldPassengers.Append(evt.Passenger);
     }
 }
