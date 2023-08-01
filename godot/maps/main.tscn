@@ -42,7 +42,7 @@ script = ExtResource("8_bjmqm")
 [node name="Interface" parent="." instance=ExtResource("9_uijmv")]
 
 [node name="PassengerSpawner1" parent="." instance=ExtResource("8_at6gr")]
-transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 23.8038, 0, -69.9976)
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 23.8425, -0.0324135, -69.923)
 
 [node name="PassengerSpawner2" parent="." instance=ExtResource("8_at6gr")]
 transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 80.5498, 0, -58.3059)
