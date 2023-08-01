@@ -170,11 +170,12 @@ public partial class Turtle : CharacterBody3D
                 // todo: use actual friction forces
                 motion *= 0.8f * (1 + relativeOrientation); // reduce speed the more perpendicular to the collider
                 motion = plane.Project(motion); // project the motion onto the plane to slide the turtle
+                m_forwardSpeed *= 0.9f * deltaTime;
             }
             else
             {
                 motion = Vector3.Zero;
-                //m_forwardSpeed = 0.1f;
+                m_forwardSpeed *= 0.1f * deltaTime;
             }
             GlobalPosition += m_collision.GetTravel() + motion;
         }

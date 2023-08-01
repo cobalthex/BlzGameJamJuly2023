@@ -29,7 +29,7 @@ public partial class Passenger : Area3D
     {
         if (body is Turtle t)
         {
-            t.Transport.TryAddPassenger(this);
+            t.Transport.TryPickupPassenger(this);
         }
     }
 }

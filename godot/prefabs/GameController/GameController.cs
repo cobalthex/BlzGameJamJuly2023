@@ -48,7 +48,6 @@ public partial class GameController : Node
 			if (turtle != null)
 			{
 				m_turtleInstance = turtle;
-				m_turtleInstance.Transport.PassengerAdded += OnPassengerAdded;
 				m_turtleInstance.Transport.PassengerDelivered += OnPassengerDelivered;
 			}
 			else
@@ -73,14 +72,4 @@ public partial class GameController : Node
 		m_score += deliveryScore;
 		m_gameTimer.WaitTime += DeliveryTimeAddSeconds;
     }
-
-	// a passenger was picked up, so spawn more to replace it
-	private void OnPassengerAdded()
-	{
-		// spawn more passengers in the world
-		while (AvailablePassengers.Length > Globals.c_maxPassengers)
-		{
-			AvailablePassengers.Append(new Passenger());
-		}
-	}
 }

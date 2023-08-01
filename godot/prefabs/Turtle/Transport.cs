@@ -23,7 +23,7 @@ public partial class Transport : Node3D
 	public Seat[] Seats { get; private set; } = Array.Empty<Seat>();
 
 	[Signal]
-	public delegate void PassengerAddedEventHandler();
+	public delegate void PassengerPickedUpEventHandler();
 
 	[Signal]
 	public delegate void PassengerDeliveredEventHandler(float deliveryScore);
@@ -47,7 +47,7 @@ public partial class Transport : Node3D
 	/// </summary>
 	/// <returns>True if the passenger was added, false if not (no free seats)</returns>
 	/// <remarks>This transport will parent the passenger if added, and handle movement</remarks>
-	public bool TryAddPassenger(Passenger passenger)
+	public bool TryPickupPassenger(Passenger passenger)
 	{
 		// TODO: find the closest seat
 		for (int i = 0; i < Seats.Length; ++i)
@@ -71,7 +71,7 @@ public partial class Transport : Node3D
 			GD.PrintS("Picked up passenger", passenger);
 			return true;
 		}
-		EmitSignal(SignalName.PassengerAdded);
+		EmitSignal(SignalName.PassengerPickedUp);
 
 		// tell target that it's active?
 
