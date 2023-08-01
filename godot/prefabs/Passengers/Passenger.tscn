@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwd527cpkem50"]
+
+[ext_resource type="Script" path="res://prefabs/Passengers/Passenger.cs" id="1_rjq55"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hv3ec"]
+
+[node name="Passenger" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.935, 0)
+script = ExtResource("1_rjq55")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_hv3ec")

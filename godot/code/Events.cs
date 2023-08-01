@@ -43,3 +43,12 @@ public class ScoreChangedEvent : TEventBase
     }
 }
 
+public class PassengerSpawnedEvent : TEventBase
+{
+    public Passenger Passenger { get; set; }
+
+    public PassengerSpawnedEvent(Passenger passenger)
+    {
+        Passenger = passenger;
+    }
+}

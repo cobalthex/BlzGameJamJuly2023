@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw5vhevf1wuce"]
+
+[ext_resource type="PackedScene" uid="uid://be01ddx28q4f5" path="res://prefabs/Passengers/PassengerSpawner.tscn" id="1_2mpwq"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.884369, 0.466788, 0, -0.466788, 0.884369, 0, 6.76966, 11.9928)
+
+[node name="PassengerSpawner" parent="." instance=ExtResource("1_2mpwq")]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0.0390806, -0.0299625, -0.0166407)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.712565, 0.320679, 0.624032, -0.651079, 0.633655, 0.417825, -0.261434, -0.704022, 0.660307, 0, 4, 0)

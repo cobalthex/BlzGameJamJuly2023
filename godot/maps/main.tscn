@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bto77f7eq6vuo"]
+[gd_scene load_steps=9 format=3 uid="uid://bto77f7eq6vuo"]
 
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_yyim6"]
 [ext_resource type="Theme" uid="uid://bu8wxtxm5hy22" path="res://etc/DebugText.tres" id="2_ecra3"]
 [ext_resource type="PackedScene" uid="uid://c8b4vlwq6o4a8" path="res://prefabs/Turtle/Turtle.tscn" id="4_njlwa"]
 [ext_resource type="PackedScene" uid="uid://cx3ns1e42mpl3" path="res://prefabs/Environment/world_environment.tscn" id="5_34cai"]
 [ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="7_pycw0"]
+[ext_resource type="PackedScene" uid="uid://be01ddx28q4f5" path="res://prefabs/Passengers/PassengerSpawner.tscn" id="8_at6gr"]
 [ext_resource type="Script" path="res://prefabs/GameTimer/GameTimer.cs" id="8_bjmqm"]
 [ext_resource type="PackedScene" uid="uid://oab203y68wwl" path="res://UI/interface.tscn" id="9_uijmv"]
 
@@ -39,3 +40,31 @@ script = ExtResource("7_pycw0")
 script = ExtResource("8_bjmqm")
 
 [node name="Interface" parent="." instance=ExtResource("9_uijmv")]
+
+[node name="PassengerSpawner1" parent="." instance=ExtResource("8_at6gr")]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 23.8038, 0, -69.9976)
+
+[node name="PassengerSpawner2" parent="." instance=ExtResource("8_at6gr")]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 80.5498, 0, -58.3059)
+m_passengerPackedScene = Array[PackedScene]([])
+
+[node name="PassengerSpawner3" parent="." instance=ExtResource("8_at6gr")]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 80.5498, 2.31296, 10.5545)
+
+[node name="PassengerSpawner4" parent="." instance=ExtResource("8_at6gr")]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, -12.5179, 2.31296, 60.928)
+
+[node name="PassengerSpawner5" parent="." instance=ExtResource("8_at6gr")]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, -48.9947, 2.31296, 80.95)
+
+[node name="PassengerSpawner6" parent="." instance=ExtResource("8_at6gr")]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, -55.3771, 2.31296, 20.536)
+
+[node name="PassengerSpawner7" parent="." instance=ExtResource("8_at6gr")]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, -86.5958, 2.31296, -8.39197)
+
+[node name="PassengerSpawner8" parent="." instance=ExtResource("8_at6gr")]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, -86.5958, 2.31296, -72.5424)
+
+[node name="PassengerSpawner9" parent="." instance=ExtResource("8_at6gr")]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, -22.4086, 2.31296, -48.279)
