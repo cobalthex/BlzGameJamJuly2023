@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://ba545pxv3u16b"]
+[gd_scene load_steps=44 format=3 uid="uid://ba545pxv3u16b"]
 
 [ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="1_bt4l2"]
 [ext_resource type="Material" uid="uid://b2d181l7tf055" path="res://materials/Sands_Ren.tres" id="2_nsugi"]
@@ -15,12 +15,13 @@
 [ext_resource type="Script" path="res://addons/proton_scatter/src/modifiers/clusterize.gd" id="14_5r306"]
 [ext_resource type="Script" path="res://addons/proton_scatter/src/shapes/sphere_shape.gd" id="14_ptpfs"]
 [ext_resource type="PackedScene" uid="uid://8jswubl5mo0b" path="res://prefabs/Env_Props/Composites/Composite_Reef.tscn" id="15_t60p3"]
+[ext_resource type="Script" path="res://prefabs/Env_Props/Composites/Reef_Seed_Script.gd" id="16_f1fug"]
 [ext_resource type="Material" uid="uid://dajcks5nbs5od" path="res://materials/Landscape.tres" id="16_y0gmj"]
 [ext_resource type="ArrayMesh" uid="uid://1wgo4p3w5337" path="res://prefabs/Env_Props/Canyon_UV.obj" id="19_cx0li"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_51oru"]
 
-[sub_resource type="Resource" id="Resource_dj7fd"]
+[sub_resource type="Resource" id="Resource_20wq8"]
 script = ExtResource("6_3bhjg")
 amount = 120
 enabled = true
@@ -29,7 +30,7 @@ custom_seed = 60
 restrict_height = true
 reference_frame = 1
 
-[sub_resource type="Resource" id="Resource_krjcm"]
+[sub_resource type="Resource" id="Resource_v45eg"]
 script = ExtResource("7_5gijm")
 position = Vector3(0.15, 0.15, 0.15)
 rotation = Vector3(20, 360, 20)
@@ -40,7 +41,7 @@ custom_seed = 0
 restrict_height = false
 reference_frame = 2
 
-[sub_resource type="Resource" id="Resource_5r1f7"]
+[sub_resource type="Resource" id="Resource_p4cw7"]
 script = ExtResource("8_vyqgm")
 iterations = 3
 offset_step = 0.55
@@ -52,7 +53,7 @@ custom_seed = 0
 restrict_height = true
 reference_frame = 0
 
-[sub_resource type="Resource" id="Resource_isf5p"]
+[sub_resource type="Resource" id="Resource_5bmyf"]
 script = ExtResource("9_j4y4u")
 ray_direction = Vector3(0, -1, 0)
 ray_length = 5.0
@@ -68,7 +69,7 @@ custom_seed = 0
 restrict_height = false
 reference_frame = 0
 
-[sub_resource type="Resource" id="Resource_m0166"]
+[sub_resource type="Resource" id="Resource_ad2aw"]
 script = ExtResource("14_5r306")
 mask = "res://addons/proton_scatter/masks/bars.png"
 mask_rotation = 0.0
@@ -84,13 +85,189 @@ custom_seed = 0
 restrict_height = false
 reference_frame = 0
 
-[sub_resource type="Resource" id="Resource_vhkc6"]
+[sub_resource type="Resource" id="Resource_kcd1u"]
 script = ExtResource("5_ujevm")
-stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_dj7fd"), SubResource("Resource_krjcm"), SubResource("Resource_5r1f7"), SubResource("Resource_isf5p"), SubResource("Resource_m0166")])
+stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_20wq8"), SubResource("Resource_v45eg"), SubResource("Resource_p4cw7"), SubResource("Resource_5bmyf"), SubResource("Resource_ad2aw")])
 
 [sub_resource type="Resource" id="Resource_pyolu"]
 script = ExtResource("14_ptpfs")
 radius = 12.0705
+
+[sub_resource type="Resource" id="Resource_j2dik"]
+script = ExtResource("6_3bhjg")
+amount = 6
+enabled = true
+override_global_seed = true
+custom_seed = 8
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_q2nba"]
+script = ExtResource("7_5gijm")
+position = Vector3(0.15, 0.15, 0.15)
+rotation = Vector3(0, 360, 0)
+scale = Vector3(0.1, 0.1, 0.1)
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_rwfeh"]
+script = ExtResource("8_vyqgm")
+iterations = 3
+offset_step = 0.2
+consecutive_step_multiplier = 0.75
+use_computeshader = true
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = true
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_x7e6x"]
+script = ExtResource("5_ujevm")
+stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_j2dik"), SubResource("Resource_q2nba"), SubResource("Resource_rwfeh")])
+
+[sub_resource type="Resource" id="Resource_iokfp"]
+script = ExtResource("14_ptpfs")
+radius = 23.446
+
+[sub_resource type="Resource" id="Resource_unx0d"]
+script = ExtResource("6_3bhjg")
+amount = 200
+enabled = true
+override_global_seed = true
+custom_seed = 400
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_x5ayb"]
+script = ExtResource("7_5gijm")
+position = Vector3(0.15, 0.15, 0.15)
+rotation = Vector3(20, 360, 20)
+scale = Vector3(0.1, 0.1, 0.1)
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_tee4g"]
+script = ExtResource("8_vyqgm")
+iterations = 3
+offset_step = 0.62
+consecutive_step_multiplier = 0.75
+use_computeshader = true
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = true
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_l2b43"]
+script = ExtResource("9_j4y4u")
+ray_direction = Vector3(0, -1, 0)
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = true
+align_with_collision_normal = true
+max_slope = 65.0
+collision_mask = 1
+exclude_mask = 0
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_tbipm"]
+script = ExtResource("14_5r306")
+mask = "res://addons/proton_scatter/masks/bars.png"
+mask_rotation = 0.0
+mask_offset = Vector2(0, 0)
+mask_scale = Vector2(2, 2)
+pixel_to_unit_ratio = 4.0
+remove_below = 0.1
+remove_above = 1.0
+scale_transforms = false
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_run7o"]
+script = ExtResource("5_ujevm")
+stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_unx0d"), SubResource("Resource_x5ayb"), SubResource("Resource_tee4g"), SubResource("Resource_l2b43"), SubResource("Resource_tbipm")])
+
+[sub_resource type="Resource" id="Resource_pelgk"]
+script = ExtResource("6_3bhjg")
+amount = 700
+enabled = true
+override_global_seed = true
+custom_seed = 400
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_k34xw"]
+script = ExtResource("14_5r306")
+mask = "res://addons/proton_scatter/masks/wave.png"
+mask_rotation = 0.0
+mask_offset = Vector2(0, 0)
+mask_scale = Vector2(1, 1)
+pixel_to_unit_ratio = 8.0
+remove_below = 0.1
+remove_above = 1.0
+scale_transforms = false
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_wclti"]
+script = ExtResource("7_5gijm")
+position = Vector3(0.15, 0.1, 0.15)
+rotation = Vector3(0, 360, 0)
+scale = Vector3(0.1, 0.1, 0.1)
+enabled = true
+override_global_seed = false
+custom_seed = 25
+restrict_height = false
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_srifw"]
+script = ExtResource("8_vyqgm")
+iterations = 3
+offset_step = 0.3
+consecutive_step_multiplier = 0.75
+use_computeshader = true
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = true
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_2q7ls"]
+script = ExtResource("9_j4y4u")
+ray_direction = Vector3(0, -1, 0)
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = true
+align_with_collision_normal = false
+max_slope = 40.0
+collision_mask = 1
+exclude_mask = 0
+enabled = true
+override_global_seed = false
+custom_seed = 0
+restrict_height = false
+reference_frame = 0
+
+[sub_resource type="Resource" id="Resource_g2bud"]
+script = ExtResource("5_ujevm")
+stack = Array[Resource("res://addons/proton_scatter/src/modifiers/base_modifier.gd")]([SubResource("Resource_pelgk"), SubResource("Resource_k34xw"), SubResource("Resource_wclti"), SubResource("Resource_srifw"), SubResource("Resource_2q7ls")])
 
 [node name="Node3D" type="Node3D"]
 
@@ -124,7 +301,7 @@ visible = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9171, 1.90735e-06, -36.4677)
 visible = false
 script = ExtResource("4_7iygc")
-modifier_stack = SubResource("Resource_vhkc6")
+modifier_stack = SubResource("Resource_kcd1u")
 Performance/use_chunks = true
 Performance/chunk_dimensions = Vector3(15, 15, 15)
 
@@ -186,12 +363,30 @@ script = ExtResource("11_86bsw")
 shape = SubResource("Resource_pyolu")
 
 [node name="Composite_Reef" parent="." instance=ExtResource("15_t60p3")]
-transform = Transform3D(0.931723, 0, -0.36317, 0, 1, 0, 0.36317, 0, 0.931723, -36.8558, 0, 36.4924)
+transform = Transform3D(0.931723, 0, -0.36317, 0, 1, 0, 0.36317, 0, 0.931723, -45.8685, 0, 46.5823)
+script = ExtResource("16_f1fug")
 
-[node name="Composite_Reef" parent="Composite_Reef" instance=ExtResource("15_t60p3")]
-transform = Transform3D(0.931723, 0, -0.36317, 0, 1, 0, 0.36317, 0, 0.931723, -73.6016, 0, 39.552)
+[node name="ProtonScatter" parent="Composite_Reef" index="0"]
+global_seed = 1
+modifier_stack = SubResource("Resource_x7e6x")
+
+[node name="ScatterShape" parent="Composite_Reef/ProtonScatter" index="2"]
+shape = SubResource("Resource_iokfp")
+
+[node name="ProtonScatter2" parent="Composite_Reef" index="1"]
+global_seed = 1
+modifier_stack = SubResource("Resource_run7o")
+
+[node name="ProtonScatter3" parent="Composite_Reef" index="2"]
+global_seed = 1
+modifier_stack = SubResource("Resource_g2bud")
 
 [node name="Canyon" type="MeshInstance3D" parent="."]
 transform = Transform3D(300, 0, 0, 0, 300, 0, 0, 0, 300, -71.135, -3.27502, 132.357)
 material_override = ExtResource("16_y0gmj")
 mesh = ExtResource("19_cx0li")
+
+[node name="Composite_Reef2" parent="." instance=ExtResource("15_t60p3")]
+transform = Transform3D(0.736215, 0, -0.676748, 0, 1, 0, 0.676748, 0, 0.736215, -119.796, 0, 46.614)
+
+[editable path="Composite_Reef"]

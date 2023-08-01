@@ -29,6 +29,9 @@ const ProtonScatterUtil := preload('./common/scatter_util.gd')
 	set(val):
 		global_seed = val
 		rebuild()
+func set_global_seed(new_value):
+	global_seed = new_value
+	rebuild()  # Assuming you want to rebuild when global_seed is changed.
 @export var show_output_in_tree := false:
 	set(val):
 		show_output_in_tree = val

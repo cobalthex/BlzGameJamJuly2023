@@ -1,0 +1,61 @@
+[gd_resource type="ShaderMaterial" load_steps=13 format=3 uid="uid://d0mgdcg7qxseu"]
+
+[ext_resource type="Shader" path="res://materials/Shaders/Caustic_Shine.gdshader" id="1_rwfk8"]
+
+[sub_resource type="Gradient" id="Gradient_7c6kh"]
+offsets = PackedFloat32Array(0.0518519, 0.921739)
+colors = PackedColorArray(0, 0.607422, 0.422389, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ai8eu"]
+noise_type = 2
+seed = 3
+fractal_type = 0
+cellular_jitter = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tacs6"]
+seamless = true
+color_ramp = SubResource("Gradient_7c6kh")
+noise = SubResource("FastNoiseLite_ai8eu")
+
+[sub_resource type="Gradient" id="Gradient_8oj7l"]
+offsets = PackedFloat32Array(0.0888889, 1)
+colors = PackedColorArray(1.11663e-05, 0.294205, 0.812896, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1atqw"]
+noise_type = 2
+seed = 1
+fractal_type = 0
+cellular_jitter = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i3p1e"]
+seamless = true
+color_ramp = SubResource("Gradient_8oj7l")
+noise = SubResource("FastNoiseLite_1atqw")
+
+[sub_resource type="Gradient" id="Gradient_kpyy0"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nnaxx"]
+noise_type = 2
+seed = 1
+fractal_type = 0
+cellular_jitter = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_arfvq"]
+seamless = true
+as_normal_map = true
+bump_strength = 14.3
+color_ramp = SubResource("Gradient_kpyy0")
+noise = SubResource("FastNoiseLite_nnaxx")
+
+[sub_resource type="Gradient" id="Gradient_ym3cc"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sgd6n"]
+gradient = SubResource("Gradient_ym3cc")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_rwfk8")
+shader_parameter/color_ramp = SubResource("GradientTexture1D_sgd6n")
+shader_parameter/Caustics = SubResource("NoiseTexture2D_tacs6")
+shader_parameter/Caustics2 = SubResource("NoiseTexture2D_i3p1e")
+shader_parameter/Normal_m = SubResource("NoiseTexture2D_arfvq")

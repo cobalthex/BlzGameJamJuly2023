@@ -1,0 +1,47 @@
+[gd_resource type="ShaderMaterial" load_steps=11 format=3 uid="uid://q2uadydgee4d"]
+
+[ext_resource type="Material" uid="uid://d0mgdcg7qxseu" path="res://materials/CausticsShine.tres" id="1_gop45"]
+[ext_resource type="Shader" path="res://materials/Shaders/Caustic_Surface.gdshader" id="2_0av78"]
+
+[sub_resource type="Gradient" id="Gradient_7c6kh"]
+offsets = PackedFloat32Array(0.356643, 0.755245)
+colors = PackedColorArray(0, 0.116829, 0.0688324, 1, 0.95, 1, 0.976667, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ai8eu"]
+noise_type = 2
+seed = 3
+fractal_type = 0
+cellular_jitter = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tacs6"]
+seamless = true
+color_ramp = SubResource("Gradient_7c6kh")
+noise = SubResource("FastNoiseLite_ai8eu")
+
+[sub_resource type="Gradient" id="Gradient_8oj7l"]
+offsets = PackedFloat32Array(0.34965, 0.783217)
+colors = PackedColorArray(8.66354e-07, 0.0671791, 0.248658, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1atqw"]
+noise_type = 2
+seed = 1
+fractal_type = 0
+cellular_jitter = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_i3p1e"]
+seamless = true
+color_ramp = SubResource("Gradient_8oj7l")
+noise = SubResource("FastNoiseLite_1atqw")
+
+[sub_resource type="Gradient" id="Gradient_ym3cc"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sgd6n"]
+gradient = SubResource("Gradient_ym3cc")
+
+[resource]
+render_priority = 0
+next_pass = ExtResource("1_gop45")
+shader = ExtResource("2_0av78")
+shader_parameter/color_ramp = SubResource("GradientTexture1D_sgd6n")
+shader_parameter/Caustics = SubResource("NoiseTexture2D_tacs6")
+shader_parameter/Caustics2 = SubResource("NoiseTexture2D_i3p1e")
