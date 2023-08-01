@@ -109,6 +109,7 @@ YawRightJoypad={
 3d_physics/layer_4="Obstacles"
 3d_physics/layer_5="Small fish"
 3d_physics/layer_6="Large fish"
+3d_physics/layer_7="Target"
 
 [rendering]
 

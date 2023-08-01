@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ctugyrjbojaha"]
+[gd_scene load_steps=20 format=3 uid="uid://ctugyrjbojaha"]
 
 [ext_resource type="Material" uid="uid://cgm5iqvfhndew" path="res://materials/sand.tres" id="1_3cird"]
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_f6koo"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="8_qo4sc"]
 [ext_resource type="PackedScene" uid="uid://ba5u2sgh4ywwc" path="res://prefabs/Env_Props/Composites/rock_wall.tscn" id="10_bn8m0"]
 [ext_resource type="PackedScene" uid="uid://byq3yxnw2y732" path="res://prefabs/Env_Props/Composites/rock_wall_02.tscn" id="11_6e7a0"]
+[ext_resource type="Script" path="res://prefabs/Passengers/Target.cs" id="11_orc2p"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6lros"]
 
@@ -20,6 +21,23 @@ size = Vector3(10.4, 5.4, 15.6)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xofn4"]
 albedo_color = Color(0.580392, 0.6, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_05o76"]
+colors = PackedColorArray(0.931334, 0.938729, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d51kd"]
+gradient = SubResource("Gradient_05o76")
+width = 32
+height = 32
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4683"]
+transparency = 1
+albedo_texture = SubResource("GradientTexture2D_d51kd")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_yfrq3"]
+height = 5.0
+radius = 1.0
 
 [node name="scene" type="Node3D"]
 script = ExtResource("1_f6koo")
@@ -52,11 +70,14 @@ shape = SubResource("WorldBoundaryShape3D_6lros")
 
 [node name="Turtle" parent="." instance=ExtResource("2_bw6yb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2, 2.2, -43.3)
-collision_mask = 1
+collision_mask = 127
 
-[node name="TestPassenger" type="Area3D" parent="."]
+[node name="TestPassenger" type="Area3D" parent="." node_paths=PackedStringArray("Target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 1.46762, 36.9253)
 script = ExtResource("5_i4cac")
+MaxDeliveryScore = 50.0
+DeliveryParTimeSeconds = 10.0
+Target = NodePath("../TestTarget")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="TestPassenger"]
 
@@ -70,7 +91,7 @@ environment = ExtResource("6_qgseq")
 script = ExtResource("8_qo4sc")
 
 [node name="Path3D" parent="." instance=ExtResource("8_4b35n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 5.62174, 0.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.62174, 0.2)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3, 3.3, -4.7)
@@ -96,3 +117,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.3, 0, 47.7)
 
 [node name="Rock_Wall2" parent="." instance=ExtResource("11_6e7a0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 66.7)
+
+[node name="TestTarget" type="Area3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 58.7, 1.40933, -48.8)
+script = ExtResource("11_orc2p")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="TestTarget"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 64
+collision_mask = 65
+radius = 1.0
+height = 5.0
+sides = 16
+material = SubResource("StandardMaterial3D_g4683")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestTarget"]
+shape = SubResource("CylinderShape3D_yfrq3")

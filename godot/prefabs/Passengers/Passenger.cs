@@ -6,7 +6,16 @@ using System.Diagnostics;
 public partial class Passenger : Area3D
 {
     [Export]
-    public bool WasDelivered { get; set; } = false;
+    public float MaxDeliveryScore { get; set; }
+
+    /// <summary>
+    /// This is the time to get half the MaxDeliveryScore, double this time = 0 points
+    /// </summary>
+    [Export]
+    public float DeliveryParTimeSeconds { get; set; }
+
+    [Export]
+    public Target Target { get; set; }
 
     [Signal]
     public delegate void PassengerDeliveredEventHandler();
@@ -21,19 +30,6 @@ public partial class Passenger : Area3D
         if (body is Turtle t)
         {
             t.Transport.TryAddPassenger(this);
-        }
-    }
-
-    // Call when Passenger delivered to emit delivery signal and update scoring
-    public void SetDelivered(bool value)
-    {
-        if (WasDelivered != value)
-        {
-            WasDelivered = value;
-            if (WasDelivered)
-            {
-                EmitSignal(nameof(PassengerDelivered));
-            }
         }
     }
 }

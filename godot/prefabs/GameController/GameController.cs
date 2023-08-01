@@ -2,73 +2,82 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 public partial class GameController : Node
 {
-	public Passenger[] AvailablePassengers { get; private set; } = Array.Empty<Passenger>();
-	private Turtle turtleInstance;
-	private Timer gameTimer;
-	
 	[Export]
-	public double Score { get; private set; } = 0;
+	public float DeliveryTimeAddSeconds { get; set; } = 30;
 
-	public override void _Process(double delta)
+	public Passenger[] AvailablePassengers { get; private set; } = Array.Empty<Passenger>();
+
+	private Turtle m_turtleInstance;
+	private Timer m_gameTimer;
+
+	public enum GameState
 	{
-		// Increment score every second
-		Score += delta;
-		EventManager.Fire(new ScoreChangedEvent(Score));
+		NotStarted,
+		Running,
+		GameOver,
 	}
-	
+
+	public GameState State { get; set; } = GameState.NotStarted;
+
+	public int Score => Mathf.FloorToInt(m_score);
+	private float m_score;
+
 	public override void _Ready()
 	{
 		GD.Print("Starting");
 		
 		// Set Timer
-		if (gameTimer == null )
+		if (m_gameTimer == null)
 		{
-			var timer = GetParent().GetNodeOrNull<GameTimer>("GameTimer");
+			var timer = GetParent().GetNodeOrNull<Timer>("GameTimer");
 			if (timer != null)
 			{
-				gameTimer = timer;
-				gameTimer.Timeout += EndGame;
+				m_gameTimer = timer;
+				m_gameTimer.Timeout += EndGame;
 			}
 		}
 
 		// Set Turtle
-		if (turtleInstance == null)
+		if (m_turtleInstance == null)
 		{
 			var turtle = GetParent().GetNodeOrNull<Turtle>("Turtle");
 			if (turtle != null)
 			{
-				GD.Print("Turtle Set");
-				turtleInstance = turtle;
-				turtleInstance.Transport.PassengerAdded += ManageAvailablePassengers;
-				turtleInstance.Transport.PassengerDelivered += AddTime;
-				turtleInstance.Transport.PassengerDelivered += ManageAvailablePassengers;
+				m_turtleInstance = turtle;
+				m_turtleInstance.Transport.PassengerAdded += OnPassengerAdded;
+				m_turtleInstance.Transport.PassengerDelivered += OnPassengerDelivered;
+			}
+			else
+			{
+				GD.PrintErr("Could not find turtle");
 			}
 		}
 
 		// Spawn initial Passengers in the world
-	}
 
-	private void EndGame()
+		State = GameState.Running;
+    }
+
+    private void EndGame()
 	{
 		GD.Print("Game Over");
-		GetTree().Quit();
+		State = GameState.GameOver;
 	}
 
-	// Add 60" to the game time when a passenger is delivered
-	// Should be called when a signal is emitted from Turtle.Transport indicating a Passenger was delivered
-	private void AddTime()
+	private void OnPassengerDelivered(float deliveryScore)
 	{
-		gameTimer.WaitTime += Globals.c_baseGameDuration;
-		EventManager.Fire(new TimerChangedEvent(gameTimer.WaitTime));
-	}
+		m_score += deliveryScore;
+		m_gameTimer.WaitTime += DeliveryTimeAddSeconds;
+    }
 
-	private void ManageAvailablePassengers()
+	// a passenger was picked up, so spawn more to replace it
+	private void OnPassengerAdded()
 	{
-		GD.Print("We can get some more passengers");
-		// if there are less than 4 passenger in availablePassengers, spawn some more in the world
+		// spawn more passengers in the world
 		while (AvailablePassengers.Length > Globals.c_maxPassengers)
 		{
 			AvailablePassengers.Append(new Passenger());

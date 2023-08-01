@@ -55,7 +55,6 @@ public partial class Turtle : CharacterBody3D
         Transport = GetNode<Transport>("model/transport");
     }
 
-    // TODO: fix controller movement
     void HandleMovement(double deltaTimeD)
     {
         float deltaTime = (float)deltaTimeD;

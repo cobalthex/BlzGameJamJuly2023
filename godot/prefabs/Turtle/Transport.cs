@@ -17,6 +17,7 @@ public partial class Transport : Node3D
 	{
 		public Node3D node;
 		public Passenger? passenger;
+		public ulong pickupTimeMillisec;
 	}
 
 	public Seat[] Seats { get; private set; } = Array.Empty<Seat>();
@@ -25,7 +26,7 @@ public partial class Transport : Node3D
 	public delegate void PassengerAddedEventHandler();
 
 	[Signal]
-	public delegate void PassengerDeliveredEventHandler();
+	public delegate void PassengerDeliveredEventHandler(float deliveryScore);
 
 	public override void _Ready()
 	{
@@ -36,7 +37,9 @@ public partial class Transport : Node3D
 
 		// TODO: do ^ in child_entered_tree?
 
+#if DEBUG
 		debugText = FindChild("debug") as Label;
+#endif
 	}
 
 	/// <summary>
@@ -70,24 +73,40 @@ public partial class Transport : Node3D
 		}
 		EmitSignal(SignalName.PassengerAdded);
 
+		// tell target that it's active?
+
 		return false;
 	}
-	
-	// Emit a signal indicating if the Transport has room for more passengers, or not
-	//public void CheckIfFull()
-	//{
-	//	for (int i = 0; i < Seats.Length; ++i)
-	//	{
-	//		if (Seats[i].passenger == null)
-	//		{
-	//			EmitSignal(SignalName., false);
-	//			return;
-	//		}
-	//	}
 
-	//	EmitSignal(SignalName.IsFull, true);
-	//	return;
-	//}
+	private float CalculateScore(Passenger passenger, float secondsTaken) =>
+        Mathf.Clamp(1 - secondsTaken / (passenger.DeliveryParTimeSeconds * 2), 0, 1) * passenger.MaxDeliveryScore;
+
+	public void TryDeliverPassengers(Target target)
+	{
+		if (target == null)
+		{
+			return;
+		}
+
+		for (int i = 0; i < Seats.Length; ++i)
+		{
+			var passenger = Seats[i].passenger;
+			if (passenger != null &&
+				passenger.Target == target)
+			{
+                // calculate score
+                var timeTaken = (Time.GetTicksMsec() - Seats[i].pickupTimeMillisec) / 1000f;
+				var deliveryScore = CalculateScore(passenger, timeTaken);
+
+                EmitSignal(nameof(PassengerDelivered), deliveryScore);
+                GD.PrintS("Passenger delivered in", timeTaken, "secs,", deliveryScore, "points");
+				Seats[i].passenger = null;
+
+				Seats[i].node.RemoveChild(passenger);
+				GetTree().QueueDelete(passenger);
+			}
+		}
+	}
 
 	public void TransportPassengerWasDelivered()
 	{
@@ -97,6 +116,8 @@ public partial class Transport : Node3D
 
 	public override void _Process(double delta)
 	{
+		var now = Time.GetTicksMsec();
+
 		if (debugText != null)
 		{
 			StringBuilder sb = new();
@@ -106,7 +127,28 @@ public partial class Transport : Node3D
 				sb.Append(": ");
 				sb.Append(Seats[i].node.Name);
 				sb.Append(' ');
-				sb.AppendLine(Seats[i].passenger?.Name ?? "(none)");
+				var passenger = Seats[i].passenger;
+				if (passenger != null)
+				{
+					sb.Append(passenger.Name);
+					sb.Append("  ");
+					var timeTaken = Time.GetTicksMsec() - Seats[i].pickupTimeMillisec;
+					sb.Append(timeTaken / 1000);
+					sb.Append('.');
+					sb.Append((timeTaken % 1000).ToString("D3"));
+					sb.Append(" / ");
+                    sb.Append(passenger.DeliveryParTimeSeconds.ToString("N3"));
+                    sb.Append(" sec,  ");
+					sb.Append(CalculateScore(passenger, timeTaken / 1000f).ToString("N1"));
+					sb.Append(" / ");
+                    sb.Append(passenger.MaxDeliveryScore.ToString("N1"));
+                    sb.AppendLine(" pts");
+				}
+				else
+				{
+					sb.AppendLine("(none)");
+				}
+				
 			}
 			debugText.Text = sb.ToString();
 		}
