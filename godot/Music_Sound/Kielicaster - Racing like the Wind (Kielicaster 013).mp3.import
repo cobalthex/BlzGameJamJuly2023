@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b0pk68wxu08mp"
+path="res://.godot/imported/Kielicaster - Racing like the Wind (Kielicaster 013).mp3-e9edca7a386622d3558d7766c00956cb.mp3str"
+
+[deps]
+
+source_file="res://Music_Sound/Kielicaster - Racing like the Wind (Kielicaster 013).mp3"
+dest_files=["res://.godot/imported/Kielicaster - Racing like the Wind (Kielicaster 013).mp3-e9edca7a386622d3558d7766c00956cb.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

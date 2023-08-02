@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://brcxvrera6288"]
+
+[ext_resource type="ArrayMesh" uid="uid://sowmj5ausj0f" path="res://prefabs/Fish_Pasengers/Particle_Fish.res" id="1_467js"]
+
+[sub_resource type="Curve" id="Curve_4bma2"]
+_data = [Vector2(0, 0.694737), 0.0, 0.862604, 0, 0, Vector2(0.499037, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.673684), -0.964087, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_6joa5"]
+curve = SubResource("Curve_4bma2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_aqlv7"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 2.0
+emission_ring_inner_radius = 1.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -34.76
+radial_accel_max = -20.0
+tangential_accel_min = 20.01
+tangential_accel_max = 26.43
+damping_min = 5.92
+damping_max = 9.241
+scale_min = 0.08
+scale_max = 0.08
+scale_curve = SubResource("CurveTexture_6joa5")
+turbulence_enabled = true
+turbulence_noise_strength = 1.95
+turbulence_noise_scale = 4.6
+turbulence_noise_speed_random = 0.33
+turbulence_influence_min = 0.08
+turbulence_influence_max = 0.2
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="Passenger_VFX_01" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 200
+lifetime = 3.0
+speed_scale = 0.75
+explosiveness = 0.15
+randomness = 0.42
+fixed_fps = 60
+transform_align = 3
+trail_lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_aqlv7")
+draw_pass_1 = ExtResource("1_467js")

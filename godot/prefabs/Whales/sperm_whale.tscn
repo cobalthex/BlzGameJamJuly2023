@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3dap1glaai03"]
+
+[ext_resource type="PackedScene" uid="uid://cowjapb1vbm1e" path="res://prefabs/Whales/Sperm_Whale.glb" id="1_60y61"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_oadlu"]
+animation = &"Sperm_Swim"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mvm5d"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_yrklv"]
+states/Sperm_Swim/node = SubResource("AnimationNodeAnimation_oadlu")
+states/Sperm_Swim/position = Vector2(332, 90)
+transitions = ["Start", "Sperm_Swim", SubResource("AnimationNodeStateMachineTransition_mvm5d")]
+
+[node name="Sperm_Whale" instance=ExtResource("1_60y61")]
+
+[node name="Armature_001" parent="." index="0"]
+transform = Transform3D(8, 0, 0, 0, 8, 2.58708e-05, 0, -2.58708e-05, 8, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Armature_001" index="0"]
+bones/0/rotation = Quaternion(-0.000633501, -0.000633583, -0.000633583, 0.999999)
+bones/1/rotation = Quaternion(-0.727368, -0.000891548, -7.76001e-06, 0.686247)
+bones/2/rotation = Quaternion(0.00994124, 0.000114493, 0.00431821, 0.999941)
+bones/3/rotation = Quaternion(0.0588555, 3.91313e-05, -0.00386446, 0.998259)
+bones/4/rotation = Quaternion(0.131206, 0.000188804, 0.000186391, 0.991355)
+bones/5/rotation = Quaternion(0.200253, -0.000150003, -0.000117644, 0.979744)
+bones/7/rotation = Quaternion(-0.311291, -0.00373152, -0.267102, 0.911998)
+bones/8/rotation = Quaternion(0.157042, -0.0667168, -0.0749006, 0.982485)
+bones/9/rotation = Quaternion(-0.0465952, 0.13907, 0.132446, 0.980279)
+bones/11/rotation = Quaternion(-0.305026, 0.0077193, 0.308025, 0.901122)
+bones/12/rotation = Quaternion(0.181564, 0.0328847, -0.0475104, 0.98168)
+bones/13/rotation = Quaternion(-0.0616918, -0.17502, -0.0362013, 0.981963)
+bones/15/position = Vector3(0.00242817, 0.621812, 1.98461)
+bones/15/rotation = Quaternion(0.64969, -2.65764e-05, -0.000600218, 0.760199)
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
+tree_root = SubResource("AnimationNodeStateMachine_yrklv")
+anim_player = NodePath("../AnimationPlayer")
+active = true

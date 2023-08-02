@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cw3yq1moc177d"
+path="res://.godot/imported/Marcos H. Bolanos - Surfing Day.mp3-0431fec4be040f41557ec45a735c82eb.mp3str"
+
+[deps]
+
+source_file="res://Music_Sound/Marcos H. Bolanos - Surfing Day.mp3"
+dest_files=["res://.godot/imported/Marcos H. Bolanos - Surfing Day.mp3-0431fec4be040f41557ec45a735c82eb.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

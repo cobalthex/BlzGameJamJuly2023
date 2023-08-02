@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://bquqa7o4sidpt"]
+
+[ext_resource type="PackedScene" uid="uid://codsdq3x6ay6a" path="res://prefabs/Whales/Dolphin.glb" id="1_4878d"]
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_j0b75"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_gb3co"]
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_cfeu8"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_5yx7q"]
+graph_offset = Vector2(-362, 2)
+nodes/BlendSpace1D/node = SubResource("AnimationNodeBlendSpace1D_j0b75")
+nodes/BlendSpace1D/position = Vector2(-220, 180)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_gb3co")
+nodes/TimeScale/position = Vector2(0, 160)
+nodes/TimeSeek/node = SubResource("AnimationNodeTimeSeek_cfeu8")
+nodes/TimeSeek/position = Vector2(147, 269)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace1D"]
+
+[node name="Dolphin" instance=ExtResource("1_4878d")]
+
+[node name="Armature_003" parent="." index="0"]
+transform = Transform3D(7.95461, -0.553768, -0.646124, 0.333611, 7.61744, -2.42143, 0.78284, 2.38075, 7.59731, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Armature_003" index="0"]
+bones/1/rotation = Quaternion(-0.644805, -0.00279951, -0.00482218, 0.764327)
+bones/2/rotation = Quaternion(-0.0675395, 0.0116015, 0.0111456, 0.997586)
+bones/3/rotation = Quaternion(0.114058, 0.0470927, 0.0238579, 0.99207)
+bones/4/rotation = Quaternion(0.12933, 0.0446224, 0.0423465, 0.989692)
+bones/5/rotation = Quaternion(0.223604, -0.00390679, -0.00327569, 0.974667)
+bones/7/rotation = Quaternion(-0.430393, 0.20122, -0.380237, 0.793529)
+bones/9/rotation = Quaternion(0.0106933, 0.0696624, 0.144421, 0.987003)
+bones/11/rotation = Quaternion(-0.472587, -0.340817, 0.279475, 0.763151)
+bones/13/rotation = Quaternion(0.0056991, -0.104268, -0.0950148, 0.989984)
+bones/15/position = Vector3(0.00105142, -0.266838, 0.54161)
+bones/15/rotation = Quaternion(0.782303, 0.00530482, 0.00242167, 0.62287)
+bones/16/rotation = Quaternion(-0.0579602, -0.0509255, -0.0989087, 0.992101)
+
+[node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer" index="0"]
+tree_root = SubResource("AnimationNodeBlendTree_5yx7q")
+anim_player = NodePath("..")
+active = true
+process_callback = 0
+parameters/BlendSpace1D/blend_position = 0
+parameters/TimeScale/scale = 1.0
+parameters/TimeSeek/seek_request = -1.0

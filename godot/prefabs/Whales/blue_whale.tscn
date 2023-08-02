@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://dq1sp4t5a8lcw"]
+
+[ext_resource type="PackedScene" uid="uid://dvelclwpgw1d2" path="res://prefabs/Whales/Blue_Whale.glb" id="1_k6t4l"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q7aub"]
+animation = &"Blue_Whale_Swim"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_iv662"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_af3jl"]
+allow_transition_to_self = true
+states/Blue_Whale_Swim/node = SubResource("AnimationNodeAnimation_q7aub")
+states/Blue_Whale_Swim/position = Vector2(367, 91)
+transitions = ["Start", "Blue_Whale_Swim", SubResource("AnimationNodeStateMachineTransition_iv662")]
+
+[node name="Blue_Whale" instance=ExtResource("1_k6t4l")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/1/rotation = Quaternion(-0.727368, -5.8793e-18, 5.98254e-18, 0.686247)
+bones/2/rotation = Quaternion(0.00572248, 0.000195994, 0.00333878, 0.999978)
+bones/3/rotation = Quaternion(0.0773906, 0.000164478, -0.00274455, 0.996997)
+bones/4/rotation = Quaternion(0.0983789, 0.000305196, 0.000274264, 0.995149)
+bones/5/rotation = Quaternion(0.156041, 1.98029e-05, 2.26892e-05, 0.987751)
+bones/7/rotation = Quaternion(-0.399716, 0.0683449, -0.233646, 0.883722)
+bones/9/rotation = Quaternion(-0.00118545, 0.0819428, 0.185476, 0.979226)
+bones/11/rotation = Quaternion(-0.389717, -0.0702617, 0.31024, 0.864254)
+bones/12/rotation = Quaternion(0.11542, 0.078965, -0.0858312, 0.986446)
+bones/13/rotation = Quaternion(-0.045964, -0.0719093, -0.249316, 0.964654)
+bones/15/position = Vector3(0.00242817, 0.621812, 1.98461)
+bones/15/rotation = Quaternion(0.643996, 1.18793e-06, 1.17233e-06, 0.765029)
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
+tree_root = SubResource("AnimationNodeStateMachine_af3jl")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+root_motion_track = NodePath("Armature/Skeleton3D:Root")

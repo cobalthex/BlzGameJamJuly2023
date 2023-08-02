@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://dy0u2lyn508ti"]
+
+[ext_resource type="PackedScene" uid="uid://b4ts0dlrbubv4" path="res://prefabs/Whales/Orca.glb" id="1_jpg8r"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sxrv5"]
+animation = &"Orca_Swim"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sdhos"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_jo8jw"]
+states/Orca_Swim/node = SubResource("AnimationNodeAnimation_sxrv5")
+states/Orca_Swim/position = Vector2(419, 100)
+states/Start/position = Vector2(231, 100)
+transitions = ["Start", "Orca_Swim", SubResource("AnimationNodeStateMachineTransition_sdhos")]
+
+[node name="Orca" instance=ExtResource("1_jpg8r")]
+
+[node name="Armature_002" parent="." index="0"]
+transform = Transform3D(8, 0, 0, 0, 7.95618, -0.836202, 0, 0.836202, 7.95618, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Armature_002" index="0"]
+bones/1/rotation = Quaternion(-0.728507, -8.16661e-08, -8.68483e-08, 0.685038)
+bones/2/rotation = Quaternion(-0.00764312, -0.000204482, 0.00506739, 0.999958)
+bones/3/rotation = Quaternion(-0.161036, 0.000948503, -0.00498454, 0.986936)
+bones/4/rotation = Quaternion(-0.183819, -1.11073e-09, 1.14413e-08, 0.98296)
+bones/5/rotation = Quaternion(-0.141627, -1.08534e-07, -4.7083e-08, 0.98992)
+bones/7/rotation = Quaternion(-0.389451, -0.0456151, -0.471191, 0.79008)
+bones/8/rotation = Quaternion(0.0248133, -0.0572577, 0.101737, 0.992852)
+bones/9/rotation = Quaternion(0.154149, 0.102938, 0.0741547, 0.979869)
+bones/11/rotation = Quaternion(-0.406366, 0.0200596, 0.505081, 0.761156)
+bones/12/rotation = Quaternion(0.120537, -0.0218661, -0.0852446, 0.9888)
+bones/13/rotation = Quaternion(0.0853402, -0.109676, -0.197114, 0.970482)
+bones/15/position = Vector3(0.0024278, -0.136827, 1.43927)
+bones/15/rotation = Quaternion(0.697564, 1.22894e-06, 1.46539e-06, 0.716523)
+bones/16/rotation = Quaternion(0.0534545, 1.1903e-07, 2.10146e-07, 0.99857)
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
+tree_root = SubResource("AnimationNodeStateMachine_jo8jw")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+root_motion_track = NodePath("Armature_002/Skeleton3D:Root")
