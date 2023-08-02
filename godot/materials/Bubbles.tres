@@ -6,7 +6,7 @@
 render_priority = 0
 shader = ExtResource("1_2gc42")
 shader_parameter/animation_speed = 0.046
-shader_parameter/smoothness = 0.1
+shader_parameter/smoothness = 0.174
 shader_parameter/height_multiplier = 0.5
 shader_parameter/animation_speed2 = 0.179
 shader_parameter/Mid_Color = Color(0, 0.658824, 1, 0.027451)
