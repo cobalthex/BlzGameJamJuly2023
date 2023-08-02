@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8b4vlwq6o4a8"]
+[gd_scene load_steps=12 format=3 uid="uid://c8b4vlwq6o4a8"]
 
 [ext_resource type="Script" path="res://prefabs/Turtle/Turtle.cs" id="1_62bav"]
 [ext_resource type="PackedScene" uid="uid://b3c3fdtw2ru5" path="res://prefabs/Turtle/Turtle.glb" id="3_8y8v7"]
@@ -7,6 +7,33 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_whkq1"]
 size = Vector3(3.75, 1, 4.5)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0kvml"]
+animation = &"Turtle_Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qos0y"]
+animation = &"Turtle_Swim"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_met3b"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_0kvml")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_qos0y")
+blend_point_1/pos = 1.0
+min_space = 0.0
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ha3qi"]
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_qgscw"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_idpwv"]
+nodes/BlendSpace1D/node = SubResource("AnimationNodeBlendSpace1D_met3b")
+nodes/BlendSpace1D/position = Vector2(140, 160)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_ha3qi")
+nodes/TimeScale/position = Vector2(420, 120)
+nodes/TimeSeek/node = SubResource("AnimationNodeTimeSeek_qgscw")
+nodes/TimeSeek/position = Vector2(580, 234)
+nodes/output/position = Vector2(680, 120)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"BlendSpace1D"]
 
 [node name="Turtle" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.57816)
@@ -26,6 +53,24 @@ theme = ExtResource("3_gju5p")
 
 [node name="model" parent="." instance=ExtResource("3_8y8v7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.5)
+
+[node name="Skeleton3D" parent="model/Turtle_Armature" index="0"]
+bones/2/rotation = Quaternion(0.329476, 0.141606, 0.187788, 0.914401)
+bones/3/rotation = Quaternion(0.0735628, 0.244631, 0.600513, 0.757713)
+bones/4/rotation = Quaternion(-0.0828477, -0.0356873, 0.18527, 0.978539)
+bones/5/rotation = Quaternion(0.170574, -0.0565272, 0.0306697, 0.983244)
+bones/6/rotation = Quaternion(0.618686, 0.247649, -0.212451, 0.714677)
+bones/7/rotation = Quaternion(0.37927, -0.184448, -0.205701, 0.883074)
+bones/8/rotation = Quaternion(0.0736641, -0.24226, -0.563045, 0.786679)
+bones/9/rotation = Quaternion(-0.0689957, 0.0601051, -0.179492, 0.979495)
+bones/10/rotation = Quaternion(0.269423, 0.050327, -0.100557, 0.956434)
+bones/12/rotation = Quaternion(-0.102352, 2.67573e-09, -8.17574e-09, 0.994748)
+bones/13/rotation = Quaternion(0.0533509, -2.85818e-09, 6.48343e-09, 0.998576)
+bones/14/rotation = Quaternion(0.0429216, 7.12571e-07, 3.70401e-08, 0.999078)
+bones/16/rotation = Quaternion(-0.281368, -0.108101, 0.0454056, 0.95241)
+bones/17/rotation = Quaternion(-0.349544, -0.0157645, 0.103719, 0.931028)
+bones/19/rotation = Quaternion(-0.228423, 0.0701866, -0.051604, 0.969657)
+bones/20/rotation = Quaternion(-0.329468, 0.0131602, -0.104497, 0.938274)
 
 [node name="transport" type="Node3D" parent="model"]
 script = ExtResource("4_ixssj")
@@ -56,3 +101,14 @@ shape = SubResource("BoxShape3D_whkq1")
 [node name="followCam" type="Camera3D" parent="."]
 transform = Transform3D(-1, 7.6194e-09, -8.70901e-08, 0, 0.996195, 0.0871557, 8.74228e-08, 0.0871557, -0.996195, 0, 2, -5)
 current = true
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeBlendTree_idpwv")
+anim_player = NodePath("../model/AnimationPlayer")
+active = true
+root_motion_track = NodePath("Turtle_Armature/Skeleton3D:Root")
+parameters/BlendSpace1D/blend_position = 0.0
+parameters/TimeScale/scale = 1.0
+parameters/TimeSeek/seek_request = -1.0
+
+[editable path="model"]

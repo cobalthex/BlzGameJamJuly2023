@@ -8,8 +8,8 @@
 [ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="6_qgseq"]
 [ext_resource type="PackedScene" uid="uid://de13w7ephfimp" path="res://prefabs/ExampleFish.tscn" id="8_4b35n"]
 [ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="8_qo4sc"]
-[ext_resource type="PackedScene" uid="uid://ba5u2sgh4ywwc" path="res://prefabs/Env_Props/Composites/rock_wall.tscn" id="10_bn8m0"]
-[ext_resource type="PackedScene" uid="uid://byq3yxnw2y732" path="res://prefabs/Env_Props/Composites/rock_wall_02.tscn" id="11_6e7a0"]
+[ext_resource type="PackedScene" uid="uid://dbybqympfknwy" path="res://prefabs/Env_Props/Composites/rock_wall.tscn" id="10_bn8m0"]
+[ext_resource type="PackedScene" path="res://prefabs/Env_Props/Composites/rock_wall_02.tscn" id="11_6e7a0"]
 [ext_resource type="Script" path="res://prefabs/Passengers/Target.cs" id="11_orc2p"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6lros"]
@@ -123,7 +123,6 @@ transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 58.7, 1.40933, -48.8)
 script = ExtResource("11_orc2p")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="TestTarget"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 64
 collision_mask = 65
 radius = 1.0

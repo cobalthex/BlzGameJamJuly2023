@@ -117,6 +117,8 @@ public partial class Transport : Node3D
 
     public override void _Process(double delta)
     {
+        // TODO: make passengers float around/have hysteresis (add script to the seats?)
+
         var now = Time.GetTicksMsec();
 
         if (debugText != null)
@@ -143,7 +145,8 @@ public partial class Transport : Node3D
                     sb.Append(CalculateScore(passenger, timeTaken / 1000f).ToString("N1"));
                     sb.Append(" / ");
                     sb.Append(passenger.MaxDeliveryScore.ToString("N1"));
-                    sb.AppendLine(" pts");
+                    sb.Append(" pts -- ");
+                    sb.AppendLine(passenger.Target?.Name);
                 }
                 else
                 {
