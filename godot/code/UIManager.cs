@@ -11,20 +11,6 @@ public partial class UIManager : Control
         m_scoreValue = GetNode<Label>("ScoreRect/ScoreValue");
     }
 
-    public override void _EnterTree()
-    {
-        base._EnterTree();
-        EventManager.AddListener<TimerChangedEvent>(OnTimerChangedEvent);
-        EventManager.AddListener<ScoreChangedEvent>(OnScoreChangedEvent);
-    }
-
-    public override void _ExitTree()
-    {
-        base._ExitTree();
-        EventManager.RemoveListener<TimerChangedEvent>(OnTimerChangedEvent);
-        EventManager.RemoveListener<ScoreChangedEvent>(OnScoreChangedEvent);
-    }
-
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {

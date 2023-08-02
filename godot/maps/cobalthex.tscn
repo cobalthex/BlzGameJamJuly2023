@@ -2,14 +2,14 @@
 
 [ext_resource type="Material" uid="uid://cgm5iqvfhndew" path="res://materials/sand.tres" id="1_3cird"]
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_f6koo"]
+[ext_resource type="PackedScene" uid="uid://byp1b20piqc6w" path="res://prefabs/GameController/GameController.tscn" id="2_4cnfd"]
 [ext_resource type="PackedScene" uid="uid://c8b4vlwq6o4a8" path="res://prefabs/Turtle/Turtle.tscn" id="2_bw6yb"]
 [ext_resource type="Theme" uid="uid://bu8wxtxm5hy22" path="res://etc/DebugText.tres" id="5_gcepk"]
 [ext_resource type="Script" path="res://prefabs/Passengers/Passenger.cs" id="5_i4cac"]
 [ext_resource type="Environment" uid="uid://ocadmcmef4d4" path="res://materials/ENV/World_Env.tres" id="6_qgseq"]
 [ext_resource type="PackedScene" uid="uid://de13w7ephfimp" path="res://prefabs/ExampleFish.tscn" id="8_4b35n"]
-[ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="8_qo4sc"]
 [ext_resource type="PackedScene" uid="uid://dbybqympfknwy" path="res://prefabs/Env_Props/Composites/rock_wall.tscn" id="10_bn8m0"]
-[ext_resource type="PackedScene" path="res://prefabs/Env_Props/Composites/rock_wall_02.tscn" id="11_6e7a0"]
+[ext_resource type="PackedScene" uid="uid://byq3yxnw2y732" path="res://prefabs/Env_Props/Composites/rock_wall_02.tscn" id="11_6e7a0"]
 [ext_resource type="Script" path="res://prefabs/Passengers/Target.cs" id="11_orc2p"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6lros"]
@@ -39,9 +39,16 @@ albedo_texture = SubResource("GradientTexture2D_d51kd")
 height = 5.0
 radius = 1.0
 
-[node name="scene" type="Node3D"]
+[node name="scene2" type="Node3D"]
 script = ExtResource("1_f6koo")
 metadata/_edit_lock_ = true
+
+[node name="Turtle" parent="." instance=ExtResource("2_bw6yb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2, 2.2, -43.3)
+collision_mask = 127
+
+[node name="GameController" parent="." node_paths=PackedStringArray("Turtle") instance=ExtResource("2_4cnfd")]
+Turtle = NodePath("../Turtle")
 
 [node name="debugText" type="Label" parent="."]
 offset_left = 10.0
@@ -68,10 +75,6 @@ collision_mask = 127
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ground/StaticBody3D"]
 shape = SubResource("WorldBoundaryShape3D_6lros")
 
-[node name="Turtle" parent="." instance=ExtResource("2_bw6yb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2, 2.2, -43.3)
-collision_mask = 127
-
 [node name="TestPassenger" type="Area3D" parent="." node_paths=PackedStringArray("Target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5, 1.46762, 36.9253)
 script = ExtResource("5_i4cac")
@@ -86,9 +89,6 @@ shape = SubResource("CylinderShape3D_hv3ec")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("6_qgseq")
-
-[node name="GameController" type="Node" parent="."]
-script = ExtResource("8_qo4sc")
 
 [node name="Path3D" parent="." instance=ExtResource("8_4b35n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.62174, 0.2)

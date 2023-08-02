@@ -1,0 +1,114 @@
+[gd_scene load_steps=5 format=3 uid="uid://byp1b20piqc6w"]
+
+[ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="1_n31fp"]
+[ext_resource type="Texture2D" uid="uid://dcr6vofl6jsw7" path="res://UI/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_54.png" id="2_afalw"]
+[ext_resource type="Theme" uid="uid://bhtgpwuqt86fr" path="res://UI/default_theme.tres" id="3_au8bx"]
+[ext_resource type="Texture2D" uid="uid://myymqne4o27k" path="res://UI/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_44.png" id="4_j6r4n"]
+
+[node name="GameController" type="Node"]
+script = ExtResource("1_n31fp")
+
+[node name="GameTimer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[node name="Hud" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TimerRect" type="NinePatchRect" parent="Hud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1354.0
+offset_top = 43.0
+offset_right = -91.0
+offset_bottom = -821.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_afalw")
+
+[node name="TimerText" type="Label" parent="Hud/TimerRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_right = -78.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_au8bx")
+text = "Time :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TimerValue" type="Label" parent="Hud/TimerRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 90.0
+offset_top = 1.0
+offset_right = -26.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_au8bx")
+text = "0"
+vertical_alignment = 1
+
+[node name="ScoreRect" type="NinePatchRect" parent="Hud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1354.0
+offset_top = 97.0
+offset_right = -91.0
+offset_bottom = -763.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_j6r4n")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="ScoreText" type="Label" parent="Hud/ScoreRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.5
+offset_top = -2.0
+offset_right = -74.5
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_au8bx")
+text = "Score :"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ScoreValue" type="Label" parent="Hud/ScoreRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 90.0
+offset_top = -1.0
+offset_right = -26.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_au8bx")
+text = "0"
+vertical_alignment = 1

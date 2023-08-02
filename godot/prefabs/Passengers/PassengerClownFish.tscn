@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://g0s6n0u15d48"]
+[gd_scene load_steps=4 format=3 uid="uid://dcffdx4ygnndc"]
 
 [ext_resource type="Script" path="res://prefabs/Passengers/Passenger.cs" id="1_idf18"]
 [ext_resource type="PackedScene" uid="uid://b0jxffxfx6xdo" path="res://prefabs/Fish_Pasengers/ClownFish.glb" id="2_cckby"]
@@ -8,6 +8,8 @@ size = Vector3(1.335, 2.265, 3.845)
 
 [node name="PassengerClownFish" type="Area3D"]
 script = ExtResource("1_idf18")
+MaxDeliveryScore = 75.0
+DeliveryParTimeSeconds = 8.0
 
 [node name="ClownFish" parent="." instance=ExtResource("2_cckby")]
 transform = Transform3D(0.535, 0, 0, 0, 0.535, 0, 0, 0, 0.535, 0, 0, -0.141996)
