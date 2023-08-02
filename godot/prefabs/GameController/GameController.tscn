@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://byp1b20piqc6w"]
+[gd_scene load_steps=7 format=3 uid="uid://byp1b20piqc6w"]
 
 [ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="1_n31fp"]
 [ext_resource type="Texture2D" uid="uid://dcr6vofl6jsw7" path="res://UI/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_54.png" id="2_afalw"]
 [ext_resource type="Theme" uid="uid://bhtgpwuqt86fr" path="res://UI/default_theme.tres" id="3_au8bx"]
 [ext_resource type="Texture2D" uid="uid://myymqne4o27k" path="res://UI/GUI Interface Kit Free/PNG/GUI-Kit-Pack-Free_44.png" id="4_j6r4n"]
+[ext_resource type="FontFile" uid="uid://dv72s55t16qhd" path="res://Super Comic.ttf" id="5_p3xi5"]
+
+[sub_resource type="Theme" id="Theme_ik7of"]
+Label/colors/font_color = Color(1, 0.384314, 0.545098, 1)
+Label/colors/font_outline_color = Color(0.360784, 0.239216, 0.592157, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.498039)
+Label/constants/outline_size = 8
+Label/constants/shadow_offset_x = 0
+Label/constants/shadow_offset_y = 4
+Label/constants/shadow_outline_size = 32
+Label/font_sizes/font_size = 96
+Label/fonts/font = ExtResource("5_p3xi5")
 
 [node name="GameController" type="Node"]
 script = ExtResource("1_n31fp")
@@ -28,7 +40,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1354.0
+offset_left = 1333.0
 offset_top = 43.0
 offset_right = -91.0
 offset_bottom = -821.0
@@ -41,25 +53,25 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 11.0
-offset_right = -78.0
+offset_left = 3.0
+offset_top = 1.0
+offset_right = -84.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_au8bx")
-text = "Time :"
-horizontal_alignment = 2
+text = "Time:"
 vertical_alignment = 1
 
 [node name="TimerValue" type="Label" parent="Hud/TimerRect"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 90.0
-offset_top = 1.0
-offset_right = -26.0
-offset_bottom = 1.0
-grow_horizontal = 2
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 88.0
+offset_top = -12.0
+offset_right = 104.0
+offset_bottom = 12.0
 grow_vertical = 2
 theme = ExtResource("3_au8bx")
 text = "0"
@@ -70,7 +82,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1354.0
+offset_left = 1309.0
 offset_top = 97.0
 offset_right = -91.0
 offset_bottom = -763.0
@@ -87,28 +99,44 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 7.5
-offset_top = -2.0
-offset_right = -74.5
-offset_bottom = -2.0
+offset_left = 5.5
+offset_right = -76.5
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_au8bx")
-text = "Score :"
-horizontal_alignment = 2
+text = "Score:"
 vertical_alignment = 1
 
 [node name="ScoreValue" type="Label" parent="Hud/ScoreRect"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 90.0
-offset_top = -1.0
-offset_right = -26.0
-offset_bottom = -1.0
-grow_horizontal = 2
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 112.0
+offset_top = -12.0
+offset_right = 128.0
+offset_bottom = 12.0
 grow_vertical = 2
 theme = ExtResource("3_au8bx")
 text = "0"
+vertical_alignment = 1
+justification_flags = 162
+
+[node name="GameOver" type="Label" parent="Hud"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -237.5
+offset_top = -66.0
+offset_right = 237.5
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_ik7of")
+text = "Game Over"
+horizontal_alignment = 1
 vertical_alignment = 1

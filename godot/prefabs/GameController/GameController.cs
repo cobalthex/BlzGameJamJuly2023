@@ -12,6 +12,7 @@ public partial class GameController : Node
 
     private Label m_timerLabel;
     private Label m_scoreLabel;
+    private Label m_gameOverLabel;
 
     public enum GameState
     {
@@ -30,12 +31,15 @@ public partial class GameController : Node
         GD.Print("Starting");
 
         Turtle.Transport.PassengerDelivered += OnPassengerDelivered;
+        Turtle.IsEnabled = true;
 
         m_gameTimer = GetNode<Timer>("GameTimer");
         m_gameTimer.Timeout += EndGame;
 
         m_timerLabel = GetNode<Label>("Hud/TimerRect/TimerValue");
         m_scoreLabel = GetNode<Label>("Hud/ScoreRect/ScoreValue");
+        m_gameOverLabel = GetNode<Label>("Hud/GameOver");
+        m_gameOverLabel.Hide();
 
         // Spawn initial Passengers in the world
 
@@ -52,6 +56,8 @@ public partial class GameController : Node
     {
         GD.Print("Game Over");
         State = GameState.GameOver;
+        m_gameOverLabel.Show();
+        Turtle.IsEnabled = false;
     }
 
     private void OnPassengerDelivered(float deliveryScore)

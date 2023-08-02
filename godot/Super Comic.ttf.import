@@ -1,0 +1,33 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://dv72s55t16qhd"
+path="res://.godot/imported/Super Comic.ttf-51ff3d028b3444fc36af1c1e2b4750f3.fontdata"
+
+[deps]
+
+source_file="res://Super Comic.ttf"
+dest_files=["res://.godot/imported/Super Comic.ttf-51ff3d028b3444fc36af1c1e2b4750f3.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[]
+language_support={}
+script_support={}
+opentype_features={}

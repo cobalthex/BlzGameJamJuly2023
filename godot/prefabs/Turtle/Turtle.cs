@@ -39,6 +39,11 @@ public partial class Turtle : CharacterBody3D
 
 	public float ForwardSpeed => m_forwardSpeed;
 
+	/// <summary>
+	///  Does this accept input
+	/// </summary>
+	public bool IsEnabled { get; set; } = true;
+
 	// child elements
 	public Transport Transport { get; private set; }
 
@@ -94,7 +99,13 @@ public partial class Turtle : CharacterBody3D
 			input = joypadInput;
 		}
 
-		// todo: if did collide, don't continue allowing rotation in that direction
+		if (!IsEnabled)
+        {
+            m_forwardSpeed *= 1 - (0.6f * (float) deltaTime);
+			input = Vector3.Zero;
+		}
+
+// todo: if did collide, don't continue allowing rotation in that direction
 
 		Vector3 newRotation = Vector3.Zero;
 		newRotation.X = input.Y * Mathf.DegToRad(MaxYawDegreesPerSec);
@@ -149,8 +160,9 @@ public partial class Turtle : CharacterBody3D
 				acceleratorForce = decelStrength * -ReverseMoveForceNewtons;
 			}
 		}
+		acceleratorForce *= (IsEnabled ? 1 : 0);
 
-		var forwardDir = GlobalTransform.Basis.Z;
+        var forwardDir = GlobalTransform.Basis.Z;
 
 		float dragForce = 0.5f * c_seaWaterDensity * (movementDir * m_forwardSpeed * m_forwardSpeed) * c_turtleDragCoefficient * TurtleFrontalAreaMSq;
 

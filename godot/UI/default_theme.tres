@@ -1,7 +1,10 @@
-[gd_resource type="Theme" format=3 uid="uid://bhtgpwuqt86fr"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bhtgpwuqt86fr"]
+
+[ext_resource type="FontFile" uid="uid://dv72s55t16qhd" path="res://Super Comic.ttf" id="1_ar53e"]
 
 [resource]
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/colors/font_outline_color = Color(1, 1, 1, 1)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0)
 Label/font_sizes/font_size = 23
+Label/fonts/font = ExtResource("1_ar53e")
