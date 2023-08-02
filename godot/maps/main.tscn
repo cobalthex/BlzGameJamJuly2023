@@ -5,7 +5,7 @@
 [ext_resource type="Theme" uid="uid://bu8wxtxm5hy22" path="res://etc/DebugText.tres" id="2_ecra3"]
 [ext_resource type="PackedScene" uid="uid://c8b4vlwq6o4a8" path="res://prefabs/Turtle/Turtle.tscn" id="4_njlwa"]
 [ext_resource type="PackedScene" uid="uid://cx3ns1e42mpl3" path="res://prefabs/Environment/world_environment.tscn" id="5_34cai"]
-[ext_resource type="PackedScene" path="res://prefabs/Passengers/PassengerSpawner.tscn" id="8_at6gr"]
+[ext_resource type="PackedScene" uid="uid://be01ddx28q4f5" path="res://prefabs/Passengers/PassengerSpawner.tscn" id="8_at6gr"]
 [ext_resource type="Script" path="res://addons/proton_scatter/src/cache/scatter_cache.gd" id="8_eqlmh"]
 [ext_resource type="PackedScene" uid="uid://by6ga6nfvdwcl" path="res://prefabs/Passengers/Target.tscn" id="9_nksca"]
 
@@ -17,8 +17,7 @@ metadata/_edit_lock_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2, 2.2, -43.3)
 collision_mask = 127
 
-[node name="GameController" parent="." node_paths=PackedStringArray("Turtle") instance=ExtResource("2_7ncmo")]
-Turtle = NodePath("../Turtle")
+[node name="GameController" parent="." instance=ExtResource("2_7ncmo")]
 
 [node name="debugText" type="Label" parent="."]
 offset_left = 10.0
@@ -85,7 +84,7 @@ AvailableTargets = [NodePath("../../Targets/Hideout"), NodePath("../../Targets/P
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8425, 1.84002, -83.923)
 
 [node name="Pipe Reef" parent="Targets" instance=ExtResource("9_nksca")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.1575, -0.0324135, 43.077)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68.1575, 5.38937, 43.077)
 
 [node name="Canyon" parent="Targets" instance=ExtResource("9_nksca")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1575, -8.03241, 1.077)
