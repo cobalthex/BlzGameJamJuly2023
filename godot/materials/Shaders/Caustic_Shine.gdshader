@@ -28,7 +28,7 @@ void fragment() {
     ALBEDO = worley.rgb;
 	ALPHA = 0.5 * worley.r;
 	EMISSION = 4.0 * worley.rgb;
-	ROUGHNESS = 0.25;
+	ROUGHNESS = 0.45;
 	SPECULAR = 0.25;
 }
 

@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://csfxavu6qalec"]
+
+[ext_resource type="Shader" uid="uid://8pk1nqqqe8my" path="res://Particles/Dust.tres" id="1_3lfau"]
+
+[sub_resource type="Curve" id="Curve_ddysh"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.210019, 1), 0.0, 0.0, 0, 0, Vector2(0.820809, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_1h4uq"]
+width = 2048
+curve = SubResource("Curve_ddysh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b2lk2"]
+emission_shape = 3
+emission_box_extents = Vector3(100, 50, 100)
+gravity = Vector3(0, 1, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+scale_min = 0.05
+scale_max = 0.12
+scale_curve = SubResource("CurveTexture_1h4uq")
+color = Color(0.611765, 1, 0.87451, 0.447059)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kq5tw"]
+render_priority = 0
+shader = ExtResource("1_3lfau")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dmxou"]
+material = SubResource("ShaderMaterial_kq5tw")
+orientation = 2
+
+[node name="Dust" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+cast_shadow = 0
+amount = 5000
+lifetime = 1.5
+visibility_aabb = AABB(-120.508, -50.0852, -144.777, 241.016, 100.17, 289.554)
+transform_align = 1
+process_material = SubResource("ParticleProcessMaterial_b2lk2")
+draw_pass_1 = SubResource("PlaneMesh_dmxou")

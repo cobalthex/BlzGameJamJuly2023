@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://ctx0ts8pv665v"]
+
+[ext_resource type="Material" uid="uid://5nupla30v72k" path="res://materials/Bubbles.tres" id="1_pgla4"]
+
+[sub_resource type="Curve" id="Curve_8h5bj"]
+_data = [Vector2(0, 0.0315789), 0.0, 0.0600346, 0, 0, Vector2(0.198459, 0.326316), 3.41447, 3.41447, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_xofe0"]
+curve = SubResource("Curve_8h5bj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0f4x7"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 5.0
+emission_ring_inner_radius = 0.0
+direction = Vector3(0, 0, 0)
+spread = 89.5
+gravity = Vector3(0, 1, 0)
+scale_curve = SubResource("CurveTexture_xofe0")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ga2td"]
+material = ExtResource("1_pgla4")
+radial_segments = 32
+
+[node name="Bubbles_3d" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1.89939, 0, 0, 0, 1, 0, 0, 0, 1.83477, 0, 0, 0)
+amount = 30
+lifetime = 10.0
+trail_lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_0f4x7")
+draw_pass_1 = SubResource("SphereMesh_ga2td")

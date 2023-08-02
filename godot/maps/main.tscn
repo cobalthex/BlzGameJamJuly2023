@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://prefabs/GameController/GameController.cs" id="7_pycw0"]
 [ext_resource type="PackedScene" uid="uid://be01ddx28q4f5" path="res://prefabs/Passengers/PassengerSpawner.tscn" id="8_at6gr"]
 [ext_resource type="Script" path="res://prefabs/GameTimer/GameTimer.cs" id="8_bjmqm"]
+[ext_resource type="Script" path="res://addons/proton_scatter/src/cache/scatter_cache.gd" id="8_eqlmh"]
 [ext_resource type="PackedScene" uid="uid://oab203y68wwl" path="res://UI/interface.tscn" id="9_uijmv"]
 
 [node name="scene" type="Node3D"]
@@ -68,3 +69,8 @@ transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, -86.5958, 2.31296, -72.5424
 
 [node name="PassengerSpawner9" parent="." instance=ExtResource("8_at6gr")]
 transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, -22.4086, 2.31296, -48.279)
+
+[node name="ScatterCache" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2, 2.2, -43.3)
+script = ExtResource("8_eqlmh")
+cache_file = "res://addons/proton_scatter/cache/Turtle_517756654_scatter_cache.tres"

@@ -5,7 +5,7 @@
 
 [sub_resource type="Gradient" id="Gradient_7c6kh"]
 offsets = PackedFloat32Array(0.356643, 0.755245)
-colors = PackedColorArray(0, 0.116829, 0.0688324, 1, 0.95, 1, 0.976667, 1)
+colors = PackedColorArray(0, 0.0483161, 0.0222859, 1, 0.95, 1, 0.976667, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ai8eu"]
 noise_type = 2
@@ -20,7 +20,7 @@ noise = SubResource("FastNoiseLite_ai8eu")
 
 [sub_resource type="Gradient" id="Gradient_8oj7l"]
 offsets = PackedFloat32Array(0.34965, 0.783217)
-colors = PackedColorArray(8.66354e-07, 0.0671791, 0.248658, 1, 1, 1, 1, 1)
+colors = PackedColorArray(1.21831e-07, 0.00969383, 0.0758141, 1, 1, 1, 1, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1atqw"]
 noise_type = 2

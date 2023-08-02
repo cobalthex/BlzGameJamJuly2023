@@ -1,0 +1,69 @@
+[gd_resource type="VisualShader" load_steps=8 format=3 uid="uid://8pk1nqqqe8my"]
+
+[sub_resource type="Gradient" id="Gradient_yactb"]
+offsets = PackedFloat32Array(0.460123, 0.699386)
+colors = PackedColorArray(1, 1, 1, 0.611765, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3blrd"]
+gradient = SubResource("Gradient_yactb")
+fill = 1
+fill_from = Vector2(0.49115, 0.544248)
+metadata/_snap_enabled = true
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_wi58y"]
+expanded_output_ports = [0]
+texture = SubResource("GradientTexture2D_3blrd")
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_v55hi"]
+constant = Color(0, 0.823529, 0.662745, 0.54902)
+
+[sub_resource type="Gradient" id="Gradient_h2bqc"]
+offsets = PackedFloat32Array(0.44697, 0.710227)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ic2or"]
+gradient = SubResource("Gradient_h2bqc")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.508547, 0.504274)
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_nrf7l"]
+expanded_output_ports = [0]
+texture = SubResource("GradientTexture2D_ic2or")
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_toon, specular_disabled;
+
+uniform sampler2D tex_frg_2;
+
+
+
+void fragment() {
+// ColorConstant:3
+	vec4 n_out3p0 = vec4(0.000000, 0.823529, 0.662745, 0.549020);
+
+
+// Texture2D:2
+	vec4 n_out2p0 = texture(tex_frg_2, UV);
+	float n_out2p4 = n_out2p0.a;
+
+
+// Output:0
+	ALBEDO = vec3(n_out3p0.xyz);
+	ALPHA = n_out2p4;
+
+
+}
+"
+graph_offset = Vector2(-235.78, 32.4687)
+modes/cull = 2
+modes/diffuse = 3
+modes/specular = 2
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_wi58y")
+nodes/fragment/2/position = Vector2(-160, 140)
+nodes/fragment/3/node = SubResource("VisualShaderNodeColorConstant_v55hi")
+nodes/fragment/3/position = Vector2(120, 140)
+nodes/fragment/connections = PackedInt32Array(2, 4, 0, 1, 3, 0, 0, 0)
+nodes/start/2/node = SubResource("VisualShaderNodeTexture_nrf7l")
+nodes/start/2/position = Vector2(-20, 160)

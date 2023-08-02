@@ -1,0 +1,38 @@
+[gd_resource type="ShaderMaterial" load_steps=9 format=3 uid="uid://b4u25qpxrrr42"]
+
+[ext_resource type="Shader" path="res://prefabs/Environment/Light_Shafts.gdshader" id="1_1igsn"]
+
+[sub_resource type="Curve" id="Curve_imrhp"]
+_data = [Vector2(0, 0.0315789), 0.0, 0.0, 0, 0, Vector2(0.0974026, 0.863158), 0.0, 0.0, 0, 0, Vector2(0.253247, 0.431579), 0.0450292, 0.0450292, 0, 0, Vector2(0.376623, 0.842105), 0.0, 0.0, 0, 0, Vector2(0.48052, 0.589474), 0.0, 0.0, 0, 0, Vector2(0.551948, 0.610526), 0.0, 0.0, 0, 0, Vector2(0.571429, 0.905263), 0.0, 0.0, 0, 0, Vector2(0.649351, 0.494737), 0.0, 0.0, 0, 0, Vector2(0.753247, 0.873684), 0.0, 0.0, 0, 0, Vector2(0.844156, 0.389474), 0.0, 0.0, 0, 0, Vector2(0.896104, 0.873684), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 12
+
+[sub_resource type="CurveTexture" id="CurveTexture_gydis"]
+curve = SubResource("Curve_imrhp")
+
+[sub_resource type="Gradient" id="Gradient_mymfc"]
+offsets = PackedFloat32Array(0.422764, 0.821138)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1c5rk"]
+gradient = SubResource("Gradient_mymfc")
+fill = 1
+fill_from = Vector2(0.483871, 0.537634)
+
+[sub_resource type="Gradient" id="Gradient_v4wn4"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jdb71"]
+noise_type = 3
+frequency = 0.0347
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2oyub"]
+color_ramp = SubResource("Gradient_v4wn4")
+noise = SubResource("FastNoiseLite_jdb71")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_1igsn")
+shader_parameter/albedo = Color(0.878431, 0.901961, 0.701961, 1)
+shader_parameter/proximity_fade_distance = 80.0
+shader_parameter/texture_albedo = SubResource("CurveTexture_gydis")
+shader_parameter/texture_alpha = SubResource("GradientTexture2D_1c5rk")
+shader_parameter/texture_alphaN = SubResource("NoiseTexture2D_2oyub")
