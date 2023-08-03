@@ -36,9 +36,9 @@ public partial class GameController : Node
         m_gameTimer = GetNode<Timer>("GameTimer");
         m_gameTimer.Timeout += EndGame;
 
-        m_timerLabel = GetNode<Label>("Hud/TimerRect/TimerValue");
-        m_scoreLabel = GetNode<Label>("Hud/ScoreRect/ScoreValue");
-        m_gameOverLabel = GetNode<Label>("Hud/GameOver");
+        m_timerLabel = GetNode<Label>("UI/HUD/TimerValue");
+        m_scoreLabel = GetNode<Label>("UI/HUD/ScoreValue");
+        m_gameOverLabel = GetNode<Label>("UI/HUD/GameOver");
         m_gameOverLabel.Hide();
 
         // Spawn initial Passengers in the world

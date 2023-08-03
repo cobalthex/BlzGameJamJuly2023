@@ -1,6 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=11 format=3 uid="uid://q2uadydgee4d"]
+[gd_resource type="ShaderMaterial" load_steps=11 format=3 uid="uid://p5653710xut3"]
 
-[ext_resource type="Material" uid="uid://d0mgdcg7qxseu" path="res://materials/CausticsShine.tres" id="1_gop45"]
+[ext_resource type="Material" uid="uid://kewdioghmulu" path="res://materials/CausticsShine.tres" id="1_gop45"]
 [ext_resource type="Shader" path="res://materials/Shaders/Caustic_Surface.gdshader" id="2_0av78"]
 
 [sub_resource type="Gradient" id="Gradient_7c6kh"]

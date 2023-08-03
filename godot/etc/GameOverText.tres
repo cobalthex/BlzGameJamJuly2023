@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cvjac38b3ln4k"]
+
+[ext_resource type="FontFile" uid="uid://dv72s55t16qhd" path="res://Super Comic.ttf" id="1_c7gdv"]
+
+[resource]
+Label/colors/font_color = Color(1, 0.384314, 0.545098, 1)
+Label/colors/font_outline_color = Color(0.360784, 0.239216, 0.592157, 1)
+Label/colors/font_shadow_color = Color(0.278431, 0.317647, 0.623529, 1)
+Label/constants/outline_size = 18
+Label/constants/shadow_offset_x = 0
+Label/constants/shadow_offset_y = 4
+Label/constants/shadow_outline_size = 32
+Label/font_sizes/font_size = 96
+Label/fonts/font = ExtResource("1_c7gdv")

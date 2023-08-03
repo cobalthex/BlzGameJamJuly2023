@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=9 format=3 uid="uid://b4u25qpxrrr42"]
+[gd_resource type="ShaderMaterial" load_steps=9 format=3 uid="uid://bagsolwhuwr8b"]
 
 [ext_resource type="Shader" path="res://prefabs/Environment/Light_Shafts.gdshader" id="1_1igsn"]
 

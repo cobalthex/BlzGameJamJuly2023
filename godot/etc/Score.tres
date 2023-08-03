@@ -1,6 +1,6 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bhtgpwuqt86fr"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c704ddi11rwa1"]
 
-[ext_resource type="FontFile" uid="uid://dv72s55t16qhd" path="res://Super Comic.ttf" id="1_ar53e"]
+[ext_resource type="FontFile" uid="uid://dv72s55t16qhd" path="res://Super Comic.ttf" id="1_woapv"]
 
 [resource]
 Label/colors/font_color = Color(1, 1, 1, 1)
@@ -11,4 +11,4 @@ Label/constants/shadow_offset_x = 0
 Label/constants/shadow_offset_y = 6
 Label/constants/shadow_outline_size = 4
 Label/font_sizes/font_size = 24
-Label/fonts/font = ExtResource("1_ar53e")
+Label/fonts/font = ExtResource("1_woapv")

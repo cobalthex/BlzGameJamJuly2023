@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=8 format=3 uid="uid://8pk1nqqqe8my"]
+[gd_resource type="VisualShader" load_steps=8 format=3 uid="uid://clr0pql2yhicm"]
 
 [sub_resource type="Gradient" id="Gradient_yactb"]
 offsets = PackedFloat32Array(0.460123, 0.699386)

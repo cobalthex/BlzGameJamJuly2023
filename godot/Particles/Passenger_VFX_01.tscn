@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://brcxvrera6288"]
+[gd_scene load_steps=5 format=3 uid="uid://0vkwbaa6mapr"]
 
-[ext_resource type="ArrayMesh" uid="uid://sowmj5ausj0f" path="res://prefabs/Fish_Pasengers/Particle_Fish.res" id="1_467js"]
+[ext_resource type="ArrayMesh" path="res://prefabs/Fish_Pasengers/Particle_Fish.res" id="1_467js"]
 
 [sub_resource type="Curve" id="Curve_4bma2"]
 _data = [Vector2(0, 0.694737), 0.0, 0.862604, 0, 0, Vector2(0.499037, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.673684), -0.964087, 0.0, 0, 0]

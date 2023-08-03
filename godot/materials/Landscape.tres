@@ -1,9 +1,9 @@
-[gd_resource type="ShaderMaterial" load_steps=10 format=3 uid="uid://dajcks5nbs5od"]
+[gd_resource type="ShaderMaterial" load_steps=10 format=3 uid="uid://djeayshs1ebog"]
 
 [ext_resource type="Material" uid="uid://cr1dftdthk43m" path="res://materials/Caustics.tres" id="1_0vvyv"]
 [ext_resource type="Shader" path="res://materials/Shaders/Landscape_02.gdshader" id="1_7i02k"]
 [ext_resource type="Texture2D" uid="uid://6fxtrulnyhks" path="res://materials/Textures/Canyon_Mask_Mask.png" id="2_3747k"]
-[ext_resource type="Texture2D" uid="uid://1auteaew6nbm" path="res://materials/Textures/Sand_Noise.tres" id="3_f0h77"]
+[ext_resource type="Texture2D" uid="uid://dtt3csk0udqo3" path="res://materials/Textures/Sand_Noise.tres" id="3_f0h77"]
 
 [sub_resource type="Gradient" id="Gradient_aqnju"]
 colors = PackedColorArray(0.0699445, 0.107402, 0.116726, 1, 0.0565812, 0.0674318, 0.0664072, 1)

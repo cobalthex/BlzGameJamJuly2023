@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=13 format=3 uid="uid://d0mgdcg7qxseu"]
+[gd_resource type="ShaderMaterial" load_steps=13 format=3 uid="uid://kewdioghmulu"]
 
 [ext_resource type="Shader" path="res://materials/Shaders/Caustic_Shine.gdshader" id="1_rwfk8"]
 

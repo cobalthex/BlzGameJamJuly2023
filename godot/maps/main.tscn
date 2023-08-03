@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://q44p6qrrtb3j"]
+[gd_scene load_steps=13 format=3 uid="uid://q44p6qrrtb3j"]
 
 [ext_resource type="Script" path="res://etc/Common.cs" id="1_yyim6"]
 [ext_resource type="PackedScene" uid="uid://byp1b20piqc6w" path="res://prefabs/GameController/GameController.tscn" id="2_7ncmo"]
@@ -7,7 +7,17 @@
 [ext_resource type="PackedScene" uid="uid://cx3ns1e42mpl3" path="res://prefabs/Environment/world_environment.tscn" id="5_34cai"]
 [ext_resource type="PackedScene" path="res://prefabs/Passengers/PassengerSpawner.tscn" id="8_at6gr"]
 [ext_resource type="Script" path="res://addons/proton_scatter/src/cache/scatter_cache.gd" id="8_eqlmh"]
+[ext_resource type="PackedScene" path="res://prefabs/Whales/blue_whale.tscn" id="9_a18am"]
 [ext_resource type="PackedScene" uid="uid://by6ga6nfvdwcl" path="res://prefabs/Passengers/Target.tscn" id="9_nksca"]
+[ext_resource type="PackedScene" uid="uid://codsdq3x6ay6a" path="res://prefabs/Whales/Dolphin.glb" id="10_b8aef"]
+[ext_resource type="Script" path="res://prefabs/Swim.cs" id="11_kq64d"]
+
+[sub_resource type="Curve3D" id="Curve3D_pgirq"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 7.07, 10, 0, 0, 7.07, 0, 0, -7.07, 0, 0, 0, 0, 10, 0, 0, 7.07, 0, 0, -7.07, -10, 0, 0, -7.07, 0, 0, 0, 0, 0, 0, 0, -10, 0, 0, -7.07, 0, 0, 0, 10, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
 
 [node name="scene" type="Node3D"]
 script = ExtResource("1_yyim6")
@@ -17,9 +27,32 @@ metadata/_edit_lock_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2, 2.2, -43.3)
 collision_mask = 127
 
-[node name="GameController" parent="." instance=ExtResource("2_7ncmo")]
+[node name="debug" parent="Turtle" index="0"]
+visible = false
+
+[node name="Skeleton3D" parent="Turtle/model/Turtle_Armature" index="0"]
+bones/2/rotation = Quaternion(0.353555, 0.151369, 0.186338, 0.904082)
+bones/3/rotation = Quaternion(0.0858123, 0.240824, 0.591882, 0.764405)
+bones/4/rotation = Quaternion(-0.0874039, -0.0310009, 0.169505, 0.981156)
+bones/5/rotation = Quaternion(0.183881, -0.062605, -0.0106564, 0.980895)
+bones/6/rotation = Quaternion(0.618969, 0.247439, -0.212294, 0.714551)
+bones/7/rotation = Quaternion(0.383607, -0.176906, -0.195785, 0.884996)
+bones/8/rotation = Quaternion(0.0891738, -0.238214, -0.57308, 0.779026)
+bones/9/rotation = Quaternion(-0.0791858, 0.0449724, -0.166984, 0.981745)
+bones/10/rotation = Quaternion(0.243498, 0.0607317, -0.0301687, 0.967528)
+bones/12/rotation = Quaternion(-0.103258, 2.67693e-09, -8.1952e-09, 0.994655)
+bones/13/rotation = Quaternion(0.0552543, -2.87059e-09, 6.4888e-09, 0.998472)
+bones/14/rotation = Quaternion(0.044188, 7.1261e-07, 4.13334e-08, 0.999023)
+bones/16/rotation = Quaternion(-0.26194, -0.0842437, 0.0456234, 0.960317)
+bones/17/rotation = Quaternion(-0.34993, -0.0138298, 0.102957, 0.930998)
+bones/19/rotation = Quaternion(-0.235379, 0.0654136, -0.0486479, 0.968479)
+bones/20/rotation = Quaternion(-0.340031, 0.0125449, -0.103347, 0.934634)
+
+[node name="GameController" parent="." node_paths=PackedStringArray("Turtle") instance=ExtResource("2_7ncmo")]
+Turtle = NodePath("../Turtle")
 
 [node name="debugText" type="Label" parent="."]
+visible = false
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 50.0
@@ -91,3 +124,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1575, -8.03241, 1.077)
 
 [node name="Cave Reef" parent="Targets" instance=ExtResource("9_nksca")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.8425, 7.96759, 40.077)
+
+[node name="fauna" type="Node" parent="."]
+
+[node name="Dolphin" parent="fauna" instance=ExtResource("10_b8aef")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -79, 43.7426, -32)
+
+[node name="Dolphin2" parent="fauna" instance=ExtResource("10_b8aef")]
+transform = Transform3D(7.07107, 0, 7.07107, 0, 10, 0, -7.07107, 0, 7.07107, -930, 462.426, -143)
+
+[node name="Path3D" type="Path3D" parent="fauna"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 25, 17)
+curve = SubResource("Curve3D_pgirq")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="fauna/Path3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 10, 0, 0)
+script = ExtResource("11_kq64d")
+SpeedMetersPerSecond = 3.0
+ShouldFlee = false
+
+[node name="Blue_Whale" parent="fauna/Path3D/PathFollow3D" instance=ExtResource("9_a18am")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 10.0421, 0.4, -1.8)
+
+[editable path="Turtle"]
+[editable path="Turtle/model"]
