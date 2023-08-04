@@ -40,7 +40,11 @@ public partial class Swim : PathFollow3D
 
         m_debugText = (Label3D)FindChild("debugText");
 
-        ((Area3D)FindChild("FieldOfView")).BodyEntered += FieldOfViewEntered;
+        var fov = (Area3D)FindChild("FieldOfView");
+        if (fov != null)
+        {
+            fov.BodyEntered += FieldOfViewEntered;
+        }
     }
 
     private void FieldOfViewEntered(Node3D body)
@@ -117,6 +121,6 @@ public partial class Swim : PathFollow3D
         }
         Quaternion = Quaternion.Slerp(c_qUp, 0.2f); // test
 
-        m_debugText.Text = $"{State} {m_navigateQuat} {m_navigateTimeEndMillisec}";
+        // m_debugText.Text = $"{State} {m_navigateQuat} {m_navigateTimeEndMillisec}";
     }
 }

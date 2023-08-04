@@ -29,7 +29,7 @@ public partial class Turtle : CharacterBody3D
 	public float MaxYawDegreesPerSec { get; set; } = 50; // cache radians?
 
 	[Export]
-	public float MaxPitchDegreesPerSec { get; set; } = 60; // cache radians?
+	public float MaxPitchDegreesPerSec { get; set; } = 80; // cache radians?
 
 	[Export]
 	public bool InvertPitchControls { get; set; } = true;

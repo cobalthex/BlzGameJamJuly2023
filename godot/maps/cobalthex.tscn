@@ -60,6 +60,7 @@ collision_mask = 127
 Turtle = NodePath("../Turtle")
 
 [node name="debugText" type="Label" parent="."]
+visible = false
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 50.0
